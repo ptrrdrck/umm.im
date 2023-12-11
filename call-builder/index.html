@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>call-builder</title>
+    <link href="./style.css" rel="stylesheet" />
+  </head>
+  <body class="fade-in">
+    <header><span id="page-title">call-builder</span></header>
+    <main>
+      <div id="scene-builder">
+        <section id="scene-info">
+          <p class="section-title">Scene</p>
+          <p class="section-info">
+            Build the call's dispatch. Unchanged variables are chosen randomly.
+          </p>
+        </section>
+        <section id="scene">
+          <div class="selector">
+            <label for="season-selector" class="selector-title">Season</label>
+            <div id="season-select-button" class="select-button">
+              <select id="season-selector"></select>
+            </div>
+          </div>
+          <div class="selector">
+            <label for="time-selector" class="selector-title">Time</label>
+            <div id="time-select-button" class="select-button">
+              <select id="time-selector"></select>
+            </div>
+          </div>
+          <div class="selector">
+            <label for="origin-selector" class="selector-title">Origin</label>
+            <div id="origin-select-button" class="select-button">
+              <select id="origin-selector"></select>
+            </div>
+          </div>
+          <div class="selector">
+            <label for="location-selector" class="selector-title"
+              >Location</label
+            >
+            <div id="location-select-button" class="select-button">
+              <select id="location-selector"></select>
+            </div>
+          </div>
+          <div id="conditions" class="hide">
+            <div class="selector" id="surf">
+              <label for="surf-selector" class="selector-title"
+                >Conditions</label
+              >
+              <div id="surf-select-button" class="select-button">
+                <select id="surf-selector"></select>
+              </div>
+            </div>
+            <div class="selector" id="period">
+              <label class="hide" for="period-selector" class="selector-title"
+                >Period</label
+              >
+              <div id="period-select-button" class="select-button">
+                <select id="period-selector"></select>
+              </div>
+            </div>
+            <div class="selector" id="direction">
+              <label
+                class="hide"
+                for="direction-selector"
+                class="selector-title"
+                >Direction</label
+              >
+              <div id="direction-select-button" class="select-button">
+                <select id="direction-selector"></select>
+              </div>
+            </div>
+          </div>
+          <div class="selector">
+            <label for="patients-selector" class="selector-title"
+              >Patients</label
+            >
+            <div id="patients-select-button" class="select-button">
+              <select id="patients-selector"></select>
+            </div>
+          </div>
+          <div class="selector">
+            <label for="nature-selector" class="selector-title">Nature</label>
+            <div id="nature-select-button" class="select-button">
+              <select id="nature-selector"></select>
+            </div>
+          </div>
+        </section>
+        <button class="next-button" id="build-scene-button">Build Scene</button>
+      </div>
+    </main>
+    <footer>
+      <span class="info">© peter rodrick <span id="year"></span></span>
+    </footer>
+    <script src="./script.js" type="text/javascript"></script>
+  </body>
+</html>
