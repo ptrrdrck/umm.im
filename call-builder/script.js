@@ -76,14 +76,14 @@ timeSelector.onchange = function () {
  */
 const originSelector = document.getElementById("origin-selector");
 
-var origin = [
+var orig = [
   { name: "Random", id: 1 },
   { name: "Observed", id: 2 },
   { name: "Reported", id: 3 },
   { name: "911 Call", id: 4 },
 ];
 
-origin.forEach(function (item) {
+orig.forEach(function (item) {
   var option = document.createElement("option");
   option.value = item.id;
   option.textContent = item.name;
@@ -259,25 +259,25 @@ patients.forEach(function (item) {
 patientsSelector.onchange = function () {
   var patientsSelectButton = document.getElementById("patients-select-button");
   var selectedPatients =
-    patientsSelector.options[patientsSelector.selectedIndex].text;
-  if (selectedPatients != "Random") {
+    patientsSelector.options[patientsSelector.selectedIndex].value;
+  if (selectedPatients != 1) {
     patientsSelectButton.classList.add("changed-select-button");
   } else {
     patientsSelectButton.classList.remove("changed-select-button");
   }
-  mixedNature = { name: "Mixed", id: 4 };
-  console.log(patientsSelector.options[patientsSelector.selectedIndex].value);
-  if (patientsSelector.options[patientsSelector.selectedIndex].value >= 3) {
+  if (selectedPatients >= 3 && nature.length == 3) {
+    mixedNature = { name: "Mixed", id: 4 };
     nature.push(mixedNature);
-    console.log(nature);
-    nature.forEach(function (item) {
-      var option = document.createElement("option");
-      option.value = item.id;
-      option.textContent = item.name;
-      natureSelector.appendChild(option);
-    });
-  } else {
-    nature.push(mixedNature);
+    var option = document.createElement("option");
+    option.id = "Mix";
+    option.value = mixedNature.id;
+    option.textContent = mixedNature.name;
+    natureSelector.appendChild(option);
+  }
+  if (selectedPatients <= 2 && nature.length == 4) {
+    nature.pop(nature[3]);
+    let mixOption = document.getElementById("Mix");
+    natureSelector.removeChild(mixOption);
   }
 };
 
@@ -314,3 +314,21 @@ natureSelector.onchange = function () {
  * Call generating
  */
 const buildSceneButton = document.getElementById("build-scene-button");
+
+const getRandomOption = (arr) => {
+  arr.shift();
+  var randomOption = arr[Math.floor(Math.random() * arr.length)];
+  console.log(randomOption);
+};
+
+buildSceneButton.addEventListener("click", () => {
+  getRandomOption(season);
+  getRandomOption(time);
+  getRandomOption(orig);
+  getRandomOption(loc);
+  getRandomOption(surf);
+  getRandomOption(period);
+  getRandomOption(direction);
+  getRandomOption(patients);
+  getRandomOption(nature);
+});
