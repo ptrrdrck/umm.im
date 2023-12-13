@@ -53,6 +53,18 @@ body {
   #scene-builder {
     padding: 20px 26px 26px;
   }
+  #surf {
+    padding-right: 0;
+    padding-top: 10px;
+  }
+  #period {
+    padding-right: 2px;
+    padding-top: 0;
+  }
+  #direction {
+    padding-right: 10px;
+    padding-top: 0;
+  }
 }
 @media (min-width: 600px) {
   #scene-info,
@@ -108,10 +120,26 @@ body {
     padding: 10px 20px 0 0;
   }
   .next-button {
-    margin: 20px 0 0 0;
+    margin: 25px 0 0 0;
   }
   #scene-builder {
     padding: 20px 26px;
+  }
+  #conditions {
+    padding-right: 10px;
+  }
+  #surf,
+  #period {
+    padding-right: 10px;
+    padding-top: 0;
+  }
+  #direction {
+    padding-right: 0;
+    padding-top: 0;
+  }
+  #period,
+  #direction {
+    align-self: flex-end;
   }
 }
 
@@ -168,6 +196,10 @@ a:hover {
   display: none !important;
 }
 
+.title-hide {
+  color: #fff;
+}
+
 .info {
   margin: 40px 0;
 }
@@ -216,6 +248,7 @@ a:hover {
   border-radius: 0.25em;
   padding: 0.25em 0.75em 0.25em 0.5em;
   font-size: 1rem;
+  color: #000;
   cursor: pointer;
   line-height: 1.1;
   background-color: #fff;
@@ -296,20 +329,4 @@ select:focus + .focus {
 #conditions,
 #surf {
   display: flex;
-}
-
-#surf,
-#period {
-  padding-right: 10px;
-  padding-top: 0;
-}
-
-#direction {
-  padding-right: 0;
-  padding-top: 0;
-}
-
-#period,
-#direction {
-  align-self: flex-end;
 }
