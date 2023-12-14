@@ -18,10 +18,10 @@ const seasonSelector = document.getElementById("season-selector");
 
 var season = [
   { name: "Random", id: 1 },
-  { name: "Winter", id: 2 },
-  { name: "Spring", id: 3 },
-  { name: "Summer", id: 4 },
-  { name: "Fall", id: 5 },
+  { name: "Winter", id: 2, weight: 25 },
+  { name: "Spring", id: 3, weight: 25 },
+  { name: "Summer", id: 4, weight: 25 },
+  { name: "Fall", id: 5, weight: 25 },
 ];
 
 season.forEach(function (item) {
@@ -49,9 +49,9 @@ const timeSelector = document.getElementById("time-selector");
 
 var time = [
   { name: "Random", id: 1 },
-  { name: "Morning", id: 2 },
-  { name: "Afternoon", id: 3 },
-  { name: "Evening", id: 4 },
+  { name: "Morning", id: 2, weight: 25 },
+  { name: "Afternoon", id: 3, weight: 50 },
+  { name: "Evening", id: 4, weight: 25 },
 ];
 
 time.forEach(function (item) {
@@ -78,9 +78,9 @@ const originSelector = document.getElementById("origin-selector");
 
 var orig = [
   { name: "Random", id: 1 },
-  { name: "Observed", id: 2 },
-  { name: "Reported", id: 3 },
-  { name: "911 Call", id: 4 },
+  { name: "Observed", id: 2, weight: 40 },
+  { name: "Reported", id: 3, weight: 50 },
+  { name: "911 Call", id: 4, weight: 10 },
 ];
 
 orig.forEach(function (item) {
@@ -107,10 +107,10 @@ const locationSelector = document.getElementById("location-selector");
 
 var loc = [
   { name: "Random", id: 1 },
-  { name: "Beach", id: 2 },
-  { name: "Water", id: 3 },
-  { name: "Jetty", id: 4 },
-  { name: "Boardwalk", id: 5 },
+  { name: "Beach", id: 2, weight: 35 },
+  { name: "Water", id: 3, weight: 30 },
+  { name: "Jetty", id: 4, weight: 30 },
+  { name: "Boardwalk", id: 5, weight: 5 },
 ];
 
 loc.forEach(function (item) {
@@ -146,11 +146,11 @@ const surfSelector = document.getElementById("surf-selector");
 
 var surf = [
   { name: "Surf", id: 1 },
-  { name: "1-2 ft", id: 2 },
-  { name: "3-5 ft", id: 3 },
-  { name: "6-9 ft", id: 4 },
-  { name: "10-14 ft", id: 5 },
-  { name: "15 ft +", id: 6 },
+  { name: "1-2 ft", id: 2, weight: 25 },
+  { name: "3-5 ft", id: 3, weight: 40 },
+  { name: "6-9 ft", id: 4, weight: 15 },
+  { name: "10-14 ft", id: 5, weight: 10 },
+  { name: "15 ft +", id: 6, weight: 10 },
 ];
 
 surf.forEach(function (item) {
@@ -177,10 +177,10 @@ const periodSelector = document.getElementById("period-selector");
 
 var period = [
   { name: "Period", id: 1 },
-  { name: "3-8 sec", id: 2 },
-  { name: "9-14 sec", id: 3 },
-  { name: "15-20 sec", id: 4 },
-  { name: "21 sec +", id: 5 },
+  { name: "3-8 sec", id: 2, weight: 10 },
+  { name: "9-14 sec", id: 3, weight: 30 },
+  { name: "15-20 sec", id: 4, weight: 40 },
+  { name: "21 sec +", id: 5, weight: 20 },
 ];
 
 period.forEach(function (item) {
@@ -208,11 +208,11 @@ const directionSelector = document.getElementById("direction-selector");
 
 var direction = [
   { name: "Direction", id: 1 },
-  { name: "N", id: 2 },
-  { name: "NW", id: 3 },
-  { name: "W", id: 4 },
-  { name: "SW", id: 5 },
-  { name: "S", id: 6 },
+  { name: "N", id: 2, weight: 5 },
+  { name: "NW", id: 3, weight: 25 },
+  { name: "W", id: 4, weight: 25 },
+  { name: "SW", id: 5, weight: 30 },
+  { name: "S", id: 6, weight: 15 },
 ];
 
 direction.forEach(function (item) {
@@ -242,11 +242,11 @@ const patientsSelector = document.getElementById("patients-selector");
 
 var patients = [
   { name: "Random", id: 1 },
-  { name: "1", id: 2 },
-  { name: "2", id: 3 },
-  { name: "3", id: 4 },
-  { name: "4", id: 5 },
-  { name: "5 or more", id: 6 },
+  { name: "1", id: 2, weight: 82 },
+  { name: "2", id: 3, weight: 14 },
+  { name: "3", id: 4, weight: 2 },
+  { name: "4", id: 5, weight: 1 },
+  { name: "5 or more", id: 6, weight: 1 },
 ];
 
 patients.forEach(function (item) {
@@ -266,7 +266,7 @@ patientsSelector.onchange = function () {
     patientsSelectButton.classList.remove("changed-select-button");
   }
   if (selectedPatients >= 3 && nature.length == 3) {
-    mixedNature = { name: "Mixed", id: 4 };
+    mixedNature = { name: "Mixed", id: 4, weight: 25 };
     nature.push(mixedNature);
     var option = document.createElement("option");
     option.id = "Mix";
@@ -288,8 +288,8 @@ const natureSelector = document.getElementById("nature-selector");
 
 var nature = [
   { name: "Random", id: 1 },
-  { name: "Medical", id: 2 },
-  { name: "Trauma", id: 3 },
+  { name: "Medical", id: 2, weight: 50 },
+  { name: "Trauma", id: 3, weight: 50 },
 ];
 
 nature.forEach(function (item) {
@@ -315,11 +315,18 @@ natureSelector.onchange = function () {
  */
 const buildSceneButton = document.getElementById("build-scene-button");
 
-const getRandomOption = (arr) => {
-  arr.shift();
-  var randomOption = arr[Math.floor(Math.random() * arr.length)];
-  console.log(randomOption);
-};
+function getRandomOption(arr) {
+  var i;
+  let options = arr.slice(1);
+  console.log(options);
+  var weights = [options[0].weight];
+  for (i = 1; i < options.length; i++)
+    weights[i] = options[i].weight + weights[i - 1];
+  var random = Math.random() * weights[weights.length - 1];
+  for (i = 0; i < weights.length; i++) if (weights[i] > random) break;
+  console.log(options[i].name);
+  return options[i].name;
+}
 
 buildSceneButton.addEventListener("click", () => {
   getRandomOption(season);

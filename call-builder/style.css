@@ -248,7 +248,7 @@ a:hover {
   border-radius: 0.25em;
   padding: 0.25em 0.75em 0.25em 0.5em;
   font-size: 1rem;
-  color: #000;
+  color: var(--select-arrow);
   cursor: pointer;
   line-height: 1.1;
   background-color: #fff;
@@ -280,6 +280,7 @@ select,
 select {
   appearance: none;
   background-color: transparent;
+  color: var(--select-arrow);
   border: none;
   padding: 0.25em 1em 0.25em 0.25em;
   margin: 0;
