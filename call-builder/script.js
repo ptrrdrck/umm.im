@@ -92,8 +92,9 @@ orig.forEach(function (item) {
 
 originSelector.onchange = function () {
   var originSelectButton = document.getElementById("origin-select-button");
-  var selectedTime = originSelector.options[originSelector.selectedIndex].text;
-  if (selectedTime != "Random") {
+  var selectedOrigin =
+    originSelector.options[originSelector.selectedIndex].text;
+  if (selectedOrigin != "Random") {
     originSelectButton.classList.add("changed-select-button");
   } else {
     originSelectButton.classList.remove("changed-select-button");
@@ -329,13 +330,16 @@ function getRandomOption(arr) {
 }
 
 buildSceneButton.addEventListener("click", () => {
-  getRandomOption(season);
-  getRandomOption(time);
-  getRandomOption(orig);
-  getRandomOption(loc);
-  getRandomOption(surf);
-  getRandomOption(period);
-  getRandomOption(direction);
-  getRandomOption(patients);
-  getRandomOption(nature);
+  let selectedSeason = getRandomOption(season);
+  let selectedTime = getRandomOption(time);
+  let selectedOrigin = getRandomOption(orig);
+  let selectedLocation = getRandomOption(loc);
+  let selectedSurf = getRandomOption(surf);
+  let selectedPeriod = getRandomOption(period);
+  let selectedDirection = getRandomOption(direction);
+  let selectedPatients = getRandomOption(patients);
+  let selectedNature = getRandomOption(nature);
+  document.getElementById(
+    "built-scene"
+  ).innerHTML = `<span class="scene-item">${selectedSeason}</span><span class="scene-item">${selectedTime}</span><span class="scene-item">${selectedOrigin}</span><span class="scene-item">${selectedLocation}</span><span class="scene-item">${selectedSurf}</span><span class="scene-item">${selectedPeriod}</span><span class="scene-item">${selectedDirection}</span><span class="scene-item">${selectedPatients}</span><span class="scene-item">${selectedNature}</span>`;
 });

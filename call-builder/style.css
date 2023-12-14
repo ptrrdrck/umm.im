@@ -29,7 +29,8 @@ body {
 @media (max-width: 599px) {
   #scene-info,
   #scene,
-  #conditions {
+  #conditions,
+  #built-scene {
     flex-direction: column;
   }
   #scene {
@@ -50,7 +51,8 @@ body {
   .next-button {
     margin: 20px 0 0 0;
   }
-  #scene-builder {
+  #scene-builder,
+  #built-scene {
     padding: 20px 26px 26px;
   }
   #surf {
@@ -70,7 +72,8 @@ body {
   #scene-info,
   #scene,
   #conditions,
-  #surf {
+  #surf,
+  #built-scene {
     flex-direction: column;
   }
   #scene {
@@ -91,14 +94,16 @@ body {
   .next-button {
     margin: 10px 0;
   }
-  #scene-builder {
+  #scene-builder,
+  #built-scene {
     padding: 20px 26px;
   }
 }
 @media (min-width: 1024px) {
   #scene-info,
   #scene,
-  #conditions {
+  #conditions,
+  #built-scene {
     flex-direction: row;
   }
   #scene {
@@ -122,7 +127,8 @@ body {
   .next-button {
     margin: 25px 0 0 0;
   }
-  #scene-builder {
+  #scene-builder,
+  #built-scene {
     padding: 20px 26px;
   }
   #conditions {
@@ -226,12 +232,23 @@ a:hover {
   flex-direction: column;
 }
 
+#built-scene {
+  display: flex;
+  background-color: var(--select-focus);
+  color: #fff;
+  border-radius: 10px;
+}
+
+.scene-item {
+  padding: 0 20px 10px 0;
+}
+
 .section-title {
   font-size: 1.8em;
 }
 
 .section-info {
-  color: #6e6e6e;
+  color: var(--select-border);
   font-size: 0.9em;
 }
 
