@@ -67,6 +67,9 @@ body {
     padding-right: 10px;
     padding-top: 0;
   }
+  .scene-item {
+    padding: 0 20px 10px 0;
+  }
 }
 @media (min-width: 600px) {
   #scene-info,
@@ -97,6 +100,9 @@ body {
   #scene-builder,
   #built-scene {
     padding: 20px 26px;
+  }
+  .scene-item {
+    padding: 0 20px 10px 0;
   }
 }
 @media (min-width: 1024px) {
@@ -132,7 +138,7 @@ body {
     padding: 20px 26px;
   }
   #conditions {
-    padding-right: 10px;
+    padding-right: 20px;
   }
   #surf,
   #period {
@@ -146,6 +152,9 @@ body {
   #period,
   #direction {
     align-self: flex-end;
+  }
+  .scene-item {
+    padding: 0 20px 0 0;
   }
 }
 
@@ -207,6 +216,7 @@ a:hover {
 }
 
 .info {
+  font-size: 0.9em;
   margin: 40px 0;
 }
 
@@ -237,10 +247,7 @@ a:hover {
   background-color: var(--select-focus);
   color: #fff;
   border-radius: 10px;
-}
-
-.scene-item {
-  padding: 0 20px 10px 0;
+  margin-top: 10px;
 }
 
 .section-title {

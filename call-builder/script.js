@@ -148,10 +148,10 @@ const surfSelector = document.getElementById("surf-selector");
 var surf = [
   { name: "Surf", id: 1 },
   { name: "1-2 ft", id: 2, weight: 25 },
-  { name: "3-5 ft", id: 3, weight: 40 },
+  { name: "3-5 ft", id: 3, weight: 50 },
   { name: "6-9 ft", id: 4, weight: 15 },
-  { name: "10-14 ft", id: 5, weight: 10 },
-  { name: "15 ft +", id: 6, weight: 10 },
+  { name: "10-14 ft", id: 5, weight: 5 },
+  { name: "15 ft +", id: 6, weight: 5 },
 ];
 
 surf.forEach(function (item) {
@@ -319,27 +319,97 @@ const buildSceneButton = document.getElementById("build-scene-button");
 function getRandomOption(arr) {
   var i;
   let options = arr.slice(1);
-  console.log(options);
   var weights = [options[0].weight];
   for (i = 1; i < options.length; i++)
     weights[i] = options[i].weight + weights[i - 1];
   var random = Math.random() * weights[weights.length - 1];
   for (i = 0; i < weights.length; i++) if (weights[i] > random) break;
-  console.log(options[i].name);
   return options[i].name;
 }
 
+let sceneData = [
+  {
+    sceneSelector: seasonSelector,
+    sceneVariable: season,
+    sceneSelected: seasonSelector.options[seasonSelector.selectedIndex].text,
+  },
+  {
+    sceneSelector: timeSelector,
+    sceneVariable: time,
+    sceneSelected: timeSelector.options[timeSelector.selectedIndex].text,
+  },
+  {
+    sceneSelector: originSelector,
+    sceneVariable: orig,
+    sceneSelected: originSelector.options[originSelector.selectedIndex].text,
+  },
+  {
+    sceneSelector: locationSelector,
+    sceneVariable: loc,
+    sceneSelected:
+      locationSelector.options[locationSelector.selectedIndex].text,
+  },
+  {
+    sceneSelector: surfSelector,
+    sceneVariable: surf,
+    sceneSelected: surfSelector.options[surfSelector.selectedIndex].text,
+  },
+  {
+    sceneSelector: periodSelector,
+    sceneVariable: period,
+    sceneSelected: periodSelector.options[periodSelector.selectedIndex].text,
+  },
+  {
+    sceneSelector: directionSelector,
+    sceneVariable: direction,
+    sceneSelected:
+      directionSelector.options[directionSelector.selectedIndex].text,
+  },
+  {
+    sceneSelector: patientsSelector,
+    sceneVariable: patients,
+    sceneSelected:
+      patientsSelector.options[patientsSelector.selectedIndex].text,
+  },
+  {
+    sceneSelector: natureSelector,
+    sceneVariable: nature,
+    sceneSelected: natureSelector.options[natureSelector.selectedIndex].text,
+  },
+];
+
+const builtScenePlaceholder = document.getElementById(
+  "built-scene-placeholder"
+);
+
 buildSceneButton.addEventListener("click", () => {
-  let selectedSeason = getRandomOption(season);
-  let selectedTime = getRandomOption(time);
-  let selectedOrigin = getRandomOption(orig);
-  let selectedLocation = getRandomOption(loc);
-  let selectedSurf = getRandomOption(surf);
-  let selectedPeriod = getRandomOption(period);
-  let selectedDirection = getRandomOption(direction);
-  let selectedPatients = getRandomOption(patients);
-  let selectedNature = getRandomOption(nature);
-  document.getElementById(
-    "built-scene"
-  ).innerHTML = `<span class="scene-item">${selectedSeason}</span><span class="scene-item">${selectedTime}</span><span class="scene-item">${selectedOrigin}</span><span class="scene-item">${selectedLocation}</span><span class="scene-item">${selectedSurf}</span><span class="scene-item">${selectedPeriod}</span><span class="scene-item">${selectedDirection}</span><span class="scene-item">${selectedPatients}</span><span class="scene-item">${selectedNature}</span>`;
+  document.getElementById("built-scene").remove();
+  const root = document.createElement("DIV");
+  root.setAttribute("id", "built-scene");
+  builtScenePlaceholder.appendChild(root);
+  sceneData.forEach((item) => {
+    if (
+      item.sceneSelector.options[item.sceneSelector.selectedIndex].text ==
+        "Random" ||
+      item.sceneSelector.options[item.sceneSelector.selectedIndex].text ==
+        "Surf" ||
+      item.sceneSelector.options[item.sceneSelector.selectedIndex].text ==
+        "Period" ||
+      item.sceneSelector.options[item.sceneSelector.selectedIndex].text ==
+        "Direction"
+    ) {
+      item.sceneSelected = getRandomOption(item.sceneVariable);
+      let sceneItem = document.createElement("span");
+      sceneItem.textContent = item.sceneSelected;
+      sceneItem.classList.add("scene-item");
+      document.getElementById("built-scene").appendChild(sceneItem);
+    } else {
+      item.sceneSelected =
+        item.sceneSelector.options[item.sceneSelector.selectedIndex].text;
+      let sceneItem = document.createElement("span");
+      sceneItem.textContent = item.sceneSelected;
+      sceneItem.classList.add("scene-item");
+      document.getElementById("built-scene").appendChild(sceneItem);
+    }
+  });
 });
