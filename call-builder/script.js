@@ -18,6 +18,8 @@ const surfSelector = document.getElementById("surf-selector");
 const periodSelector = document.getElementById("period-selector");
 const directionSelector = document.getElementById("direction-selector");
 const patientsSelector = document.getElementById("patients-selector");
+const ageSelector = document.getElementById("age-selector");
+const sexSelector = document.getElementById("sex-selector");
 const natureSelector = document.getElementById("nature-selector");
 
 var season = [
@@ -78,11 +80,26 @@ var direction = [
 
 var patients = [
   { name: "Random", id: 1 },
-  { name: "1", id: 2, weight: 82 },
-  { name: "2", id: 3, weight: 14 },
+  { name: "1", id: 2, weight: 84 },
+  { name: "2", id: 3, weight: 12 },
   { name: "3", id: 4, weight: 2 },
   { name: "4", id: 5, weight: 1 },
-  { name: "5 or more", id: 6, weight: 1 },
+  { name: "5", id: 6, weight: 1 },
+];
+
+var age = [
+  { name: "Random", id: 1 },
+  { name: "0-9", id: 2, weight: 20 },
+  { name: "10-19", id: 3, weight: 20 },
+  { name: "20-29", id: 4, weight: 20 },
+  { name: "30-49", id: 5, weight: 20 },
+  { name: "50+", id: 6, weight: 20 },
+];
+
+var sex = [
+  { name: "Random", id: 1 },
+  { name: "Male", id: 2, weight: 50 },
+  { name: "Female", id: 3, weight: 50 },
 ];
 
 var nature = [
@@ -238,19 +255,83 @@ patientsSelector.onchange = function () {
   } else {
     patientsSelectButton.classList.remove("changed-select-button");
   }
+  /*
+  if (selectedPatients >= 3 && age.length == 6) {
+    mixedAge = { name: "Mixed", id: 7, weight: 20 };
+    age.push(mixedAge);
+    var option = document.createElement("option");
+    option.id = "mixed-age";
+    option.value = mixedAge.id;
+    option.textContent = mixedAge.name;
+    ageSelector.appendChild(option);
+  }
+  if (selectedPatients <= 2 && age.length == 7) {
+    age.pop(age[6]);
+    let mixOption = document.getElementById("mixed-age");
+    ageSelector.removeChild(mixOption);
+  }
+  if (selectedPatients >= 3 && sex.length == 3) {
+    mixedSex = { name: "Mixed", id: 4, weight: 50 };
+    sex.push(mixedSex);
+    var option = document.createElement("option");
+    option.id = "mixed-sex";
+    option.value = mixedSex.id;
+    option.textContent = mixedSex.name;
+    sexSelector.appendChild(option);
+  }
+  if (selectedPatients <= 2 && sex.length == 4) {
+    sex.pop(sex[3]);
+    let mixOption = document.getElementById("mixed-sex");
+    sexSelector.removeChild(mixOption);
+  }
   if (selectedPatients >= 3 && nature.length == 3) {
     mixedNature = { name: "Mixed", id: 4, weight: 25 };
     nature.push(mixedNature);
     var option = document.createElement("option");
-    option.id = "Mix";
+    option.id = "mixed-nature";
     option.value = mixedNature.id;
     option.textContent = mixedNature.name;
     natureSelector.appendChild(option);
   }
   if (selectedPatients <= 2 && nature.length == 4) {
     nature.pop(nature[3]);
-    let mixOption = document.getElementById("Mix");
+    let mixOption = document.getElementById("mixed-nature");
     natureSelector.removeChild(mixOption);
+  }
+  */
+};
+
+age.forEach(function (item) {
+  var option = document.createElement("option");
+  option.value = item.id;
+  option.textContent = item.name;
+  ageSelector.appendChild(option);
+});
+
+ageSelector.onchange = function () {
+  var ageSelectButton = document.getElementById("age-select-button");
+  var selectedAge = ageSelector.options[ageSelector.selectedIndex].text;
+  if (selectedAge != "Random") {
+    ageSelectButton.classList.add("changed-select-button");
+  } else {
+    ageSelectButton.classList.remove("changed-select-button");
+  }
+};
+
+sex.forEach(function (item) {
+  var option = document.createElement("option");
+  option.value = item.id;
+  option.textContent = item.name;
+  sexSelector.appendChild(option);
+});
+
+sexSelector.onchange = function () {
+  var sexSelectButton = document.getElementById("sex-select-button");
+  var selectedSex = sexSelector.options[sexSelector.selectedIndex].text;
+  if (selectedSex != "Random") {
+    sexSelectButton.classList.add("changed-select-button");
+  } else {
+    sexSelectButton.classList.remove("changed-select-button");
   }
 };
 
@@ -310,6 +391,9 @@ let sceneData = [
     sceneSelected:
       locationSelector.options[locationSelector.selectedIndex].text,
   },
+];
+
+let conditionsData = [
   {
     sceneSelector: surfSelector,
     sceneVariable: surf,
@@ -326,11 +410,27 @@ let sceneData = [
     sceneSelected:
       directionSelector.options[directionSelector.selectedIndex].text,
   },
+];
+
+let patientCountData = [
   {
     sceneSelector: patientsSelector,
     sceneVariable: patients,
     sceneSelected:
       patientsSelector.options[patientsSelector.selectedIndex].text,
+  },
+];
+
+let patientsData = [
+  {
+    sceneSelector: ageSelector,
+    sceneVariable: age,
+    sceneSelected: ageSelector.options[ageSelector.selectedIndex].text,
+  },
+  {
+    sceneSelector: sexSelector,
+    sceneVariable: sex,
+    sceneSelected: sexSelector.options[sexSelector.selectedIndex].text,
   },
   {
     sceneSelector: natureSelector,
@@ -343,18 +443,16 @@ const builtScenePlaceholder = document.getElementById(
   "built-scene-placeholder"
 );
 
-buildSceneButton.addEventListener("click", () => {
+function buildScene() {
   document.getElementById("built-scene").remove();
   const root = document.createElement("DIV");
   root.setAttribute("id", "built-scene");
   builtScenePlaceholder.appendChild(root);
   sceneData.forEach((item) => {
     if (
-      (item.sceneSelector.options[item.sceneSelector.selectedIndex].text ==
-        "Random",
-      "Surf",
-      "Period",
-      "Direction")
+      ["Random", "Surf", "Period", "Direction"].includes(
+        item.sceneSelector.options[item.sceneSelector.selectedIndex].text
+      )
     ) {
       item.sceneSelected = getRandomOption(item.sceneVariable);
       let sceneItem = document.createElement("span");
@@ -370,4 +468,83 @@ buildSceneButton.addEventListener("click", () => {
       document.getElementById("built-scene").appendChild(sceneItem);
     }
   });
+  if (
+    sceneData[3].sceneSelected == "Water" ||
+    sceneData[3].sceneSelected == "Jetty"
+  ) {
+    conditionsData.forEach((item) => {
+      if (
+        ["Random", "Surf", "Period", "Direction"].includes(
+          item.sceneSelector.options[item.sceneSelector.selectedIndex].text
+        )
+      ) {
+        item.sceneSelected = getRandomOption(item.sceneVariable);
+        let sceneItem = document.createElement("span");
+        sceneItem.textContent = item.sceneSelected;
+        sceneItem.classList.add("scene-item");
+        document.getElementById("built-scene").appendChild(sceneItem);
+      } else {
+        item.sceneSelected =
+          item.sceneSelector.options[item.sceneSelector.selectedIndex].text;
+        let sceneItem = document.createElement("span");
+        sceneItem.textContent = item.sceneSelected;
+        sceneItem.classList.add("scene-item");
+        document.getElementById("built-scene").appendChild(sceneItem);
+      }
+    });
+  }
+  patientCountData.forEach((item) => {
+    if (
+      ["Random"].includes(
+        item.sceneSelector.options[item.sceneSelector.selectedIndex].text
+      )
+    ) {
+      item.sceneSelected = getRandomOption(item.sceneVariable);
+    } else {
+      item.sceneSelected =
+        item.sceneSelector.options[item.sceneSelector.selectedIndex].text;
+    }
+  });
+}
+
+const builtPatientsPlaceholder = document.getElementById(
+  "built-patients-placeholder"
+);
+
+function buildPatients(number) {
+  document.getElementById("patients-container").remove();
+  const root = document.createElement("DIV");
+  root.setAttribute("id", "patients-container");
+  builtPatientsPlaceholder.appendChild(root);
+  for (let i = 0; i < number; i++) {
+    var patient = document.createElement("DIV");
+    patient.setAttribute("id", `patient-${i + 1}`);
+    patient.setAttribute("class", "patient");
+    root.appendChild(patient);
+    patientsData.forEach((item) => {
+      if (
+        ["Random"].includes(
+          item.sceneSelector.options[item.sceneSelector.selectedIndex].text
+        )
+      ) {
+        item.sceneSelected = getRandomOption(item.sceneVariable);
+        let patientItem = document.createElement("span");
+        patientItem.textContent = item.sceneSelected;
+        patientItem.classList.add("scene-item");
+        patient.appendChild(patientItem);
+      } else {
+        item.sceneSelected =
+          item.sceneSelector.options[item.sceneSelector.selectedIndex].text;
+        let patientItem = document.createElement("span");
+        patientItem.textContent = item.sceneSelected;
+        patientItem.classList.add("scene-item");
+        patient.appendChild(patientItem);
+      }
+    });
+  }
+}
+
+buildSceneButton.addEventListener("click", () => {
+  buildScene();
+  buildPatients(patientCountData[0].sceneSelected);
 });

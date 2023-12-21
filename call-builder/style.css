@@ -11,6 +11,7 @@
 :root {
   --select-border: #888;
   --select-focus: rgb(94, 169, 255);
+  --select-patient: rgb(62, 188, 100);
   --select-arrow: #000;
 }
 
@@ -38,7 +39,9 @@ body {
   #scene-info,
   #scene,
   #conditions,
-  #built-scene {
+  #built-scene,
+  #patients-container,
+  .patient {
     flex-direction: column;
   }
   #scene {
@@ -60,7 +63,8 @@ body {
     margin: 20px 0 0 0;
   }
   #scene-builder,
-  #built-scene {
+  #built-scene,
+  .patient {
     padding: 20px 26px 26px;
   }
   #surf {
@@ -76,10 +80,11 @@ body {
     padding-top: 0;
   }
   .scene-item {
-    padding: 0 20px 10px 0;
+    padding: 0 0 10px 0;
   }
-  #built-scene span:last-of-type {
-    padding: 0 20px 0 0;
+  #built-scene span:last-of-type,
+  .patient span:last-of-type {
+    padding: 0;
   }
 }
 @media (min-width: 600px) {
@@ -87,7 +92,8 @@ body {
   #scene,
   #conditions,
   #surf,
-  #built-scene {
+  #built-scene,
+  #patients-container {
     flex-direction: column;
   }
   #scene {
@@ -109,11 +115,12 @@ body {
     margin: 10px 0;
   }
   #scene-builder,
-  #built-scene {
+  #built-scene,
+  .patient {
     padding: 20px 26px;
   }
   .scene-item {
-    padding: 0 20px 10px 0;
+    padding: 0 0 10px 0;
   }
 }
 @media (min-width: 1024px) {
@@ -128,7 +135,8 @@ body {
   #scene-info,
   #scene,
   #conditions,
-  #built-scene {
+  #built-scene,
+  #patients-container {
     flex-direction: row;
   }
   #scene {
@@ -153,7 +161,8 @@ body {
     margin: 25px 0 0 0;
   }
   #scene-builder,
-  #built-scene {
+  #built-scene,
+  .patient {
     padding: 20px 26px;
   }
   #conditions {
@@ -173,7 +182,7 @@ body {
     align-self: flex-end;
   }
   .scene-item {
-    padding: 0 20px 0 0;
+    padding: 0 40px 0 0;
   }
 }
 
@@ -371,4 +380,12 @@ select:focus + .focus {
 #conditions,
 #surf {
   display: flex;
+}
+
+.patient {
+  display: flex;
+  background-color: var(--select-patient);
+  color: #fff;
+  border-radius: 10px;
+  margin-top: 10px;
 }
