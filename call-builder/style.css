@@ -27,6 +27,14 @@ body {
 }
 
 @media (max-width: 599px) {
+  header,
+  main,
+  footer {
+    margin: 0 20px;
+  }
+  #page-title {
+    margin: 40px 0;
+  }
   #scene-info,
   #scene,
   #conditions,
@@ -70,6 +78,9 @@ body {
   .scene-item {
     padding: 0 20px 10px 0;
   }
+  #built-scene span:last-of-type {
+    padding: 0 20px 0 0;
+  }
 }
 @media (min-width: 600px) {
   #scene-info,
@@ -106,6 +117,14 @@ body {
   }
 }
 @media (min-width: 1024px) {
+  header,
+  main,
+  footer {
+    margin: 0 40px;
+  }
+  #page-title {
+    margin: 40px 0;
+  }
   #scene-info,
   #scene,
   #conditions,
@@ -173,7 +192,6 @@ footer {
   flex-shrink: 1;
   height: auto;
   width: auto;
-  margin: 0 40px;
 }
 
 main {
@@ -221,7 +239,6 @@ a:hover {
 }
 
 #page-title {
-  margin: 40px 0;
   font-size: 2em;
 }
 
