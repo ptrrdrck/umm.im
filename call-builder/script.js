@@ -10,11 +10,15 @@ document.getElementById("year").textContent = new Date().getFullYear();
 /**
  * Option loading
  */
-
-/**
- * SEASON
- */
 const seasonSelector = document.getElementById("season-selector");
+const timeSelector = document.getElementById("time-selector");
+const originSelector = document.getElementById("origin-selector");
+const locationSelector = document.getElementById("location-selector");
+const surfSelector = document.getElementById("surf-selector");
+const periodSelector = document.getElementById("period-selector");
+const directionSelector = document.getElementById("direction-selector");
+const patientsSelector = document.getElementById("patients-selector");
+const natureSelector = document.getElementById("nature-selector");
 
 var season = [
   { name: "Random", id: 1 },
@@ -22,6 +26,69 @@ var season = [
   { name: "Spring", id: 3, weight: 25 },
   { name: "Summer", id: 4, weight: 25 },
   { name: "Fall", id: 5, weight: 25 },
+];
+
+var time = [
+  { name: "Random", id: 1 },
+  { name: "Morning", id: 2, weight: 25 },
+  { name: "Afternoon", id: 3, weight: 50 },
+  { name: "Evening", id: 4, weight: 25 },
+];
+
+var orig = [
+  { name: "Random", id: 1 },
+  { name: "Observed", id: 2, weight: 40 },
+  { name: "Reported", id: 3, weight: 50 },
+  { name: "911 Call", id: 4, weight: 10 },
+];
+
+var loc = [
+  { name: "Random", id: 1 },
+  { name: "Beach", id: 2, weight: 35 },
+  { name: "Water", id: 3, weight: 30 },
+  { name: "Jetty", id: 4, weight: 30 },
+  { name: "Boardwalk", id: 5, weight: 5 },
+];
+
+var surf = [
+  { name: "Surf", id: 1 },
+  { name: "1-2 ft", id: 2, weight: 25 },
+  { name: "3-5 ft", id: 3, weight: 50 },
+  { name: "6-9 ft", id: 4, weight: 15 },
+  { name: "10-14 ft", id: 5, weight: 5 },
+  { name: "15 ft +", id: 6, weight: 5 },
+];
+
+var period = [
+  { name: "Period", id: 1 },
+  { name: "3-8 sec", id: 2, weight: 10 },
+  { name: "9-14 sec", id: 3, weight: 30 },
+  { name: "15-20 sec", id: 4, weight: 40 },
+  { name: "21 sec +", id: 5, weight: 20 },
+];
+
+var direction = [
+  { name: "Direction", id: 1 },
+  { name: "N", id: 2, weight: 5 },
+  { name: "NW", id: 3, weight: 25 },
+  { name: "W", id: 4, weight: 25 },
+  { name: "SW", id: 5, weight: 30 },
+  { name: "S", id: 6, weight: 15 },
+];
+
+var patients = [
+  { name: "Random", id: 1 },
+  { name: "1", id: 2, weight: 82 },
+  { name: "2", id: 3, weight: 14 },
+  { name: "3", id: 4, weight: 2 },
+  { name: "4", id: 5, weight: 1 },
+  { name: "5 or more", id: 6, weight: 1 },
+];
+
+var nature = [
+  { name: "Random", id: 1 },
+  { name: "Medical", id: 2, weight: 50 },
+  { name: "Trauma", id: 3, weight: 50 },
 ];
 
 season.forEach(function (item) {
@@ -42,18 +109,6 @@ seasonSelector.onchange = function () {
   }
 };
 
-/**
- * TIME
- */
-const timeSelector = document.getElementById("time-selector");
-
-var time = [
-  { name: "Random", id: 1 },
-  { name: "Morning", id: 2, weight: 25 },
-  { name: "Afternoon", id: 3, weight: 50 },
-  { name: "Evening", id: 4, weight: 25 },
-];
-
 time.forEach(function (item) {
   var option = document.createElement("option");
   option.value = item.id;
@@ -70,18 +125,6 @@ timeSelector.onchange = function () {
     timeSelectButton.classList.remove("changed-select-button");
   }
 };
-
-/**
- * ORIGIN
- */
-const originSelector = document.getElementById("origin-selector");
-
-var orig = [
-  { name: "Random", id: 1 },
-  { name: "Observed", id: 2, weight: 40 },
-  { name: "Reported", id: 3, weight: 50 },
-  { name: "911 Call", id: 4, weight: 10 },
-];
 
 orig.forEach(function (item) {
   var option = document.createElement("option");
@@ -100,19 +143,6 @@ originSelector.onchange = function () {
     originSelectButton.classList.remove("changed-select-button");
   }
 };
-
-/**
- * LOCATION
- */
-const locationSelector = document.getElementById("location-selector");
-
-var loc = [
-  { name: "Random", id: 1 },
-  { name: "Beach", id: 2, weight: 35 },
-  { name: "Water", id: 3, weight: 30 },
-  { name: "Jetty", id: 4, weight: 30 },
-  { name: "Boardwalk", id: 5, weight: 5 },
-];
 
 loc.forEach(function (item) {
   var option = document.createElement("option");
@@ -137,23 +167,6 @@ locationSelector.onchange = function () {
   }
 };
 
-/**
- * CONDITIONS
- */
-/**
- * SURF
- */
-const surfSelector = document.getElementById("surf-selector");
-
-var surf = [
-  { name: "Surf", id: 1 },
-  { name: "1-2 ft", id: 2, weight: 25 },
-  { name: "3-5 ft", id: 3, weight: 50 },
-  { name: "6-9 ft", id: 4, weight: 15 },
-  { name: "10-14 ft", id: 5, weight: 5 },
-  { name: "15 ft +", id: 6, weight: 5 },
-];
-
 surf.forEach(function (item) {
   var option = document.createElement("option");
   option.value = item.id;
@@ -170,19 +183,6 @@ surfSelector.onchange = function () {
     surfSelectButton.classList.remove("changed-select-button");
   }
 };
-
-/**
- * PERIOD
- */
-const periodSelector = document.getElementById("period-selector");
-
-var period = [
-  { name: "Period", id: 1 },
-  { name: "3-8 sec", id: 2, weight: 10 },
-  { name: "9-14 sec", id: 3, weight: 30 },
-  { name: "15-20 sec", id: 4, weight: 40 },
-  { name: "21 sec +", id: 5, weight: 20 },
-];
 
 period.forEach(function (item) {
   var option = document.createElement("option");
@@ -201,20 +201,6 @@ periodSelector.onchange = function () {
     periodSelectButton.classList.remove("changed-select-button");
   }
 };
-
-/**
- * DIRECTION
- */
-const directionSelector = document.getElementById("direction-selector");
-
-var direction = [
-  { name: "Direction", id: 1 },
-  { name: "N", id: 2, weight: 5 },
-  { name: "NW", id: 3, weight: 25 },
-  { name: "W", id: 4, weight: 25 },
-  { name: "SW", id: 5, weight: 30 },
-  { name: "S", id: 6, weight: 15 },
-];
 
 direction.forEach(function (item) {
   var option = document.createElement("option");
@@ -235,20 +221,6 @@ directionSelector.onchange = function () {
     directionSelectButton.classList.remove("changed-select-button");
   }
 };
-
-/**
- * PATIENTS
- */
-const patientsSelector = document.getElementById("patients-selector");
-
-var patients = [
-  { name: "Random", id: 1 },
-  { name: "1", id: 2, weight: 82 },
-  { name: "2", id: 3, weight: 14 },
-  { name: "3", id: 4, weight: 2 },
-  { name: "4", id: 5, weight: 1 },
-  { name: "5 or more", id: 6, weight: 1 },
-];
 
 patients.forEach(function (item) {
   var option = document.createElement("option");
@@ -281,17 +253,6 @@ patientsSelector.onchange = function () {
     natureSelector.removeChild(mixOption);
   }
 };
-
-/**
- * NATURE
- */
-const natureSelector = document.getElementById("nature-selector");
-
-var nature = [
-  { name: "Random", id: 1 },
-  { name: "Medical", id: 2, weight: 50 },
-  { name: "Trauma", id: 3, weight: 50 },
-];
 
 nature.forEach(function (item) {
   var option = document.createElement("option");
@@ -389,14 +350,11 @@ buildSceneButton.addEventListener("click", () => {
   builtScenePlaceholder.appendChild(root);
   sceneData.forEach((item) => {
     if (
-      item.sceneSelector.options[item.sceneSelector.selectedIndex].text ==
-        "Random" ||
-      item.sceneSelector.options[item.sceneSelector.selectedIndex].text ==
-        "Surf" ||
-      item.sceneSelector.options[item.sceneSelector.selectedIndex].text ==
-        "Period" ||
-      item.sceneSelector.options[item.sceneSelector.selectedIndex].text ==
-        "Direction"
+      (item.sceneSelector.options[item.sceneSelector.selectedIndex].text ==
+        "Random",
+      "Surf",
+      "Period",
+      "Direction")
     ) {
       item.sceneSelected = getRandomOption(item.sceneVariable);
       let sceneItem = document.createElement("span");
