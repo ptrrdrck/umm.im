@@ -337,11 +337,3 @@ buildSceneButton.addEventListener("click", () => {
   });
   buildPatients(selectedPatients);
 });
-/*
-selectors.age.onchange = () => {
-  let ageMin = options.age[selectors.age.selectedIndex].min;
-  let ageMax = options.age[selectors.age.selectedIndex].max;
-  let test = randomIntFromInterval(ageMin, ageMax);
-  console.log(test);
-};
-*/
