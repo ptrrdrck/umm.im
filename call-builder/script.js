@@ -87,42 +87,40 @@ const options = {
   ],
 };
 
-function createOptionElement(option) {
+const createOptionElement = (option) => {
   const element = document.createElement("option");
   element.value = option.id;
   element.textContent = option.name;
   return element;
-}
+};
 
-function createSceneItemElement(text) {
+const createSceneItemElement = (text) => {
   const element = document.createElement("span");
   element.textContent = text;
   element.classList.add("scene-item");
   return element;
-}
+};
 
-function loadOptions(selector, variable) {
+const loadOptions = (selector, variable) => {
   variable.forEach((item) => {
     const option = createOptionElement(item);
     selector.appendChild(option);
   });
-}
+};
 
-function handleSelectorChange(selector, selectButton) {
-  const selectedOption = selector.options[selector.selectedIndex].text;
-  if (selectedOption !== "Random") {
-    selectButton.classList.add("changed-select-button");
-  } else {
-    selectButton.classList.remove("changed-select-button");
-  }
-}
+const getSelectedOption = (selector) => {
+  return selector.options[selector.selectedIndex].text;
+};
 
-function getSelectedOption(selector) {
-  const selectedOption = selector.options[selector.selectedIndex].text;
-  return selectedOption;
-}
+const handleSelectorChange = (selector, selectButton) => {
+  const selectedOption = getSelectedOption(selector);
+  selectButton.classList.toggle(
+    "changed-select-button",
+    selectedOption !== "Random"
+  );
+};
 
-function getRandomOption(arr) {
+const getRandomOption = (arr) => {
   const options = arr.slice(1);
   const weights = [options[0].weight];
   for (let i = 1; i < options.length; i++) {
@@ -134,83 +132,75 @@ function getRandomOption(arr) {
       return options[i].name;
     }
   }
-}
+};
 
-function getOptionIndex(selector, optionName) {
-  let options = Array.from(selector.options);
+const getOptionIndex = (selector, optionName) => {
+  const options = Array.from(selector.options);
   return options.findIndex((opt) => opt.label == optionName);
-}
+};
 
-function getRandomAge(min, max) {
+const getRandomAge = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
+};
 
 loadOptions(selectors.season, options.season);
-
-selectors.season.onchange = () => {
+selectors.season.addEventListener("change", () => {
   handleSelectorChange(selectors.season, selectButtons.season);
-};
+});
 
 loadOptions(selectors.time, options.time);
-
-selectors.time.onchange = () => {
+selectors.time.addEventListener("change", () => {
   handleSelectorChange(selectors.time, selectButtons.time);
-};
+});
 
 loadOptions(selectors.origin, options.origin);
-
-selectors.origin.onchange = () => {
+selectors.origin.addEventListener("change", () => {
   handleSelectorChange(selectors.origin, selectButtons.origin);
-};
+});
 
 loadOptions(selectors.location, options.location);
-
-selectors.location.onchange = () => {
+selectors.location.addEventListener("change", () => {
   handleSelectorChange(selectors.location, selectButtons.location);
-  let selectedLocation = getSelectedOption(selectors.location);
-  if (selectedLocation === "Water" || selectedLocation === "Jetty") {
-    document.getElementById("surf").classList.remove("hide");
-  } else {
-    document.getElementById("surf").classList.add("hide");
-  }
-};
+  const selectedLocation = getSelectedOption(selectors.location);
+  document
+    .getElementById("surf")
+    .classList.toggle(
+      "hide",
+      !(selectedLocation === "Water" || selectedLocation === "Jetty")
+    );
+});
 
 loadOptions(selectors.surf, options.surf);
-
-selectors.surf.onchange = () => {
+selectors.surf.addEventListener("change", () => {
   handleSelectorChange(selectors.surf, selectButtons.surf);
-};
+});
 
 loadOptions(selectors.patients, options.patients);
-
-selectors.patients.onchange = () => {
+selectors.patients.addEventListener("change", () => {
   handleSelectorChange(selectors.patients, selectButtons.patients);
-};
+});
 
 loadOptions(selectors.age, options.age);
-
-selectors.age.onchange = () => {
+selectors.age.addEventListener("change", () => {
   handleSelectorChange(selectors.age, selectButtons.age);
-};
+});
 
 loadOptions(selectors.sex, options.sex);
-
-selectors.sex.onchange = () => {
+selectors.sex.addEventListener("change", () => {
   handleSelectorChange(selectors.sex, selectButtons.sex);
-};
+});
 
 loadOptions(selectors.nature, options.nature);
-
-selectors.nature.onchange = () => {
+selectors.nature.addEventListener("change", () => {
   handleSelectorChange(selectors.nature, selectButtons.nature);
-};
+});
 
 const buildSceneButton = document.getElementById("build-scene-button");
 const builtScenePlaceholder = document.getElementById(
   "built-scene-placeholder"
 );
 
-function buildScene() {
+const buildScene = () => {
   const builtScene = document.getElementById("built-scene");
   if (builtScene) {
     builtScene.remove();
@@ -220,44 +210,45 @@ function buildScene() {
   root.setAttribute("class", "fade-in");
   builtScenePlaceholder.appendChild(root);
   let selectedSeason = getSelectedOption(selectors.season);
-  selectedSeason == "Random"
-    ? (selectedSeason = getRandomOption(options.season))
-    : (selectedSeason = selectedSeason);
+  selectedSeason =
+    selectedSeason === "Random"
+      ? getRandomOption(options.season)
+      : selectedSeason;
   const seasonItem = createSceneItemElement(selectedSeason);
   root.appendChild(seasonItem);
   let selectedTime = getSelectedOption(selectors.time);
-  selectedTime == "Random"
-    ? (selectedTime = getRandomOption(options.time))
-    : (selectedTime = selectedTime);
+  selectedTime =
+    selectedTime === "Random" ? getRandomOption(options.time) : selectedTime;
   const timeItem = createSceneItemElement(selectedTime);
   root.appendChild(timeItem);
   let selectedOrigin = getSelectedOption(selectors.origin);
-  selectedOrigin == "Random"
-    ? (selectedOrigin = getRandomOption(options.origin))
-    : (selectedOrigin = selectedOrigin);
+  selectedOrigin =
+    selectedOrigin === "Random"
+      ? getRandomOption(options.origin)
+      : selectedOrigin;
   const originItem = createSceneItemElement(selectedOrigin);
   root.appendChild(originItem);
   let selectedLocation = getSelectedOption(selectors.location);
-  selectedLocation == "Random"
-    ? (selectedLocation = getRandomOption(options.location))
-    : (selectedLocation = selectedLocation);
+  selectedLocation =
+    selectedLocation === "Random"
+      ? getRandomOption(options.location)
+      : selectedLocation;
   const locationItem = createSceneItemElement(selectedLocation);
   root.appendChild(locationItem);
-  if (selectedLocation == "Water" || selectedLocation == "Jetty") {
+  if (selectedLocation === "Water" || selectedLocation === "Jetty") {
     let selectedSurf = getSelectedOption(selectors.surf);
-    selectedSurf == "Random"
-      ? (selectedSurf = getRandomOption(options.surf))
-      : (selectedSurf = selectedSurf);
+    selectedSurf =
+      selectedSurf === "Random" ? getRandomOption(options.surf) : selectedSurf;
     const surfItem = createSceneItemElement(selectedSurf);
     root.appendChild(surfItem);
   }
-}
+};
 
 const builtPatientsPlaceholder = document.getElementById(
   "built-patients-placeholder"
 );
 
-function buildPatients(number) {
+const buildPatients = (number) => {
   const patientsContainer = document.getElementById("patients-container");
   if (patientsContainer) {
     patientsContainer.remove();
@@ -271,36 +262,36 @@ function buildPatients(number) {
     patient.setAttribute("class", "patient fade-in");
     root.appendChild(patient);
     let selectedAge = getSelectedOption(selectors.age);
-    selectedAge == "Random"
-      ? (selectedAge = getRandomOption(options.age))
-      : (selectedAge = selectedAge);
-    let optionIndex = getOptionIndex(selectors.age, selectedAge);
-    let randomAge = getRandomAge(
+    selectedAge =
+      selectedAge === "Random" ? getRandomOption(options.age) : selectedAge;
+    const optionIndex = getOptionIndex(selectors.age, selectedAge);
+    const randomAge = getRandomAge(
       options.age[optionIndex].min,
       options.age[optionIndex].max
     );
     const ageItem = createSceneItemElement(randomAge);
     patient.appendChild(ageItem);
     let selectedSex = getSelectedOption(selectors.sex);
-    selectedSex == "Random"
-      ? (selectedSex = getRandomOption(options.sex))
-      : (selectedSex = selectedSex);
+    selectedSex =
+      selectedSex === "Random" ? getRandomOption(options.sex) : selectedSex;
     const sexItem = createSceneItemElement(selectedSex);
     patient.appendChild(sexItem);
     let selectedNature = getSelectedOption(selectors.nature);
-    selectedNature == "Random"
-      ? (selectedNature = getRandomOption(options.nature))
-      : (selectedNature = selectedNature);
+    selectedNature =
+      selectedNature === "Random"
+        ? getRandomOption(options.nature)
+        : selectedNature;
     const natureItem = createSceneItemElement(selectedNature);
     patient.appendChild(natureItem);
   }
-}
+};
 
 buildSceneButton.addEventListener("click", () => {
   buildScene();
   let selectedPatients = getSelectedOption(selectors.patients);
-  selectedPatients == "Random"
-    ? (selectedPatients = getRandomOption(options.patients))
-    : (selectedPatients = selectedPatients);
+  selectedPatients =
+    selectedPatients === "Random"
+      ? getRandomOption(options.patients)
+      : selectedPatients;
   buildPatients(selectedPatients);
 });
