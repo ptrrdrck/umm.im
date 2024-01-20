@@ -214,32 +214,32 @@ const buildScene = () => {
     selectedSeason === "Random"
       ? getRandomOption(options.season)
       : selectedSeason;
-  const seasonItem = createSceneItemElement(selectedSeason);
+  const seasonItem = createSceneItemElement(`Season: ${selectedSeason}`);
   root.appendChild(seasonItem);
   let selectedTime = getSelectedOption(selectors.time);
   selectedTime =
     selectedTime === "Random" ? getRandomOption(options.time) : selectedTime;
-  const timeItem = createSceneItemElement(selectedTime);
+  const timeItem = createSceneItemElement(`Time: ${selectedTime}`);
   root.appendChild(timeItem);
   let selectedOrigin = getSelectedOption(selectors.origin);
   selectedOrigin =
     selectedOrigin === "Random"
       ? getRandomOption(options.origin)
       : selectedOrigin;
-  const originItem = createSceneItemElement(selectedOrigin);
+  const originItem = createSceneItemElement(`Origin: ${selectedOrigin}`);
   root.appendChild(originItem);
   let selectedLocation = getSelectedOption(selectors.location);
   selectedLocation =
     selectedLocation === "Random"
       ? getRandomOption(options.location)
       : selectedLocation;
-  const locationItem = createSceneItemElement(selectedLocation);
+  const locationItem = createSceneItemElement(`Location: ${selectedLocation}`);
   root.appendChild(locationItem);
   if (selectedLocation === "Water" || selectedLocation === "Jetty") {
     let selectedSurf = getSelectedOption(selectors.surf);
     selectedSurf =
       selectedSurf === "Random" ? getRandomOption(options.surf) : selectedSurf;
-    const surfItem = createSceneItemElement(selectedSurf);
+    const surfItem = createSceneItemElement(`Wave Height: ${selectedSurf}`);
     root.appendChild(surfItem);
   }
 };
@@ -269,19 +269,19 @@ const buildPatients = (number) => {
       options.age[optionIndex].min,
       options.age[optionIndex].max
     );
-    const ageItem = createSceneItemElement(randomAge);
+    const ageItem = createSceneItemElement(`Age: ${randomAge}`);
     patient.appendChild(ageItem);
     let selectedSex = getSelectedOption(selectors.sex);
     selectedSex =
       selectedSex === "Random" ? getRandomOption(options.sex) : selectedSex;
-    const sexItem = createSceneItemElement(selectedSex);
+    const sexItem = createSceneItemElement(`Sex: ${selectedSex}`);
     patient.appendChild(sexItem);
     let selectedNature = getSelectedOption(selectors.nature);
     selectedNature =
       selectedNature === "Random"
         ? getRandomOption(options.nature)
         : selectedNature;
-    const natureItem = createSceneItemElement(selectedNature);
+    const natureItem = createSceneItemElement(`Nature: ${selectedNature}`);
     patient.appendChild(natureItem);
   }
 };
