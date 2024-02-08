@@ -12,8 +12,8 @@
 
 :root {
   --select-border: #888;
-  --select-focus: rgb(94, 169, 255);
-  --select-patient: rgb(62, 188, 100);
+  --select-focus: rgb(61, 143, 237);
+  --select-patient: rgb(23, 164, 63);
   --select-arrow: #000;
 }
 
@@ -87,10 +87,21 @@ body {
   .patient span:last-of-type {
     padding: 0;
   }
+  .scene {
+    padding: 0 60px 5px 0;
+  }
+  .patient {
+    justify-content: space-between;
+  }
+  .sex {
+    padding: 10px 20px 10px 0;
+  }
+  .nature {
+    padding: 10px 0;
+  }
 }
 @media (min-width: 600px) {
   #scene-info,
-  #scene,
   #surf,
   #built-scene,
   #patients-container {
@@ -98,6 +109,7 @@ body {
   }
   #scene {
     gap: unset;
+    flex-direction: row;
   }
   .section-title,
   .section-info {
@@ -121,6 +133,12 @@ body {
   }
   .scene-item {
     padding: 0 0 10px 0;
+  }
+  .sex {
+    padding: 10px 20px 10px 0;
+  }
+  .nature {
+    padding: 10px 0;
   }
 }
 @media (min-width: 1024px) {
@@ -157,7 +175,7 @@ body {
     padding: 10px 20px 0 0;
   }
   .next-button {
-    margin: 25px 0 0 0;
+    margin: 25px 0 5px 0;
   }
   #scene-builder,
   #built-scene,
@@ -174,6 +192,17 @@ body {
   }
   .scene-item {
     padding: 0 40px 0 0;
+  }
+  .scene {
+    padding: 0 60px 0 10px;
+  }
+  .sex {
+    width: 140px;
+    padding: 10px 30px;
+  }
+  .nature {
+    width: 164px;
+    padding: 10px 30px;
   }
 }
 
@@ -199,7 +228,7 @@ main {
 }
 
 footer {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 a {
@@ -221,7 +250,7 @@ a:hover {
 }
 
 .fade-in {
-  animation: 1s fadeIn;
+  animation: 0.33s fadeIn;
   opacity: 1;
 }
 
@@ -244,16 +273,18 @@ a:hover {
 
 #scene-info {
   display: flex;
+  margin-bottom: 10px;
 }
 
 #scene {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  margin-bottom: 10px;
 }
 
 #scene-builder {
-  border: 1px solid var(--select-focus);
+  background-color: #c4c4c4;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -269,11 +300,15 @@ a:hover {
 
 .section-title {
   font-size: 1.8em;
+  font-weight: 500;
 }
 
 .section-info {
-  color: var(--select-border);
-  font-size: 0.9em;
+  font-size: 1em;
+}
+
+.selector-title {
+  font-size: 1.2em;
 }
 
 .selector {
@@ -300,8 +335,8 @@ a:hover {
 }
 
 .changed-select-button {
-  border: 1px solid var(--select-focus);
-  box-shadow: 0px 0px 0px 2px var(--select-focus) inset;
+  border: 1px solid #000;
+  box-shadow: 0px 0px 0px 2px #000 inset;
 }
 
 select,
@@ -337,21 +372,23 @@ select {
 .next-button {
   display: grid;
   width: fit-content;
-  height: 37.7px;
-  border: 1px solid rgb(79, 161, 254);
+  height: 40px;
+  border: 1px solid #000;
   letter-spacing: 0.6px;
   border-radius: 0.25em;
   padding: 0.25em 0.75em;
-  font-size: 1rem;
+  font-size: 1.2rem;
   cursor: pointer;
   line-height: 1.1;
   color: #fff;
-  background-color: rgb(94, 169, 255);
+  background-color: #000;
+  /*
   background-image: linear-gradient(
     to top,
     rgb(79, 161, 254),
     rgb(94, 169, 255) 33%
   );
+  */
   grid-template-areas: "select";
   align-items: center;
   position: relative;
@@ -363,8 +400,49 @@ select {
 
 .patient {
   display: flex;
-  background-color: var(--select-patient);
+  flex-direction: row;
+  background-color: var(--select-focus);
   color: #fff;
   border-radius: 10px;
   margin-top: 10px;
+}
+
+.scene {
+  display: flex;
+  width: auto;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.surf {
+  display: flex;
+  width: auto;
+  padding: 5px 60px 0 10px;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.age {
+  display: flex;
+  background: #fff;
+  color: var(--select-focus);
+  font-size: 22px;
+  font-weight: 700;
+  padding: 10px;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  justify-content: center;
+}
+
+.sex {
+  display: flex;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.nature {
+  display: flex;
+  font-size: 22px;
+  font-weight: 700;
 }
