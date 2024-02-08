@@ -214,32 +214,37 @@ const buildScene = () => {
     selectedSeason === "Random"
       ? getRandomOption(options.season)
       : selectedSeason;
-  const seasonItem = createSceneItemElement(`Season: ${selectedSeason}`);
+  const seasonItem = createSceneItemElement(`${selectedSeason}...`);
+  seasonItem.classList.add("scene");
   root.appendChild(seasonItem);
   let selectedTime = getSelectedOption(selectors.time);
   selectedTime =
     selectedTime === "Random" ? getRandomOption(options.time) : selectedTime;
-  const timeItem = createSceneItemElement(`Time: ${selectedTime}`);
+  const timeItem = createSceneItemElement(`${selectedTime}...`);
+  timeItem.classList.add("scene");
   root.appendChild(timeItem);
   let selectedOrigin = getSelectedOption(selectors.origin);
   selectedOrigin =
     selectedOrigin === "Random"
       ? getRandomOption(options.origin)
       : selectedOrigin;
-  const originItem = createSceneItemElement(`Origin: ${selectedOrigin}`);
+  const originItem = createSceneItemElement(`${selectedOrigin}...`);
+  originItem.classList.add("scene");
   root.appendChild(originItem);
   let selectedLocation = getSelectedOption(selectors.location);
   selectedLocation =
     selectedLocation === "Random"
       ? getRandomOption(options.location)
       : selectedLocation;
-  const locationItem = createSceneItemElement(`Location: ${selectedLocation}`);
+  const locationItem = createSceneItemElement(`${selectedLocation}`);
+  locationItem.classList.add("scene");
   root.appendChild(locationItem);
   if (selectedLocation === "Water" || selectedLocation === "Jetty") {
     let selectedSurf = getSelectedOption(selectors.surf);
     selectedSurf =
       selectedSurf === "Random" ? getRandomOption(options.surf) : selectedSurf;
     const surfItem = createSceneItemElement(`Wave Height: ${selectedSurf}`);
+    surfItem.classList.add("surf");
     root.appendChild(surfItem);
   }
 };
@@ -269,19 +274,22 @@ const buildPatients = (number) => {
       options.age[optionIndex].min,
       options.age[optionIndex].max
     );
-    const ageItem = createSceneItemElement(`Age: ${randomAge}`);
+    const ageItem = createSceneItemElement(`${randomAge}`);
+    ageItem.classList.add("age");
     patient.appendChild(ageItem);
     let selectedSex = getSelectedOption(selectors.sex);
     selectedSex =
       selectedSex === "Random" ? getRandomOption(options.sex) : selectedSex;
-    const sexItem = createSceneItemElement(`Sex: ${selectedSex}`);
+    const sexItem = createSceneItemElement(`${selectedSex}`);
+    sexItem.classList.add("sex");
     patient.appendChild(sexItem);
     let selectedNature = getSelectedOption(selectors.nature);
     selectedNature =
       selectedNature === "Random"
         ? getRandomOption(options.nature)
         : selectedNature;
-    const natureItem = createSceneItemElement(`Nature: ${selectedNature}`);
+    const natureItem = createSceneItemElement(`(${selectedNature})`);
+    natureItem.classList.add("nature");
     patient.appendChild(natureItem);
   }
 };
