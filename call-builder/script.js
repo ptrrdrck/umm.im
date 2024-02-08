@@ -97,7 +97,7 @@ const createOptionElement = (option) => {
 const createSceneItemElement = (text) => {
   const element = document.createElement("span");
   element.textContent = text;
-  element.classList.add("scene-item");
+  /*element.classList.add("scene-item");*/
   return element;
 };
 
@@ -140,8 +140,54 @@ const getOptionIndex = (selector, optionName) => {
 };
 
 const getRandomAge = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  const randomValue = Math.floor(Math.random() * (max - min + 1)) + min;
+  if (randomValue === 0) {
+    const months = Math.floor(Math.random() * 11) + 1;
+    return months ? (months === 1 ? "1 month" : `${months} months`) : months;
+  }
+  return randomValue;
 };
+
+function getRandomTime(selectedTime) {
+  const timeRanges = {
+    Morning: { start: 6, end: 12 },
+    Afternoon: { start: 12, end: 16 },
+    Evening: { start: 16, end: 21 },
+  };
+  const { start, end } = timeRanges[selectedTime];
+  const randomHour = Math.floor(Math.random() * (end - start) + start);
+  const randomMinutes = Math.floor(Math.random() * 60);
+  const formattedTime = `${String(randomHour).padStart(2, "0")}:${String(
+    randomMinutes
+  ).padStart(2, "0")}`;
+  return formattedTime;
+}
+
+function getRandomDate(selectedSeason) {
+  const seasonMonths = {
+    Winter: { start: 11, end: 2 },
+    Spring: { start: 3, end: 5 },
+    Summer: { start: 6, end: 8 },
+    Fall: { start: 9, end: 10 },
+  };
+
+  const { start, end } = seasonMonths[selectedSeason];
+
+  let randomMonth;
+  if (selectedSeason === "Winter") {
+    const winterMonths = [11, 12, 1, 2];
+    randomMonth = winterMonths[Math.floor(Math.random() * winterMonths.length)];
+  } else {
+    randomMonth = getRandomAge(start, end);
+  }
+
+  const daysInMonth = new Date(2022, randomMonth, 0).getDate();
+  const randomDay = Math.floor(Math.random() * daysInMonth) + 1;
+
+  return `${randomMonth}/${randomDay}`;
+}
 
 loadOptions(selectors.season, options.season);
 selectors.season.addEventListener("change", () => {
@@ -207,46 +253,72 @@ const buildScene = () => {
   }
   const root = document.createElement("div");
   root.setAttribute("id", "built-scene");
-  root.setAttribute("class", "fade-in");
+  root.classList.add("fade-in");
   builtScenePlaceholder.appendChild(root);
+
+  const dateTimeContainer = document.createElement("div");
+  dateTimeContainer.setAttribute("id", "scene-date-time");
+  dateTimeContainer.classList.add("fade-in");
   let selectedSeason = getSelectedOption(selectors.season);
   selectedSeason =
     selectedSeason === "Random"
       ? getRandomOption(options.season)
       : selectedSeason;
-  const seasonItem = createSceneItemElement(`${selectedSeason}...`);
-  seasonItem.classList.add("scene");
-  root.appendChild(seasonItem);
   let selectedTime = getSelectedOption(selectors.time);
   selectedTime =
     selectedTime === "Random" ? getRandomOption(options.time) : selectedTime;
-  const timeItem = createSceneItemElement(`${selectedTime}...`);
-  timeItem.classList.add("scene");
-  root.appendChild(timeItem);
+  let randomDate = getRandomDate(selectedSeason);
+  let randomTime = getRandomTime(selectedTime);
+  const dateItem = createSceneItemElement(`${randomDate}, ${randomTime}`);
+  dateItem.classList.add("scene-info");
+  dateTimeContainer.appendChild(dateItem);
+  const seasonItem = createSceneItemElement(
+    `(${selectedSeason}, ${selectedTime})`
+  );
+  seasonItem.classList.add("scene-desc");
+  dateTimeContainer.appendChild(seasonItem);
+  root.appendChild(dateTimeContainer);
+
+  const originContainer = document.createElement("div");
+  originContainer.setAttribute("id", "scene-origin");
+  originContainer.classList.add("fade-in");
   let selectedOrigin = getSelectedOption(selectors.origin);
   selectedOrigin =
     selectedOrigin === "Random"
       ? getRandomOption(options.origin)
       : selectedOrigin;
-  const originItem = createSceneItemElement(`${selectedOrigin}...`);
-  originItem.classList.add("scene");
-  root.appendChild(originItem);
+  const originItem = createSceneItemElement(`${selectedOrigin}`);
+  originItem.classList.add("scene-info");
+  originContainer.appendChild(originItem);
+  const originDesc = createSceneItemElement(`(Origin)`);
+  originDesc.classList.add("scene-desc");
+  originContainer.appendChild(originDesc);
+  root.appendChild(originContainer);
+
+  const locationContainer = document.createElement("div");
+  locationContainer.setAttribute("id", "scene-location");
+  locationContainer.classList.add("fade-in");
   let selectedLocation = getSelectedOption(selectors.location);
   selectedLocation =
     selectedLocation === "Random"
       ? getRandomOption(options.location)
       : selectedLocation;
   const locationItem = createSceneItemElement(`${selectedLocation}`);
-  locationItem.classList.add("scene");
-  root.appendChild(locationItem);
+  locationItem.classList.add("scene-info");
+  locationContainer.appendChild(locationItem);
   if (selectedLocation === "Water" || selectedLocation === "Jetty") {
     let selectedSurf = getSelectedOption(selectors.surf);
     selectedSurf =
       selectedSurf === "Random" ? getRandomOption(options.surf) : selectedSurf;
     const surfItem = createSceneItemElement(`Wave Height: ${selectedSurf}`);
-    surfItem.classList.add("surf");
-    root.appendChild(surfItem);
+    surfItem.classList.add("scene-desc");
+    locationContainer.appendChild(surfItem);
+  } else {
+    const locationDesc = createSceneItemElement(`(Location)`);
+    locationDesc.classList.add("scene-desc");
+    locationContainer.appendChild(locationDesc);
   }
+  root.appendChild(locationContainer);
 };
 
 const builtPatientsPlaceholder = document.getElementById(
@@ -262,10 +334,18 @@ const buildPatients = (number) => {
   root.setAttribute("id", "patients-container");
   builtPatientsPlaceholder.appendChild(root);
   for (let i = 0; i < number; i++) {
+    const patientTitle = document.createElement("div");
+    patientTitle.setAttribute("class", "patient-title fade-in");
+    const patientTitleText = createSceneItemElement(`Patient ${i + 1}`);
+    patientTitle.appendChild(patientTitleText);
+    root.appendChild(patientTitle);
     const patient = document.createElement("div");
     patient.setAttribute("id", `patient-${i + 1}`);
     patient.setAttribute("class", "patient fade-in");
     root.appendChild(patient);
+
+    const patientHeader = document.createElement("div");
+    patientHeader.classList.add("patient-header", "fade-in");
     let selectedAge = getSelectedOption(selectors.age);
     selectedAge =
       selectedAge === "Random" ? getRandomOption(options.age) : selectedAge;
@@ -276,13 +356,13 @@ const buildPatients = (number) => {
     );
     const ageItem = createSceneItemElement(`${randomAge}`);
     ageItem.classList.add("age");
-    patient.appendChild(ageItem);
+    patientHeader.appendChild(ageItem);
     let selectedSex = getSelectedOption(selectors.sex);
     selectedSex =
       selectedSex === "Random" ? getRandomOption(options.sex) : selectedSex;
     const sexItem = createSceneItemElement(`${selectedSex}`);
     sexItem.classList.add("sex");
-    patient.appendChild(sexItem);
+    patientHeader.appendChild(sexItem);
     let selectedNature = getSelectedOption(selectors.nature);
     selectedNature =
       selectedNature === "Random"
@@ -290,7 +370,47 @@ const buildPatients = (number) => {
         : selectedNature;
     const natureItem = createSceneItemElement(`(${selectedNature})`);
     natureItem.classList.add("nature");
-    patient.appendChild(natureItem);
+    patientHeader.appendChild(natureItem);
+    patient.appendChild(patientHeader);
+
+    const assessmentItem = document.createElement("div");
+    assessmentItem.classList.add("assessment");
+    if (selectedNature === "Medical") {
+      const medicalChief = getRandomChiefComplaint(medicalChiefComplaints);
+      const assessmentLines = [
+        "1. Scene Safety - Safe",
+        `2. Nature of Illness - ${medicalChief.nature}`,
+        `3. Check responsiveness - ${medicalChief.responsiveness}`,
+        `4. Chief Complaint - ${medicalChief.complaint}`,
+        `5. Airway - ${medicalChief.airway}`,
+        `6. Breathing - ${medicalChief.breathing}`,
+        `7. Circulation - ${medicalChief.circulation}`,
+      ];
+      assessmentLines.forEach((line, index) => {
+        const lineElement = document.createElement("div");
+        lineElement.textContent = line;
+        lineElement.setAttribute("id", `assessment-line-${index + 1}`);
+        assessmentItem.appendChild(lineElement);
+      });
+    } else if (selectedNature === "Trauma") {
+      const traumaChief = getRandomChiefComplaint(traumaChiefComplaints);
+      const assessmentLines = [
+        "1. Scene Safety - Safe\n",
+        `2. Mechanism of Injury - ${traumaChief.mechanism}\n`,
+        "3. Check responsiveness - Responsive\n",
+        `4. Chief Complaint - ${traumaChief.complaint}\n`,
+        "5. Airway - Clear\n",
+        "6. Breathing - Normal\n",
+        "7. Circulation - Pulse present\n",
+      ];
+      assessmentLines.forEach((line, index) => {
+        const lineElement = document.createElement("div");
+        lineElement.textContent = line;
+        lineElement.setAttribute("id", `assessment-line-${index + 1}`);
+        assessmentItem.appendChild(lineElement);
+      });
+    }
+    patient.appendChild(assessmentItem);
   }
 };
 
