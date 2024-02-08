@@ -1,5 +1,195 @@
 /* © 2023 Peter Rodrick <pete@lftlc.xyz> */
 
+const medicalChiefComplaints = [
+  {
+    complaint: "Chest pain",
+    nature: "Cardiac",
+    responsiveness: "Responsive: Alert",
+    airway: "Clear",
+    breathing: "Normal",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Shortness of breath",
+    nature: "Respiratory",
+    responsiveness: "Responsive: to Verbal",
+    airway: "May be compromised",
+    breathing: "Labored",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Abdominal pain",
+    nature: "Gastrointestinal",
+    responsiveness: "Responsive: to Pain",
+    airway: "Clear",
+    breathing: "Normal",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Headache",
+    nature: "Neurological",
+    responsiveness: "Responsive: Alert",
+    airway: "Clear",
+    breathing: "Normal",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Dizziness",
+    nature: "Neurological",
+    responsiveness: "Responsive: Alert",
+    airway: "Clear",
+    breathing: "Normal",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Nausea",
+    nature: "Gastrointestinal",
+    responsiveness: "Responsive: to Verbal",
+    airway: "Clear",
+    breathing: "Normal",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Vomiting",
+    nature: "Gastrointestinal",
+    responsiveness: "Responsive: to Pain",
+    airway: "May be compromised",
+    breathing: "Normal",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Allergic reaction",
+    nature: "Allergic/Immunologic",
+    responsiveness: "Responsive: Alert",
+    airway: "May be compromised",
+    breathing: "Normal",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Seizure",
+    nature: "Neurological",
+    responsiveness: "Responsive: to Pain",
+    airway: "May be compromised",
+    breathing: "Labored",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Fever",
+    nature: "Infectious",
+    responsiveness: "Responsive: Alert",
+    airway: "Clear",
+    breathing: "Normal",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Cardiac arrest",
+    nature: "Cardiac",
+    responsiveness: "Unresponsive",
+    airway: "May be compromised",
+    breathing: "Absent",
+    circulation: "Pulse absent",
+  },
+];
+
+const traumaChiefComplaints = [
+  {
+    complaint: "Motor vehicle accident",
+    mechanism: "Blunt trauma",
+    responsiveness: "Responsive: Alert",
+    airway: "May be compromised",
+    breathing: "Labored",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Fall from height",
+    mechanism: "Fall",
+    responsiveness: "Responsive: to Pain",
+    airway: "May be compromised",
+    breathing: "Labored",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Bicycle accident",
+    mechanism: "Blunt trauma",
+    responsiveness: "Responsive: to Pain",
+    airway: "May be compromised",
+    breathing: "Labored",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Assault",
+    mechanism: "Blunt or penetrating trauma",
+    responsiveness: "Responsive: to Pain",
+    airway: "May be compromised",
+    breathing: "Labored",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Sports injury",
+    mechanism: "Blunt trauma",
+    responsiveness: "Responsive: Alert",
+    airway: "Clear",
+    breathing: "Normal",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Burn",
+    mechanism: "Burn",
+    responsiveness: "Responsive: Alert",
+    airway: "May be compromised",
+    breathing: "Labored",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Penetrating trauma",
+    mechanism: "Penetrating trauma",
+    responsiveness: "Responsive: to Pain",
+    airway: "May be compromised",
+    breathing: "Labored",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Animal bite",
+    mechanism: "Bite",
+    responsiveness: "Responsive: to Pain",
+    airway: "May be compromised",
+    breathing: "Labored",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Electrical injury",
+    mechanism: "Electrical injury",
+    responsiveness: "Responsive: to Pain",
+    airway: "May be compromised",
+    breathing: "Labored",
+    circulation: "Pulse present",
+  },
+  {
+    complaint: "Crush injury",
+    mechanism: "Crush injury",
+    responsiveness: "Responsive: to Pain",
+    airway: "May be compromised",
+    breathing: "Labored",
+    circulation: "Pulse present",
+  },
+];
+
+const getRandomChiefComplaint = (chiefComplaints) => {
+  const randomIndex = Math.floor(Math.random() * chiefComplaints.length);
+  return chiefComplaints[randomIndex];
+};
+
+/*
+const safety = ["yes", "no"];
+
+const hazard = ["none", "yes-combative", "yes-fire"];
+
+const mechanism = {
+  beach,
+};
+
+const buildTraumaAssessment = (location, patients, age, sex) => {};
+
 const trauma = {
   single: {
     observed: {
@@ -8,17 +198,22 @@ const trauma = {
           id: 1,
           safe: "Yes",
           hazard: "None",
+          treatmentConsent: "Verbal",
           mechanism: "Running",
           additionalEMS: "Yes",
           cSpine: "No",
           generalImpression: "Seated, holding leg, wincing",
+          avpu: "Alert",
           loc: "4",
+          alteredMentalStatus: "No",
           chiefComplaint: "Ankle pain",
           airway: "Open",
           airwayCompromise: "None",
           ventilationRate: "Normal",
           ventilationQuality: "Normal",
-          oxygen: "No",
+          supplementalOxygen: "No",
+          supplementalOxygenRoute: "N/A",
+          supplementalOxygenRate: "N/A",
           pulse: "Yes",
           skinColor: "Pink",
           skinTemperature: "Warm",
@@ -29,7 +224,7 @@ const trauma = {
           gcs: "14",
           treatTransport: "Transport",
           vitalPulse: "96",
-          vitalRespiration: "16",
+          vitalRespiration: "18",
           vitalBP: "130/P",
           painOnset: "Sudden",
           painBetter: "Nothing",
@@ -70,6 +265,14 @@ const trauma = {
           secondaryPosteriorThorax: "Normal",
           secondaryPosteriorLumbar: "Normal",
           secondaryPosteriorButtocks: "Normal",
+          relatedProtocolName: "Trauma-Extremity",
+          relatedProtocolID: "S-139",
+          relatedProtocolBLSInterventions:
+            "Splint neurologically stable fractures in position as presented. Traction splint PRN. Reduce grossly angulated long bone fractures with no pulse or sensation PRN BHO. Direct pressure to control external hemorrhage. Apply gauze or hemostatic dressing PRN. Tourniquet PRN. In MCI, direct pressure not required prior to tourniquet application.",
+          secondaryRelatedProtocolName: "Pain Management",
+          secondaryRelatedProtocolID: "S-141",
+          secondaryRelatedProtocolBLSInterventions:
+            "Assess level of pain. Ice, immobilize, and splint PRN. Elevation of extremity PRN.",
           reassessmentTime: "15 minutes",
           reassessmentObtainable: "No",
         },
@@ -100,3 +303,4 @@ const trauma = {
     },
   },
 };
+*/
