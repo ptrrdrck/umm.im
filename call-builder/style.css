@@ -20,7 +20,7 @@
 html {
   font-family: Helvetica, sans-serif;
   font-size: 17px;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.4px;
 }
 
 html,
@@ -80,21 +80,31 @@ body {
     padding-right: 10px;
     padding-top: 0;
   }
-  .scene-item {
-    padding: 0 0 10px 0;
-  }
-  #built-scene span:last-of-type,
-  .patient span:last-of-type {
+  .scene-info {
     padding: 0;
   }
-  .scene {
-    padding: 0 60px 5px 0;
+  .scene-desc {
+    padding: 4px 0 0 0;
+  }
+  #scene-date-time,
+  #scene-origin,
+  #scene-location {
+    flex-direction: row;
+    width: auto;
+    gap: 12px;
+    padding: 0 0 10px 0;
+  }
+  #scene-location {
+    padding-bottom: 0;
   }
   .patient {
     justify-content: space-between;
   }
+  .patient-header {
+    justify-content: space-between;
+  }
   .sex {
-    padding: 10px 20px 10px 0;
+    padding: 10px 0;
   }
   .nature {
     padding: 10px 0;
@@ -130,9 +140,6 @@ body {
   #built-scene,
   .patient {
     padding: 20px 26px;
-  }
-  .scene-item {
-    padding: 0 0 10px 0;
   }
   .sex {
     padding: 10px 20px 10px 0;
@@ -190,11 +197,29 @@ body {
   #direction {
     align-self: flex-end;
   }
-  .scene-item {
+  .scene {
+    padding: 0 20px 0 10px;
+  }
+  .scene-info {
+    padding: 0 0 5px 0;
+  }
+  .scene-desc {
+    padding: 0;
+  }
+  #scene-date-time,
+  #scene-origin,
+  #scene-location {
+    flex-direction: column;
     padding: 0 40px 0 0;
   }
-  .scene {
-    padding: 0 60px 0 10px;
+  #scene-date-time {
+    width: 208px;
+  }
+  #scene-origin {
+    width: 178px;
+  }
+  .patient-header {
+    justify-content: unset;
   }
   .sex {
     width: 140px;
@@ -284,7 +309,7 @@ a:hover {
 }
 
 #scene-builder {
-  background-color: #c4c4c4;
+  background-color: #c6dbe7;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -292,7 +317,7 @@ a:hover {
 
 #built-scene {
   display: flex;
-  background-color: var(--select-focus);
+  background-color: #346f93;
   color: #fff;
   border-radius: 10px;
   margin-top: 10px;
@@ -304,7 +329,8 @@ a:hover {
 }
 
 .section-info {
-  font-size: 1em;
+  font-size: 1rem;
+  font-weight: 300;
 }
 
 .selector-title {
@@ -320,7 +346,7 @@ a:hover {
 .select-button {
   display: grid;
   width: 100%;
-  border: 1px solid var(--select-border);
+  border: 1px solid #7a8a94;
   border-radius: 0.25em;
   padding: 0.25em 0.75em 0.25em 0.5em;
   font-size: 1rem;
@@ -335,8 +361,8 @@ a:hover {
 }
 
 .changed-select-button {
-  border: 1px solid #000;
-  box-shadow: 0px 0px 0px 2px #000 inset;
+  border: 1px solid #fb5064;
+  box-shadow: 0px 0px 0px 2px #fb5064 inset;
 }
 
 select,
@@ -363,7 +389,8 @@ select {
   width: 100%;
   font-family: inherit;
   font-size: inherit;
-  letter-spacing: 0.6px;
+  font-weight: 300;
+  letter-spacing: 0.4px;
   cursor: inherit;
   line-height: inherit;
   outline: none;
@@ -373,15 +400,15 @@ select {
   display: grid;
   width: fit-content;
   height: 40px;
-  border: 1px solid #000;
-  letter-spacing: 0.6px;
+  border: 1px solid #346f93;
+  letter-spacing: 0.4px;
   border-radius: 0.25em;
   padding: 0.25em 0.75em;
   font-size: 1.2rem;
   cursor: pointer;
   line-height: 1.1;
   color: #fff;
-  background-color: #000;
+  background-color: #346f93;
   /*
   background-image: linear-gradient(
     to top,
@@ -398,26 +425,50 @@ select {
   display: flex;
 }
 
-.patient {
+.patient-title {
   display: flex;
-  flex-direction: row;
-  background-color: var(--select-focus);
-  color: #fff;
+  justify-content: center;
+  background-color: #c6dbe7;
+  color: #346f93;
+  font-size: 1.2em;
+  font-weight: 500;
   border-radius: 10px;
   margin-top: 10px;
+  padding-top: 5px;
+  padding-bottom: 25px;
+  margin-bottom: -20px;
 }
 
-.scene {
+.patient {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: #346f93;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.patient-header {
+  display: flex;
+  flex-direction: row;
+}
+
+#scene-date-time,
+#scene-origin,
+#scene-location {
+  display: flex;
+}
+
+.scene-info {
   display: flex;
   width: auto;
   font-size: 22px;
   font-weight: 700;
 }
 
-.surf {
+.scene-desc {
   display: flex;
   width: auto;
-  padding: 5px 60px 0 10px;
   font-size: 1rem;
   font-weight: 300;
 }
@@ -425,12 +476,13 @@ select {
 .age {
   display: flex;
   background: #fff;
-  color: var(--select-focus);
+  color: #346f93;
   font-size: 22px;
   font-weight: 700;
   padding: 10px;
-  border-radius: 50%;
-  width: 46px;
+  border-radius: 23px;
+  width: auto;
+  min-width: 46px;
   height: 46px;
   justify-content: center;
 }
@@ -445,4 +497,9 @@ select {
   display: flex;
   font-size: 22px;
   font-weight: 700;
+}
+
+.assessment {
+  clear: both;
+  padding: 20px 0 0;
 }
