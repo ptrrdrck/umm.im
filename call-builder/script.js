@@ -363,7 +363,7 @@ const buildPatients = (number) => {
     const primarySurveyTitle = document.createElement("div");
     primarySurveyTitle.setAttribute("class", "patient-sub-title fade-in");
     const primarySurveyTitleText = createTextSpanElement(
-      `Primary Survey/Resuscitation`
+      `Primary Survey / Resuscitation`
     );
     primarySurveyTitle.appendChild(primarySurveyTitleText);
     patient.appendChild(primarySurveyTitle);

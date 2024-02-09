@@ -204,19 +204,13 @@ body {
     padding: 0 0 5px 0;
   }
   .scene-desc {
-    padding: 0;
+    padding: 4px 0 0 20px;
   }
   #scene-date-time,
   #scene-origin,
   #scene-location {
-    flex-direction: column;
+    flex-direction: row;
     padding: 0 40px 0 0;
-  }
-  #scene-date-time {
-    width: 208px;
-  }
-  #scene-origin {
-    width: 178px;
   }
   .patient-header {
     justify-content: unset;
@@ -475,12 +469,12 @@ select {
   justify-content: center;
   background-color: #f2f4f4;
   color: #000;
-  font-size: 1.2em;
+  font-size: 1.8em;
   font-weight: 500;
   border-radius: 10px;
   margin-top: 10px;
-  padding-top: 5px;
-  padding-bottom: 25px;
+  padding-top: 10px;
+  padding-bottom: 30px;
   margin-bottom: -20px;
 }
 
@@ -491,9 +485,9 @@ select {
   color: #000;
   font-size: 1.2em;
   font-weight: 500;
-  border-radius: 10px;
+  border-radius: 6px;
   margin-top: 20px;
-  padding: 5px;
+  padding: 5px 10px;
 }
 
 .patient {
