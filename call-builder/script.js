@@ -94,10 +94,9 @@ const createOptionElement = (option) => {
   return element;
 };
 
-const createSceneItemElement = (text) => {
+const createTextSpanElement = (text) => {
   const element = document.createElement("span");
   element.textContent = text;
-  /*element.classList.add("scene-item");*/
   return element;
 };
 
@@ -120,74 +119,10 @@ const handleSelectorChange = (selector, selectButton) => {
   );
 };
 
-const getRandomOption = (arr) => {
-  const options = arr.slice(1);
-  const weights = [options[0].weight];
-  for (let i = 1; i < options.length; i++) {
-    weights[i] = options[i].weight + weights[i - 1];
-  }
-  const random = Math.random() * weights[weights.length - 1];
-  for (let i = 0; i < weights.length; i++) {
-    if (weights[i] > random) {
-      return options[i].name;
-    }
-  }
-};
-
 const getOptionIndex = (selector, optionName) => {
   const options = Array.from(selector.options);
   return options.findIndex((opt) => opt.label == optionName);
 };
-
-const getRandomAge = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  const randomValue = Math.floor(Math.random() * (max - min + 1)) + min;
-  if (randomValue === 0) {
-    const months = Math.floor(Math.random() * 11) + 1;
-    return months ? (months === 1 ? "1 month" : `${months} months`) : months;
-  }
-  return randomValue;
-};
-
-function getRandomTime(selectedTime) {
-  const timeRanges = {
-    Morning: { start: 6, end: 12 },
-    Afternoon: { start: 12, end: 16 },
-    Evening: { start: 16, end: 21 },
-  };
-  const { start, end } = timeRanges[selectedTime];
-  const randomHour = Math.floor(Math.random() * (end - start) + start);
-  const randomMinutes = Math.floor(Math.random() * 60);
-  const formattedTime = `${String(randomHour).padStart(2, "0")}:${String(
-    randomMinutes
-  ).padStart(2, "0")}`;
-  return formattedTime;
-}
-
-function getRandomDate(selectedSeason) {
-  const seasonMonths = {
-    Winter: { start: 11, end: 2 },
-    Spring: { start: 3, end: 5 },
-    Summer: { start: 6, end: 8 },
-    Fall: { start: 9, end: 10 },
-  };
-
-  const { start, end } = seasonMonths[selectedSeason];
-
-  let randomMonth;
-  if (selectedSeason === "Winter") {
-    const winterMonths = [11, 12, 1, 2];
-    randomMonth = winterMonths[Math.floor(Math.random() * winterMonths.length)];
-  } else {
-    randomMonth = getRandomAge(start, end);
-  }
-
-  const daysInMonth = new Date(2022, randomMonth, 0).getDate();
-  const randomDay = Math.floor(Math.random() * daysInMonth) + 1;
-
-  return `${randomMonth}/${randomDay}`;
-}
 
 loadOptions(selectors.season, options.season);
 selectors.season.addEventListener("change", () => {
@@ -269,10 +204,10 @@ const buildScene = () => {
     selectedTime === "Random" ? getRandomOption(options.time) : selectedTime;
   let randomDate = getRandomDate(selectedSeason);
   let randomTime = getRandomTime(selectedTime);
-  const dateItem = createSceneItemElement(`${randomDate}, ${randomTime}`);
+  const dateItem = createTextSpanElement(`${randomDate}, ${randomTime}`);
   dateItem.classList.add("scene-info");
   dateTimeContainer.appendChild(dateItem);
-  const seasonItem = createSceneItemElement(
+  const seasonItem = createTextSpanElement(
     `(${selectedSeason}, ${selectedTime})`
   );
   seasonItem.classList.add("scene-desc");
@@ -287,10 +222,10 @@ const buildScene = () => {
     selectedOrigin === "Random"
       ? getRandomOption(options.origin)
       : selectedOrigin;
-  const originItem = createSceneItemElement(`${selectedOrigin}`);
+  const originItem = createTextSpanElement(`${selectedOrigin}`);
   originItem.classList.add("scene-info");
   originContainer.appendChild(originItem);
-  const originDesc = createSceneItemElement(`(Origin)`);
+  const originDesc = createTextSpanElement(`(Origin)`);
   originDesc.classList.add("scene-desc");
   originContainer.appendChild(originDesc);
   root.appendChild(originContainer);
@@ -303,18 +238,18 @@ const buildScene = () => {
     selectedLocation === "Random"
       ? getRandomOption(options.location)
       : selectedLocation;
-  const locationItem = createSceneItemElement(`${selectedLocation}`);
+  const locationItem = createTextSpanElement(`${selectedLocation}`);
   locationItem.classList.add("scene-info");
   locationContainer.appendChild(locationItem);
   if (selectedLocation === "Water" || selectedLocation === "Jetty") {
     let selectedSurf = getSelectedOption(selectors.surf);
     selectedSurf =
       selectedSurf === "Random" ? getRandomOption(options.surf) : selectedSurf;
-    const surfItem = createSceneItemElement(`Wave Height: ${selectedSurf}`);
+    const surfItem = createTextSpanElement(`Wave Height: ${selectedSurf}`);
     surfItem.classList.add("scene-desc");
     locationContainer.appendChild(surfItem);
   } else {
-    const locationDesc = createSceneItemElement(`(Location)`);
+    const locationDesc = createTextSpanElement(`(Location)`);
     locationDesc.classList.add("scene-desc");
     locationContainer.appendChild(locationDesc);
   }
@@ -334,9 +269,10 @@ const buildPatients = (number) => {
   root.setAttribute("id", "patients-container");
   builtPatientsPlaceholder.appendChild(root);
   for (let i = 0; i < number; i++) {
+    let patientCount = number;
     const patientTitle = document.createElement("div");
     patientTitle.setAttribute("class", "patient-title fade-in");
-    const patientTitleText = createSceneItemElement(`Patient ${i + 1}`);
+    const patientTitleText = createTextSpanElement(`Patient ${i + 1}`);
     patientTitle.appendChild(patientTitleText);
     root.appendChild(patientTitle);
     const patient = document.createElement("div");
@@ -354,13 +290,13 @@ const buildPatients = (number) => {
       options.age[optionIndex].min,
       options.age[optionIndex].max
     );
-    const ageItem = createSceneItemElement(`${randomAge}`);
+    const ageItem = createTextSpanElement(`${randomAge}`);
     ageItem.classList.add("age");
     patientHeader.appendChild(ageItem);
     let selectedSex = getSelectedOption(selectors.sex);
     selectedSex =
       selectedSex === "Random" ? getRandomOption(options.sex) : selectedSex;
-    const sexItem = createSceneItemElement(`${selectedSex}`);
+    const sexItem = createTextSpanElement(`${selectedSex}`);
     sexItem.classList.add("sex");
     patientHeader.appendChild(sexItem);
     let selectedNature = getSelectedOption(selectors.nature);
@@ -368,49 +304,129 @@ const buildPatients = (number) => {
       selectedNature === "Random"
         ? getRandomOption(options.nature)
         : selectedNature;
-    const natureItem = createSceneItemElement(`(${selectedNature})`);
+    const natureItem = createTextSpanElement(`(${selectedNature})`);
     natureItem.classList.add("nature");
     patientHeader.appendChild(natureItem);
     patient.appendChild(patientHeader);
 
-    const assessmentItem = document.createElement("div");
-    assessmentItem.classList.add("assessment");
+    const sizeUpTitle = document.createElement("div");
+    sizeUpTitle.setAttribute("class", "patient-sub-title fade-in");
+    const sizeUpTitleText = createTextSpanElement(`Scene Size Up`);
+    sizeUpTitle.appendChild(sizeUpTitleText);
+    patient.appendChild(sizeUpTitle);
+
+    const sizeUpItem = document.createElement("div");
+    sizeUpItem.setAttribute("id", "patient-size-up");
+    sizeUpItem.classList.add("assessment");
+    let chiefComplaint;
+    let bloodPressure;
+    let pulse;
     if (selectedNature === "Medical") {
       const medicalChief = getRandomChiefComplaint(medicalChiefComplaints);
       const assessmentLines = [
-        "1. Scene Safety - Safe",
-        `2. Nature of Illness - ${medicalChief.nature}`,
-        `3. Check responsiveness - ${medicalChief.responsiveness}`,
-        `4. Chief Complaint - ${medicalChief.complaint}`,
-        `5. Airway - ${medicalChief.airway}`,
-        `6. Breathing - ${medicalChief.breathing}`,
-        `7. Circulation - ${medicalChief.circulation}`,
+        `Scene Safety: Safe`,
+        `Nature of Illness: ${medicalChief.nature}`,
+        `Number of Patients: ${patientCount}`,
+        `Additional EMS: Yes`,
+        `C-Spine Stabilization: Yes`,
       ];
       assessmentLines.forEach((line, index) => {
         const lineElement = document.createElement("div");
         lineElement.textContent = line;
-        lineElement.setAttribute("id", `assessment-line-${index + 1}`);
-        assessmentItem.appendChild(lineElement);
+        lineElement.setAttribute("id", `size-up-line-${index + 1}`);
+        sizeUpItem.appendChild(lineElement);
+      });
+      chiefComplaint = medicalChief.complaint;
+      bloodPressure = medicalChief.bloodPressure;
+      pulse = medicalChief.pulse;
+    } else if (selectedNature === "Trauma") {
+      const traumaChief = getRandomChiefComplaint(traumaChiefComplaints);
+      const assessmentLines = [
+        `Scene Safety: Safe`,
+        `Mechanism of Injury: ${traumaChief.mechanism}`,
+        `Number of Patients: ${patientCount}`,
+        `Additional EMS: Yes`,
+        `C-Spine Stabilization: Yes`,
+      ];
+      assessmentLines.forEach((line, index) => {
+        const lineElement = document.createElement("div");
+        lineElement.textContent = line;
+        lineElement.setAttribute("id", `size-up-line-${index + 1}`);
+        sizeUpItem.appendChild(lineElement);
+      });
+      chiefComplaint = traumaChief.complaint;
+      bloodPressure = traumaChief.bloodPressure;
+      pulse = traumaChief.pulse;
+    }
+    patient.appendChild(sizeUpItem);
+
+    const primarySurveyTitle = document.createElement("div");
+    primarySurveyTitle.setAttribute("class", "patient-sub-title fade-in");
+    const primarySurveyTitleText = createTextSpanElement(
+      `Primary Survey/Resuscitation`
+    );
+    primarySurveyTitle.appendChild(primarySurveyTitleText);
+    patient.appendChild(primarySurveyTitle);
+
+    const primarySurveyItem = document.createElement("div");
+    primarySurveyItem.setAttribute("id", "patient-size-up");
+    primarySurveyItem.classList.add("assessment");
+    if (selectedNature === "Medical") {
+      const medicalChief = getRandomChiefComplaint(medicalChiefComplaints);
+      const assessmentLines = [
+        `General Impression: `,
+        `Check Responsiveness/LOC (AVPU): ${medicalChief.responsiveness}`,
+        `Chief Complaint/Apparent Life Threats: ${medicalChief.complaint}`,
+        `Airway: ${medicalChief.airway}`,
+        `Breathing: ${medicalChief.breathing}`,
+        `Circulation: ${medicalChief.circulation}`,
+        `Patient Priority/Transport: `,
+      ];
+      assessmentLines.forEach((line, index) => {
+        const lineElement = document.createElement("div");
+        lineElement.textContent = line;
+        lineElement.setAttribute("id", `primary-line-${index + 1}`);
+        primarySurveyItem.appendChild(lineElement);
       });
     } else if (selectedNature === "Trauma") {
       const traumaChief = getRandomChiefComplaint(traumaChiefComplaints);
       const assessmentLines = [
-        "1. Scene Safety - Safe\n",
-        `2. Mechanism of Injury - ${traumaChief.mechanism}\n`,
-        "3. Check responsiveness - Responsive\n",
-        `4. Chief Complaint - ${traumaChief.complaint}\n`,
-        "5. Airway - Clear\n",
-        "6. Breathing - Normal\n",
-        "7. Circulation - Pulse present\n",
+        `General Impression: `,
+        `Check Responsiveness/LOC (AVPU): ${traumaChief.responsiveness}`,
+        `Chief Complaint/Apparent Life Threats: ${traumaChief.complaint}`,
+        `Airway: ${traumaChief.airway}`,
+        `Breathing: ${traumaChief.breathing}`,
+        `Circulation: ${traumaChief.circulation}`,
+        `Patient Priority/Transport: `,
       ];
       assessmentLines.forEach((line, index) => {
         const lineElement = document.createElement("div");
         lineElement.textContent = line;
-        lineElement.setAttribute("id", `assessment-line-${index + 1}`);
-        assessmentItem.appendChild(lineElement);
+        lineElement.setAttribute("id", `primary-line-${index + 1}`);
+        primarySurveyItem.appendChild(lineElement);
       });
     }
-    patient.appendChild(assessmentItem);
+    patient.appendChild(primarySurveyItem);
+
+    const vitalsItem = document.createElement("div");
+    vitalsItem.classList.add("assessment");
+    const randomGCS = getRandomGCS(chiefComplaint);
+    const gcsItem = createTextSpanElement(
+      `GCS: E${randomGCS.eyeResponse} V${randomGCS.verbalResponse} M${randomGCS.motorResponse} = ${randomGCS.totalGCS}`
+    );
+    gcsItem.classList.add("blood-pressure");
+    vitalsItem.appendChild(gcsItem);
+    const randomBloodPressure = getRandomBloodPressure(bloodPressure);
+    const bloodPressureItem = createTextSpanElement(
+      `Blood Pressure: ${randomBloodPressure}`
+    );
+    bloodPressureItem.classList.add("blood-pressure");
+    vitalsItem.appendChild(bloodPressureItem);
+    const randomPulse = getRandomPulse(pulse);
+    const pulseItem = createTextSpanElement(`Pulse: ${randomPulse}`);
+    pulseItem.classList.add("blood-pressure");
+    vitalsItem.appendChild(pulseItem);
+    patient.appendChild(vitalsItem);
   }
 };
 
