@@ -309,11 +309,19 @@ const buildPatients = (number) => {
     patientHeader.appendChild(natureItem);
     patient.appendChild(patientHeader);
 
+    const patientBody = document.createElement("div");
+    patientBody.setAttribute("class", "patient-body fade-in");
+    patient.appendChild(patientBody);
+
+    const sizeUpGroup = document.createElement("div");
+    sizeUpGroup.setAttribute("class", "size-up-group fade-in");
+    patientBody.appendChild(sizeUpGroup);
+
     const sizeUpTitle = document.createElement("div");
     sizeUpTitle.setAttribute("class", "patient-sub-title fade-in");
     const sizeUpTitleText = createTextSpanElement(`Scene Size Up`);
     sizeUpTitle.appendChild(sizeUpTitleText);
-    patient.appendChild(sizeUpTitle);
+    sizeUpGroup.appendChild(sizeUpTitle);
 
     const sizeUpItem = document.createElement("div");
     sizeUpItem.setAttribute("id", "patient-size-up");
@@ -358,7 +366,32 @@ const buildPatients = (number) => {
       bloodPressure = traumaChief.bloodPressure;
       pulse = traumaChief.pulse;
     }
-    patient.appendChild(sizeUpItem);
+    sizeUpGroup.appendChild(sizeUpItem);
+
+    const vitalsItem = document.createElement("div");
+    vitalsItem.classList.add("assessment");
+    const randomGCS = getRandomGCS(chiefComplaint);
+    const gcsItem = createTextSpanElement(
+      `GCS: E${randomGCS.eyeResponse} V${randomGCS.verbalResponse} M${randomGCS.motorResponse} = ${randomGCS.totalGCS}`
+    );
+    gcsItem.classList.add("blood-pressure");
+    vitalsItem.appendChild(gcsItem);
+    const randomBloodPressure = getRandomBloodPressure(bloodPressure);
+    const bloodPressureItem = createTextSpanElement(
+      `Blood Pressure: ${randomBloodPressure}`
+    );
+    bloodPressureItem.classList.add("blood-pressure");
+    vitalsItem.appendChild(bloodPressureItem);
+    const randomPulse = getRandomPulse(pulse);
+    const pulseItem = createTextSpanElement(`Pulse: ${randomPulse}`);
+    pulseItem.classList.add("blood-pressure");
+    vitalsItem.appendChild(pulseItem);
+
+    setDivContent(sizeUpTitle, sizeUpItem, vitalsItem);
+
+    const primaryGroup = document.createElement("div");
+    primaryGroup.setAttribute("class", "size-up-group fade-in");
+    patientBody.appendChild(primaryGroup);
 
     const primarySurveyTitle = document.createElement("div");
     primarySurveyTitle.setAttribute("class", "patient-sub-title fade-in");
@@ -366,10 +399,10 @@ const buildPatients = (number) => {
       `Primary Survey / Resuscitation`
     );
     primarySurveyTitle.appendChild(primarySurveyTitleText);
-    patient.appendChild(primarySurveyTitle);
+    primaryGroup.appendChild(primarySurveyTitle);
 
     const primarySurveyItem = document.createElement("div");
-    primarySurveyItem.setAttribute("id", "patient-size-up");
+    primarySurveyItem.setAttribute("id", "patient-primary-survey");
     primarySurveyItem.classList.add("assessment");
     if (selectedNature === "Medical") {
       const medicalChief = getRandomChiefComplaint(medicalChiefComplaints);
@@ -406,27 +439,9 @@ const buildPatients = (number) => {
         primarySurveyItem.appendChild(lineElement);
       });
     }
-    patient.appendChild(primarySurveyItem);
+    primaryGroup.appendChild(primarySurveyItem);
 
-    const vitalsItem = document.createElement("div");
-    vitalsItem.classList.add("assessment");
-    const randomGCS = getRandomGCS(chiefComplaint);
-    const gcsItem = createTextSpanElement(
-      `GCS: E${randomGCS.eyeResponse} V${randomGCS.verbalResponse} M${randomGCS.motorResponse} = ${randomGCS.totalGCS}`
-    );
-    gcsItem.classList.add("blood-pressure");
-    vitalsItem.appendChild(gcsItem);
-    const randomBloodPressure = getRandomBloodPressure(bloodPressure);
-    const bloodPressureItem = createTextSpanElement(
-      `Blood Pressure: ${randomBloodPressure}`
-    );
-    bloodPressureItem.classList.add("blood-pressure");
-    vitalsItem.appendChild(bloodPressureItem);
-    const randomPulse = getRandomPulse(pulse);
-    const pulseItem = createTextSpanElement(`Pulse: ${randomPulse}`);
-    pulseItem.classList.add("blood-pressure");
-    vitalsItem.appendChild(pulseItem);
-    patient.appendChild(vitalsItem);
+    setDivContent(primarySurveyTitle, primarySurveyItem, vitalsItem);
   }
 };
 

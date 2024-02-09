@@ -434,6 +434,23 @@ function getRandomGCS(chiefComplaint) {
     totalGCS: totalGCS,
   };
 }
+
+const setDivContent = (buttonDiv, targetDiv, newDiv) => {
+  buttonDiv.addEventListener("touchstart", (event) => {
+    event.preventDefault();
+    targetDiv.replaceWith(newDiv);
+  });
+  buttonDiv.addEventListener("touchend", (event) => {
+    event.preventDefault();
+    newDiv.replaceWith(targetDiv);
+  });
+  buttonDiv.addEventListener("mousedown", () => {
+    targetDiv.replaceWith(newDiv);
+  });
+  buttonDiv.addEventListener("mouseup", () => {
+    newDiv.replaceWith(targetDiv);
+  });
+};
 /*
 const safety = ["yes", "no"];
 

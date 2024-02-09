@@ -61,7 +61,8 @@ body {
     padding: 10px 0;
   }
   .next-button {
-    margin: 20px 0 0 0;
+    margin: 20px auto 0 auto;
+    align-items: center;
   }
   #scene-builder,
   #built-scene,
@@ -108,6 +109,9 @@ body {
   }
   .nature {
     padding: 10px 0;
+  }
+  .size-up-group {
+    width: 100%;
   }
 }
 @media (min-width: 600px) {
@@ -222,6 +226,9 @@ body {
   .nature {
     width: 164px;
     padding: 10px 30px;
+  }
+  .size-up-group {
+    width: 48%;
   }
 }
 
@@ -486,7 +493,6 @@ select {
   font-size: 1.2em;
   font-weight: 500;
   border-radius: 6px;
-  margin-top: 20px;
   padding: 5px 10px;
 }
 
@@ -497,11 +503,25 @@ select {
   background-color: #d4dbdd;
   color: #000;
   border-radius: 10px;
+  gap: 20px;
 }
 
 .patient-header {
   display: flex;
   flex-direction: row;
+}
+
+.patient-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.size-up-group {
+  display: flex;
+  flex-direction: column;
 }
 
 #scene-date-time,
