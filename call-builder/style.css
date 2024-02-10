@@ -99,16 +99,17 @@ body {
     padding-bottom: 0;
   }
   .patient {
-    justify-content: space-between;
+    justify-content: flex-start;
+    height: 600px;
   }
   .patient-header {
     justify-content: space-between;
   }
   .sex {
-    padding: 10px 0;
+    padding: 10px;
   }
   .nature {
-    padding: 10px 0;
+    padding: 10px;
   }
   .size-up-group {
     width: 100%;
@@ -215,6 +216,9 @@ body {
   #scene-location {
     flex-direction: row;
     padding: 0 40px 0 0;
+  }
+  .patient {
+    height: 300px;
   }
   .patient-header {
     justify-content: unset;
@@ -472,17 +476,24 @@ select {
 }
 
 .patient-title {
+  cursor: pointer;
   display: flex;
   justify-content: center;
-  background-color: #f2f4f4;
+  background-color: #d4dbdd;
   color: #000;
   font-size: 1.8em;
   font-weight: 500;
   border-radius: 10px;
   margin-top: 10px;
   padding-top: 10px;
+  padding-bottom: 10px;
+  user-select: none;
+}
+
+.patient-title.active {
   padding-bottom: 30px;
   margin-bottom: -20px;
+  background-color: #f2f4f4;
 }
 
 .patient-sub-title {
@@ -497,13 +508,16 @@ select {
 }
 
 .patient {
-  display: flex;
+  display: none;
   flex-direction: column;
-  flex-wrap: wrap;
   background-color: #d4dbdd;
   color: #000;
   border-radius: 10px;
   gap: 20px;
+}
+
+.patient.active {
+  display: flex;
 }
 
 .patient-header {

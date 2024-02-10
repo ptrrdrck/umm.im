@@ -444,13 +444,55 @@ const setDivContent = (buttonDiv, targetDiv, newDiv) => {
     event.preventDefault();
     newDiv.replaceWith(targetDiv);
   });
+  buttonDiv.addEventListener("touchcancel", (event) => {
+    event.preventDefault();
+    newDiv.replaceWith(targetDiv);
+  });
   buttonDiv.addEventListener("mousedown", () => {
     targetDiv.replaceWith(newDiv);
   });
   buttonDiv.addEventListener("mouseup", () => {
     newDiv.replaceWith(targetDiv);
   });
+  buttonDiv.addEventListener("mouseout", () => {
+    newDiv.replaceWith(targetDiv);
+  });
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  const patientContainer = document.getElementById(
+    "built-patients-placeholder"
+  );
+
+  patientContainer.addEventListener("click", (event) => {
+    const patientTitle = event.target.closest(".patient-title");
+
+    if (patientTitle) {
+      const patientDiv = patientTitle.nextElementSibling;
+      const isActive = patientDiv.classList.toggle("active");
+
+      if (!isActive) {
+        const patientTitleText = patientTitle.querySelector("span").textContent;
+        patientTitle.setAttribute("data-original-content", patientTitleText);
+
+        const patientHeader = patientDiv.querySelector(".patient-header");
+        if (patientHeader) {
+          patientTitle.innerHTML = "";
+          patientTitle.appendChild(patientHeader.cloneNode(true));
+        }
+        patientTitle.classList.remove("active");
+      } else {
+        const originalContent = patientTitle.getAttribute(
+          "data-original-content"
+        );
+        if (originalContent) {
+          patientTitle.innerHTML = `<span>${originalContent}</span>`;
+        }
+        patientTitle.classList.add("active");
+      }
+    }
+  });
+});
 /*
 const safety = ["yes", "no"];
 

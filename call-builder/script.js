@@ -453,4 +453,13 @@ buildSceneButton.addEventListener("click", () => {
       ? getRandomOption(options.patients)
       : selectedPatients;
   buildPatients(selectedPatients);
+  const patientContainer = document.getElementById(
+    "built-patients-placeholder"
+  );
+  const firstPatientDiv = patientContainer.querySelector(".patient");
+  const firstPatientTitle = patientContainer.querySelector(".patient-title");
+  if (firstPatientDiv) {
+    firstPatientDiv.classList.add("active");
+    firstPatientTitle.classList.add("active");
+  }
 });
