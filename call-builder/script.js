@@ -273,6 +273,7 @@ const buildPatients = (number) => {
     const patientTitle = document.createElement("div");
     patientTitle.setAttribute("class", "patient-title fade-in");
     const patientTitleText = createTextSpanElement(`Patient ${i + 1}`);
+    patientTitleText.setAttribute("class", "patient-number");
     patientTitle.appendChild(patientTitleText);
     root.appendChild(patientTitle);
     const patient = document.createElement("div");
@@ -307,7 +308,7 @@ const buildPatients = (number) => {
     const natureItem = createTextSpanElement(`(${selectedNature})`);
     natureItem.classList.add("nature");
     patientHeader.appendChild(natureItem);
-    patient.appendChild(patientHeader);
+    patientTitle.appendChild(patientHeader);
 
     const patientBody = document.createElement("div");
     patientBody.setAttribute("class", "patient-body fade-in");
@@ -408,8 +409,9 @@ const buildPatients = (number) => {
       const medicalChief = getRandomChiefComplaint(medicalChiefComplaints);
       const assessmentLines = [
         `General Impression: `,
-        `Check Responsiveness/LOC (AVPU): ${medicalChief.responsiveness}`,
-        `Chief Complaint/Apparent Life Threats: ${medicalChief.complaint}`,
+        `Responsiveness/LOC (AVPU): ${medicalChief.responsiveness}`,
+        `Chief Complaint: ${medicalChief.complaint}`,
+        `Apparent Life Threats: `,
         `Airway: ${medicalChief.airway}`,
         `Breathing: ${medicalChief.breathing}`,
         `Circulation: ${medicalChief.circulation}`,
@@ -425,8 +427,9 @@ const buildPatients = (number) => {
       const traumaChief = getRandomChiefComplaint(traumaChiefComplaints);
       const assessmentLines = [
         `General Impression: `,
-        `Check Responsiveness/LOC (AVPU): ${traumaChief.responsiveness}`,
-        `Chief Complaint/Apparent Life Threats: ${traumaChief.complaint}`,
+        `Responsiveness/LOC (AVPU): ${traumaChief.responsiveness}`,
+        `Chief Complaint: ${traumaChief.complaint}`,
+        `Apparent Life Threats: `,
         `Airway: ${traumaChief.airway}`,
         `Breathing: ${traumaChief.breathing}`,
         `Circulation: ${traumaChief.circulation}`,
@@ -458,8 +461,10 @@ buildSceneButton.addEventListener("click", () => {
   );
   const firstPatientDiv = patientContainer.querySelector(".patient");
   const firstPatientTitle = patientContainer.querySelector(".patient-title");
+  const firstPatientAge = patientContainer.querySelector(".age");
   if (firstPatientDiv) {
     firstPatientDiv.classList.add("active");
     firstPatientTitle.classList.add("active");
+    firstPatientAge.classList.add("active");
   }
 });

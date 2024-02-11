@@ -4,7 +4,7 @@ const medicalChiefComplaints = [
   {
     complaint: "Chest pain",
     nature: "Cardiac",
-    responsiveness: "Responsive: Alert",
+    responsiveness: "Alert",
     airway: "Clear",
     breathing: "Normal",
     circulation: "Pulse present",
@@ -14,7 +14,7 @@ const medicalChiefComplaints = [
   {
     complaint: "Shortness of breath",
     nature: "Respiratory",
-    responsiveness: "Responsive: to Verbal",
+    responsiveness: "Verbal",
     airway: "May be compromised",
     breathing: "Labored",
     circulation: "Pulse present",
@@ -24,7 +24,7 @@ const medicalChiefComplaints = [
   {
     complaint: "Abdominal pain",
     nature: "Gastrointestinal",
-    responsiveness: "Responsive: to Pain",
+    responsiveness: "Pain",
     airway: "Clear",
     breathing: "Normal",
     circulation: "Pulse present",
@@ -34,7 +34,7 @@ const medicalChiefComplaints = [
   {
     complaint: "Headache",
     nature: "Neurological",
-    responsiveness: "Responsive: Alert",
+    responsiveness: "Alert",
     airway: "Clear",
     breathing: "Normal",
     circulation: "Pulse present",
@@ -44,7 +44,7 @@ const medicalChiefComplaints = [
   {
     complaint: "Dizziness",
     nature: "Neurological",
-    responsiveness: "Responsive: Alert",
+    responsiveness: "Alert",
     airway: "Clear",
     breathing: "Normal",
     circulation: "Pulse present",
@@ -54,7 +54,7 @@ const medicalChiefComplaints = [
   {
     complaint: "Nausea",
     nature: "Gastrointestinal",
-    responsiveness: "Responsive: to Verbal",
+    responsiveness: "Verbal",
     airway: "Clear",
     breathing: "Normal",
     circulation: "Pulse present",
@@ -64,7 +64,7 @@ const medicalChiefComplaints = [
   {
     complaint: "Vomiting",
     nature: "Gastrointestinal",
-    responsiveness: "Responsive: to Pain",
+    responsiveness: "Pain",
     airway: "May be compromised",
     breathing: "Normal",
     circulation: "Pulse present",
@@ -74,7 +74,7 @@ const medicalChiefComplaints = [
   {
     complaint: "Allergic reaction",
     nature: "Allergic/Immunologic",
-    responsiveness: "Responsive: Alert",
+    responsiveness: "Alert",
     airway: "May be compromised",
     breathing: "Normal",
     circulation: "Pulse present",
@@ -84,7 +84,7 @@ const medicalChiefComplaints = [
   {
     complaint: "Seizure",
     nature: "Neurological",
-    responsiveness: "Responsive: to Pain",
+    responsiveness: "Pain",
     airway: "May be compromised",
     breathing: "Labored",
     circulation: "Pulse present",
@@ -94,7 +94,7 @@ const medicalChiefComplaints = [
   {
     complaint: "Fever",
     nature: "Infectious",
-    responsiveness: "Responsive: Alert",
+    responsiveness: "Alert",
     airway: "Clear",
     breathing: "Normal",
     circulation: "Pulse present",
@@ -117,7 +117,7 @@ const traumaChiefComplaints = [
   {
     complaint: "Motor vehicle accident",
     mechanism: "Blunt trauma",
-    responsiveness: "Responsive: Alert",
+    responsiveness: "Alert",
     airway: "May be compromised",
     breathing: "Labored",
     circulation: "Pulse present",
@@ -127,7 +127,7 @@ const traumaChiefComplaints = [
   {
     complaint: "Fall from height",
     mechanism: "Fall",
-    responsiveness: "Responsive: to Pain",
+    responsiveness: "Pain",
     airway: "May be compromised",
     breathing: "Labored",
     circulation: "Pulse present",
@@ -137,7 +137,7 @@ const traumaChiefComplaints = [
   {
     complaint: "Bicycle accident",
     mechanism: "Blunt trauma",
-    responsiveness: "Responsive: to Pain",
+    responsiveness: "Pain",
     airway: "May be compromised",
     breathing: "Labored",
     circulation: "Pulse present",
@@ -147,7 +147,7 @@ const traumaChiefComplaints = [
   {
     complaint: "Assault",
     mechanism: "Blunt or penetrating trauma",
-    responsiveness: "Responsive: to Pain",
+    responsiveness: "Pain",
     airway: "May be compromised",
     breathing: "Labored",
     circulation: "Pulse present",
@@ -157,7 +157,7 @@ const traumaChiefComplaints = [
   {
     complaint: "Sports injury",
     mechanism: "Blunt trauma",
-    responsiveness: "Responsive: Alert",
+    responsiveness: "Alert",
     airway: "Clear",
     breathing: "Normal",
     circulation: "Pulse present",
@@ -167,7 +167,7 @@ const traumaChiefComplaints = [
   {
     complaint: "Burn",
     mechanism: "Burn",
-    responsiveness: "Responsive: Alert",
+    responsiveness: "Alert",
     airway: "May be compromised",
     breathing: "Labored",
     circulation: "Pulse present",
@@ -177,7 +177,7 @@ const traumaChiefComplaints = [
   {
     complaint: "Penetrating trauma",
     mechanism: "Penetrating trauma",
-    responsiveness: "Responsive: to Pain",
+    responsiveness: "Pain",
     airway: "May be compromised",
     breathing: "Labored",
     circulation: "Pulse present",
@@ -187,7 +187,7 @@ const traumaChiefComplaints = [
   {
     complaint: "Animal bite",
     mechanism: "Bite",
-    responsiveness: "Responsive: to Pain",
+    responsiveness: "Pain",
     airway: "May be compromised",
     breathing: "Labored",
     circulation: "Pulse present",
@@ -197,7 +197,7 @@ const traumaChiefComplaints = [
   {
     complaint: "Electrical injury",
     mechanism: "Electrical injury",
-    responsiveness: "Responsive: to Pain",
+    responsiveness: "Pain",
     airway: "May be compromised",
     breathing: "Labored",
     circulation: "Pulse present",
@@ -207,7 +207,7 @@ const traumaChiefComplaints = [
   {
     complaint: "Crush injury",
     mechanism: "Crush injury",
-    responsiveness: "Responsive: to Pain",
+    responsiveness: "Pain",
     airway: "May be compromised",
     breathing: "Labored",
     circulation: "Pulse present",
@@ -466,29 +466,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   patientContainer.addEventListener("click", (event) => {
     const patientTitle = event.target.closest(".patient-title");
+    const patientAge = patientContainer.querySelector(".age");
 
     if (patientTitle) {
       const patientDiv = patientTitle.nextElementSibling;
       const isActive = patientDiv.classList.toggle("active");
 
       if (!isActive) {
-        const patientTitleText = patientTitle.querySelector("span").textContent;
-        patientTitle.setAttribute("data-original-content", patientTitleText);
-
-        const patientHeader = patientDiv.querySelector(".patient-header");
-        if (patientHeader) {
-          patientTitle.innerHTML = "";
-          patientTitle.appendChild(patientHeader.cloneNode(true));
-        }
         patientTitle.classList.remove("active");
+        patientAge.classList.remove("active");
       } else {
-        const originalContent = patientTitle.getAttribute(
-          "data-original-content"
-        );
-        if (originalContent) {
-          patientTitle.innerHTML = `<span>${originalContent}</span>`;
-        }
         patientTitle.classList.add("active");
+        patientAge.classList.add("active");
       }
     }
   });

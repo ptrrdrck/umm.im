@@ -100,13 +100,16 @@ body {
   }
   .patient {
     justify-content: flex-start;
-    height: 600px;
+    height: auto;
+  }
+  .patient-title {
+    flex-direction: column;
   }
   .patient-header {
-    justify-content: space-between;
+    justify-content: center;
   }
   .sex {
-    padding: 10px;
+    padding: 10px 10px 20px 20px;
   }
   .nature {
     padding: 10px;
@@ -218,18 +221,19 @@ body {
     padding: 0 40px 0 0;
   }
   .patient {
-    height: 300px;
+    height: auto;
+  }
+  .patient-title {
+    flex-direction: row;
   }
   .patient-header {
     justify-content: unset;
   }
   .sex {
-    width: 140px;
     padding: 10px 30px;
   }
   .nature {
-    width: 164px;
-    padding: 10px 30px;
+    padding: 10px 0;
   }
   .size-up-group {
     width: 48%;
@@ -478,16 +482,20 @@ select {
 .patient-title {
   cursor: pointer;
   display: flex;
-  justify-content: center;
   background-color: #d4dbdd;
   color: #000;
-  font-size: 1.8em;
-  font-weight: 500;
   border-radius: 10px;
   margin-top: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
   user-select: none;
+  justify-content: flex-start;
+}
+
+.patient-number {
+  padding: 12px 30px 10px;
+  display: flex;
+  align-self: center;
 }
 
 .patient-title.active {
@@ -572,6 +580,10 @@ select {
   justify-content: center;
 }
 
+.age.active {
+  background-color: #d4dbdd;
+}
+
 .sex {
   display: flex;
   font-size: 22px;
@@ -590,4 +602,5 @@ select {
   padding: 20px 0 0;
   font-size: 1rem;
   font-weight: 400;
+  gap: 10px;
 }
