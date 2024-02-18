@@ -192,10 +192,11 @@ body {
   .next-button {
     margin: 25px 0 5px 0;
   }
-  #scene-builder,
-  #built-scene,
+  #built-scene {
+    padding: 16px 20px;
+  }
   .patient {
-    padding: 20px 26px;
+    padding: 10px 12px;
   }
   #direction {
     padding-right: 0;
@@ -209,10 +210,10 @@ body {
     padding: 0 20px 0 10px;
   }
   .scene-info {
-    padding: 0 0 5px 0;
+    padding: 0 0 2px 0;
   }
   .scene-desc {
-    padding: 4px 0 0 20px;
+    padding: 5px 0 0 20px;
   }
   #scene-date-time,
   #scene-origin,
@@ -490,10 +491,22 @@ select {
   padding-bottom: 10px;
   user-select: none;
   justify-content: flex-start;
+  position: relative;
+}
+
+.patient-title::before {
+  content: "☆";
+  font-size: 1em;
+  position: absolute;
+  top: 21px;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  align-self: center;
 }
 
 .patient-number {
-  padding: 12px 30px 10px;
+  padding: 12px 60px 10px 64px;
   display: flex;
   align-self: center;
 }
@@ -501,13 +514,23 @@ select {
 .patient-title.active {
   padding-bottom: 30px;
   margin-bottom: -20px;
-  background-color: #f2f4f4;
+  background-color: #6dc6e3;
+}
+
+.patient-title.active::before {
+  content: "★";
+  font-size: 1em;
+  position: absolute;
+  top: 21px;
+  left: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .patient-sub-title {
   display: flex;
   justify-content: center;
-  background-color: #f2f4f4;
+  background-color: #fff;
   color: #000;
   font-size: 1.2em;
   font-weight: 500;
@@ -521,11 +544,13 @@ select {
   background-color: #d4dbdd;
   color: #000;
   border-radius: 10px;
-  gap: 20px;
+  gap: 16px;
+  position: relative;
 }
 
 .patient.active {
   display: flex;
+  background-color: #d9eef5;
 }
 
 .patient-header {
@@ -544,6 +569,7 @@ select {
 .size-up-group {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 #scene-date-time,
@@ -581,7 +607,7 @@ select {
 }
 
 .age.active {
-  background-color: #d4dbdd;
+  background-color: #fff;
 }
 
 .sex {
@@ -603,4 +629,10 @@ select {
   font-size: 1rem;
   font-weight: 400;
   gap: 10px;
+}
+
+.size-up-group {
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 5px 10px;
 }
