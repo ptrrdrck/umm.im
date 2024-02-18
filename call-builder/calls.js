@@ -377,6 +377,68 @@ function getRandomPulse(pulseValue) {
 }
 
 function getRandomGCS(chiefComplaint) {
+  const eyeResponseValues = [
+    { score: 1, meaning: "Your eyes don’t open for any reason." },
+    {
+      score: 2,
+      meaning: "Your eyes only open in response to feeling pressure.",
+    },
+    {
+      score: 3,
+      meaning:
+        "You only open your eyes when someone tells you to do so. Your eyes stay closed otherwise.",
+    },
+    {
+      score: 4,
+      meaning: "You can open your eyes and keep them open on your own.",
+    },
+  ];
+
+  const verbalResponseValues = [
+    { score: 1, meaning: "You can't speak or make sounds." },
+    { score: 2, meaning: "You can’t talk and can only make sounds or noises." },
+    {
+      score: 3,
+      meaning:
+        "You can talk and others can understand words you say, but your responses to questions don’t make sense.",
+    },
+    {
+      score: 4,
+      meaning:
+        "You’re confused. You can answer questions, but your answers show you’re not fully aware of what’s happening.",
+    },
+    {
+      score: 5,
+      meaning:
+        "You’re oriented. You can correctly answer questions about who you are, where you’re at, the day or year, etc.",
+    },
+  ];
+
+  const motorResponseValues = [
+    { score: 1, meaning: "You don’t move in response to pressure." },
+    {
+      score: 2,
+      meaning: "You extend muscles (stretch outward) in response to pressure.",
+    },
+    {
+      score: 3,
+      meaning: "You flex muscles (pull inward) in response to pressure.",
+    },
+    {
+      score: 4,
+      meaning: "You only move away from something pressing on you as a reflex.",
+    },
+    {
+      score: 5,
+      meaning:
+        "You intentionally move away from something that presses on you.",
+    },
+    {
+      score: 6,
+      meaning: "You follow instructions on how and when to move.",
+    },
+  ];
+
   const gcsMapping = {
     "Chest pain": { eye: 4, verbal: 5, motor: 6 },
     "Shortness of breath": { eye: 3, verbal: 4, motor: 5 },
@@ -428,9 +490,21 @@ function getRandomGCS(chiefComplaint) {
   const totalGCS = finalEyeResponse + finalVerbalResponse + finalMotorResponse;
 
   return {
-    eyeResponse: finalEyeResponse,
-    verbalResponse: finalVerbalResponse,
-    motorResponse: finalMotorResponse,
+    eyeResponse: {
+      score: finalEyeResponse,
+      meaning: eyeResponseValues.find((v) => v.score === finalEyeResponse)
+        .meaning,
+    },
+    verbalResponse: {
+      score: finalVerbalResponse,
+      meaning: verbalResponseValues.find((v) => v.score === finalVerbalResponse)
+        .meaning,
+    },
+    motorResponse: {
+      score: finalMotorResponse,
+      meaning: motorResponseValues.find((v) => v.score === finalMotorResponse)
+        .meaning,
+    },
     totalGCS: totalGCS,
   };
 }
@@ -459,29 +533,6 @@ const setDivContent = (buttonDiv, targetDiv, newDiv) => {
   });
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  const patientContainer = document.getElementById(
-    "built-patients-placeholder"
-  );
-
-  patientContainer.addEventListener("click", (event) => {
-    const patientTitle = event.target.closest(".patient-title");
-    const patientAge = patientContainer.querySelector(".age");
-
-    if (patientTitle) {
-      const patientDiv = patientTitle.nextElementSibling;
-      const isActive = patientDiv.classList.toggle("active");
-
-      if (!isActive) {
-        patientTitle.classList.remove("active");
-        patientAge.classList.remove("active");
-      } else {
-        patientTitle.classList.add("active");
-        patientAge.classList.add("active");
-      }
-    }
-  });
-});
 /*
 const safety = ["yes", "no"];
 
