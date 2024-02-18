@@ -26,70 +26,69 @@ const selectButtons = {
 
 const options = {
   season: [
-    { name: "Random", id: 1 },
-    { name: "Winter", id: 2, weight: 25 },
-    { name: "Spring", id: 3, weight: 25 },
-    { name: "Summer", id: 4, weight: 25 },
-    { name: "Fall", id: 5, weight: 25 },
+    { name: "Random" },
+    { name: "Winter", weight: 25 },
+    { name: "Spring", weight: 25 },
+    { name: "Summer", weight: 25 },
+    { name: "Fall", weight: 25 },
   ],
   time: [
-    { name: "Random", id: 1 },
-    { name: "Morning", id: 2, weight: 25 },
-    { name: "Afternoon", id: 3, weight: 50 },
-    { name: "Evening", id: 4, weight: 25 },
+    { name: "Random" },
+    { name: "Morning", weight: 25 },
+    { name: "Afternoon", weight: 50 },
+    { name: "Evening", weight: 25 },
   ],
   origin: [
-    { name: "Random", id: 1 },
-    { name: "Observed", id: 2, weight: 40 },
-    { name: "Reported", id: 3, weight: 50 },
-    { name: "911 Call", id: 4, weight: 10 },
+    { name: "Random" },
+    { name: "Observed", weight: 40 },
+    { name: "Reported", weight: 50 },
+    { name: "911 Call", weight: 10 },
   ],
   location: [
-    { name: "Random", id: 1 },
-    { name: "Beach", id: 2, weight: 35 },
-    { name: "Water", id: 3, weight: 30 },
-    { name: "Jetty", id: 4, weight: 30 },
-    { name: "Boardwalk", id: 5, weight: 5 },
+    { name: "Random" },
+    { name: "Beach", weight: 35 },
+    { name: "Water", weight: 30 },
+    { name: "Jetty", weight: 30 },
+    { name: "Boardwalk", weight: 5 },
   ],
   surf: [
-    { name: "Random", id: 1 },
-    { name: "1-2 ft", id: 2, weight: 27 },
-    { name: "3-5 ft", id: 3, weight: 55 },
-    { name: "6-9 ft", id: 4, weight: 15 },
-    { name: "10-14 ft", id: 5, weight: 2 },
-    { name: "15 ft +", id: 6, weight: 1 },
+    { name: "Random" },
+    { name: "1-2 ft", weight: 27 },
+    { name: "3-5 ft", weight: 55 },
+    { name: "6-9 ft", weight: 15 },
+    { name: "10-14 ft", weight: 2 },
+    { name: "15 ft +", weight: 1 },
   ],
   patients: [
-    { name: "Random", id: 1 },
-    { name: "1", id: 2, weight: 93 },
-    { name: "2", id: 3, weight: 4 },
-    { name: "3", id: 4, weight: 1 },
-    { name: "4", id: 5, weight: 1 },
-    { name: "5", id: 6, weight: 1 },
+    { name: "Random" },
+    { name: "1", weight: 93 },
+    { name: "2", weight: 4 },
+    { name: "3", weight: 1 },
+    { name: "4", weight: 1 },
+    { name: "5", weight: 1 },
   ],
   age: [
-    { name: "Random", id: 1 },
-    { name: "0-9", id: 2, weight: 5, min: 0, max: 9 },
-    { name: "10-19", id: 3, weight: 25, min: 10, max: 19 },
-    { name: "20-29", id: 4, weight: 25, min: 20, max: 29 },
-    { name: "30-49", id: 5, weight: 25, min: 30, max: 49 },
-    { name: "50+", id: 6, weight: 20, min: 50, max: 79 },
+    { name: "Random" },
+    { name: "0-9", weight: 5, min: 0, max: 9 },
+    { name: "10-19", weight: 25, min: 10, max: 19 },
+    { name: "20-29", weight: 25, min: 20, max: 29 },
+    { name: "30-49", weight: 25, min: 30, max: 49 },
+    { name: "50+", weight: 20, min: 50, max: 79 },
   ],
   sex: [
-    { name: "Random", id: 1 },
-    { name: "Male", id: 2, weight: 50 },
-    { name: "Female", id: 3, weight: 50 },
+    { name: "Random" },
+    { name: "Male", weight: 50 },
+    { name: "Female", weight: 50 },
   ],
   nature: [
-    { name: "Random", id: 1 },
-    { name: "Medical", id: 2, weight: 50 },
-    { name: "Trauma", id: 3, weight: 50 },
+    { name: "Random" },
+    { name: "Medical", weight: 50 },
+    { name: "Trauma", weight: 50 },
   ],
 };
 
 const createOptionElement = (option) => {
   const element = document.createElement("option");
-  element.value = option.id;
   element.textContent = option.name;
   return element;
 };
@@ -98,6 +97,21 @@ const createTextSpanElement = (text) => {
   const element = document.createElement("span");
   element.textContent = text;
   return element;
+};
+
+const createTextElement = (tag, text, className, id) => {
+  const element = document.createElement(tag);
+  if (text) element.textContent = text;
+  if (className) element.classList.add(className);
+  if (id) element.id = id;
+  return element;
+};
+
+const createDivElement = (id, className) => {
+  const div = document.createElement("div");
+  if (id) div.setAttribute("id", id);
+  if (className) div.classList.add(className);
+  return div;
 };
 
 const loadOptions = (selector, variable) => {
@@ -176,7 +190,92 @@ selectors.nature.addEventListener("change", () => {
   handleSelectorChange(selectors.nature, selectButtons.nature);
 });
 
-const buildSceneButton = document.getElementById("build-scene-button");
+const buildDateTimeContainer = () => {
+  const dateTimeContainer = createDivElement("scene-date-time");
+
+  let selectedSeason = getSelectedOption(selectors.season);
+  selectedSeason =
+    selectedSeason === "Random"
+      ? getRandomOption(options.season)
+      : selectedSeason;
+
+  let selectedTime = getSelectedOption(selectors.time);
+  selectedTime =
+    selectedTime === "Random" ? getRandomOption(options.time) : selectedTime;
+
+  const randomDate = getRandomDate(selectedSeason);
+  const randomTime = getRandomTime(selectedTime);
+
+  const dateItem = createTextElement(
+    "span",
+    `${randomDate}, ${randomTime}`,
+    "scene-info"
+  );
+  dateTimeContainer.appendChild(dateItem);
+
+  const seasonItem = createTextElement(
+    "span",
+    `(${selectedSeason}, ${selectedTime})`,
+    "scene-desc"
+  );
+  dateTimeContainer.appendChild(seasonItem);
+
+  const root = document.getElementById("built-scene");
+  root.appendChild(dateTimeContainer);
+};
+
+const buildOriginContainer = () => {
+  const originContainer = createDivElement("scene-origin");
+
+  let selectedOrigin = getSelectedOption(selectors.origin);
+  selectedOrigin =
+    selectedOrigin === "Random"
+      ? getRandomOption(options.origin)
+      : selectedOrigin;
+  const originItem = createTextElement("span", selectedOrigin, "scene-info");
+  originContainer.appendChild(originItem);
+
+  const originDesc = createTextElement("span", "(Origin)", "scene-desc");
+  originContainer.appendChild(originDesc);
+
+  const root = document.getElementById("built-scene");
+  root.appendChild(originContainer);
+};
+
+const buildLocationContainer = () => {
+  const locationContainer = createDivElement("scene-location");
+
+  let selectedLocation = getSelectedOption(selectors.location);
+  selectedLocation =
+    selectedLocation === "Random"
+      ? getRandomOption(options.location)
+      : selectedLocation;
+  const locationItem = createTextElement(
+    "span",
+    selectedLocation,
+    "scene-info"
+  );
+  locationContainer.appendChild(locationItem);
+
+  if (selectedLocation === "Water" || selectedLocation === "Jetty") {
+    let selectedSurf = getSelectedOption(selectors.surf);
+    selectedSurf =
+      selectedSurf === "Random" ? getRandomOption(options.surf) : selectedSurf;
+    const surfItem = createTextElement(
+      "span",
+      `(Wave Height: ${selectedSurf})`,
+      "scene-desc"
+    );
+    locationContainer.appendChild(surfItem);
+  } else {
+    const locationDesc = createTextElement("span", "(Location)", "scene-desc");
+    locationContainer.appendChild(locationDesc);
+  }
+
+  const root = document.getElementById("built-scene");
+  root.appendChild(locationContainer);
+};
+
 const builtScenePlaceholder = document.getElementById(
   "built-scene-placeholder"
 );
@@ -186,75 +285,15 @@ const buildScene = () => {
   if (builtScene) {
     builtScene.remove();
   }
-  const root = document.createElement("div");
-  root.setAttribute("id", "built-scene");
-  root.classList.add("fade-in");
+  const root = createDivElement("built-scene");
   builtScenePlaceholder.appendChild(root);
 
-  const dateTimeContainer = document.createElement("div");
-  dateTimeContainer.setAttribute("id", "scene-date-time");
-  dateTimeContainer.classList.add("fade-in");
-  let selectedSeason = getSelectedOption(selectors.season);
-  selectedSeason =
-    selectedSeason === "Random"
-      ? getRandomOption(options.season)
-      : selectedSeason;
-  let selectedTime = getSelectedOption(selectors.time);
-  selectedTime =
-    selectedTime === "Random" ? getRandomOption(options.time) : selectedTime;
-  let randomDate = getRandomDate(selectedSeason);
-  let randomTime = getRandomTime(selectedTime);
-  const dateItem = createTextSpanElement(`${randomDate}, ${randomTime}`);
-  dateItem.classList.add("scene-info");
-  dateTimeContainer.appendChild(dateItem);
-  const seasonItem = createTextSpanElement(
-    `(${selectedSeason}, ${selectedTime})`
-  );
-  seasonItem.classList.add("scene-desc");
-  dateTimeContainer.appendChild(seasonItem);
-  root.appendChild(dateTimeContainer);
-
-  const originContainer = document.createElement("div");
-  originContainer.setAttribute("id", "scene-origin");
-  originContainer.classList.add("fade-in");
-  let selectedOrigin = getSelectedOption(selectors.origin);
-  selectedOrigin =
-    selectedOrigin === "Random"
-      ? getRandomOption(options.origin)
-      : selectedOrigin;
-  const originItem = createTextSpanElement(`${selectedOrigin}`);
-  originItem.classList.add("scene-info");
-  originContainer.appendChild(originItem);
-  const originDesc = createTextSpanElement(`(Origin)`);
-  originDesc.classList.add("scene-desc");
-  originContainer.appendChild(originDesc);
-  root.appendChild(originContainer);
-
-  const locationContainer = document.createElement("div");
-  locationContainer.setAttribute("id", "scene-location");
-  locationContainer.classList.add("fade-in");
-  let selectedLocation = getSelectedOption(selectors.location);
-  selectedLocation =
-    selectedLocation === "Random"
-      ? getRandomOption(options.location)
-      : selectedLocation;
-  const locationItem = createTextSpanElement(`${selectedLocation}`);
-  locationItem.classList.add("scene-info");
-  locationContainer.appendChild(locationItem);
-  if (selectedLocation === "Water" || selectedLocation === "Jetty") {
-    let selectedSurf = getSelectedOption(selectors.surf);
-    selectedSurf =
-      selectedSurf === "Random" ? getRandomOption(options.surf) : selectedSurf;
-    const surfItem = createTextSpanElement(`Wave Height: ${selectedSurf}`);
-    surfItem.classList.add("scene-desc");
-    locationContainer.appendChild(surfItem);
-  } else {
-    const locationDesc = createTextSpanElement(`(Location)`);
-    locationDesc.classList.add("scene-desc");
-    locationContainer.appendChild(locationDesc);
-  }
-  root.appendChild(locationContainer);
+  buildDateTimeContainer();
+  buildOriginContainer();
+  buildLocationContainer();
 };
+
+const buildPatientTitleContainer = () => {};
 
 const builtPatientsPlaceholder = document.getElementById(
   "built-patients-placeholder"
@@ -265,24 +304,24 @@ const buildPatients = (number) => {
   if (patientsContainer) {
     patientsContainer.remove();
   }
-  const root = document.createElement("div");
-  root.setAttribute("id", "patients-container");
+  const root = createDivElement("patients-container");
   builtPatientsPlaceholder.appendChild(root);
+
   for (let i = 0; i < number; i++) {
     let patientCount = number;
-    const patientTitle = document.createElement("div");
-    patientTitle.setAttribute("class", "patient-title fade-in");
-    const patientTitleText = createTextSpanElement(`Patient ${i + 1}`);
-    patientTitleText.setAttribute("class", "patient-number");
+    const patientTitle = createDivElement(
+      `patient-${i + 1}-title`,
+      "patient-title"
+    );
+    const patientTitleText = createTextElement(
+      "span",
+      `Patient ${i + 1}`,
+      "patient-number"
+    );
     patientTitle.appendChild(patientTitleText);
-    root.appendChild(patientTitle);
-    const patient = document.createElement("div");
-    patient.setAttribute("id", `patient-${i + 1}`);
-    patient.setAttribute("class", "patient fade-in");
-    root.appendChild(patient);
 
-    const patientHeader = document.createElement("div");
-    patientHeader.classList.add("patient-header", "fade-in");
+    const patientHeader = createDivElement(null, "patient-header");
+
     let selectedAge = getSelectedOption(selectors.age);
     selectedAge =
       selectedAge === "Random" ? getRandomOption(options.age) : selectedAge;
@@ -291,47 +330,56 @@ const buildPatients = (number) => {
       options.age[optionIndex].min,
       options.age[optionIndex].max
     );
-    const ageItem = createTextSpanElement(`${randomAge}`);
-    ageItem.classList.add("age");
+    const ageItem = createTextElement("span", randomAge, "age");
     patientHeader.appendChild(ageItem);
+
     let selectedSex = getSelectedOption(selectors.sex);
     selectedSex =
       selectedSex === "Random" ? getRandomOption(options.sex) : selectedSex;
-    const sexItem = createTextSpanElement(`${selectedSex}`);
-    sexItem.classList.add("sex");
+    const sexItem = createTextElement("span", selectedSex, "sex");
     patientHeader.appendChild(sexItem);
+
     let selectedNature = getSelectedOption(selectors.nature);
     selectedNature =
       selectedNature === "Random"
         ? getRandomOption(options.nature)
         : selectedNature;
-    const natureItem = createTextSpanElement(`(${selectedNature})`);
-    natureItem.classList.add("nature");
+    const natureItem = createTextElement(
+      "span",
+      `(${selectedNature})`,
+      "nature"
+    );
     patientHeader.appendChild(natureItem);
     patientTitle.appendChild(patientHeader);
+    root.appendChild(patientTitle);
 
-    const patientBody = document.createElement("div");
-    patientBody.setAttribute("class", "patient-body fade-in");
+    patientTitle.addEventListener("click", () => {
+      patientTitle.classList.toggle("active");
+      patient.classList.toggle("active");
+      ageItem.classList.toggle("active");
+    });
+
+    const patient = createDivElement(`patient-${i + 1}`, "patient");
+    root.appendChild(patient);
+
+    const patientBody = createDivElement(null, "patient-body");
     patient.appendChild(patientBody);
 
-    const sizeUpGroup = document.createElement("div");
-    sizeUpGroup.setAttribute("class", "size-up-group fade-in");
+    const sizeUpGroup = createDivElement(null, "size-up-group");
     patientBody.appendChild(sizeUpGroup);
 
-    const sizeUpTitle = document.createElement("div");
-    sizeUpTitle.setAttribute("class", "patient-sub-title fade-in");
-    const sizeUpTitleText = createTextSpanElement(`Scene Size Up`);
+    const sizeUpTitle = createDivElement(null, "patient-sub-title");
+    const sizeUpTitleText = createTextElement("span", "Scene Size Up", null);
     sizeUpTitle.appendChild(sizeUpTitleText);
     sizeUpGroup.appendChild(sizeUpTitle);
 
-    const sizeUpItem = document.createElement("div");
-    sizeUpItem.setAttribute("id", "patient-size-up");
-    sizeUpItem.classList.add("assessment");
+    const sizeUpItem = createDivElement("patient-size-up", "assessment");
     let chiefComplaint;
     let bloodPressure;
     let pulse;
+    const medicalChief = getRandomChiefComplaint(medicalChiefComplaints);
+    const traumaChief = getRandomChiefComplaint(traumaChiefComplaints);
     if (selectedNature === "Medical") {
-      const medicalChief = getRandomChiefComplaint(medicalChiefComplaints);
       const assessmentLines = [
         `Scene Safety: Safe`,
         `Nature of Illness: ${medicalChief.nature}`,
@@ -340,16 +388,18 @@ const buildPatients = (number) => {
         `C-Spine Stabilization: Yes`,
       ];
       assessmentLines.forEach((line, index) => {
-        const lineElement = document.createElement("div");
-        lineElement.textContent = line;
-        lineElement.setAttribute("id", `size-up-line-${index + 1}`);
+        const lineElement = createTextElement(
+          "div",
+          line,
+          null,
+          `size-up-line-${index + 1}`
+        );
         sizeUpItem.appendChild(lineElement);
       });
       chiefComplaint = medicalChief.complaint;
       bloodPressure = medicalChief.bloodPressure;
       pulse = medicalChief.pulse;
     } else if (selectedNature === "Trauma") {
-      const traumaChief = getRandomChiefComplaint(traumaChiefComplaints);
       const assessmentLines = [
         `Scene Safety: Safe`,
         `Mechanism of Injury: ${traumaChief.mechanism}`,
@@ -358,9 +408,12 @@ const buildPatients = (number) => {
         `C-Spine Stabilization: Yes`,
       ];
       assessmentLines.forEach((line, index) => {
-        const lineElement = document.createElement("div");
-        lineElement.textContent = line;
-        lineElement.setAttribute("id", `size-up-line-${index + 1}`);
+        const lineElement = createTextElement(
+          "div",
+          line,
+          null,
+          `size-up-line-${index + 1}`
+        );
         sizeUpItem.appendChild(lineElement);
       });
       chiefComplaint = traumaChief.complaint;
@@ -369,44 +422,47 @@ const buildPatients = (number) => {
     }
     sizeUpGroup.appendChild(sizeUpItem);
 
-    const vitalsItem = document.createElement("div");
-    vitalsItem.classList.add("assessment");
+    const vitalsItem = createDivElement(null, "assessment");
+
     const randomGCS = getRandomGCS(chiefComplaint);
-    const gcsItem = createTextSpanElement(
-      `GCS: E${randomGCS.eyeResponse} V${randomGCS.verbalResponse} M${randomGCS.motorResponse} = ${randomGCS.totalGCS}`
-    );
-    gcsItem.classList.add("blood-pressure");
+    const gcsItem = createTextElement("span", null, "blood-pressure");
+    gcsItem.innerHTML = `GCS: ${randomGCS.totalGCS} <br>E${randomGCS.eyeResponse.score} (${randomGCS.eyeResponse.meaning}) <br>V${randomGCS.verbalResponse.score} (${randomGCS.verbalResponse.meaning}) <br>M${randomGCS.motorResponse.score} (${randomGCS.motorResponse.meaning})`;
     vitalsItem.appendChild(gcsItem);
+
     const randomBloodPressure = getRandomBloodPressure(bloodPressure);
-    const bloodPressureItem = createTextSpanElement(
-      `Blood Pressure: ${randomBloodPressure}`
+    const bloodPressureItem = createTextElement(
+      "span",
+      `Blood Pressure: ${randomBloodPressure}`,
+      "blood-pressure"
     );
-    bloodPressureItem.classList.add("blood-pressure");
     vitalsItem.appendChild(bloodPressureItem);
+
     const randomPulse = getRandomPulse(pulse);
-    const pulseItem = createTextSpanElement(`Pulse: ${randomPulse}`);
-    pulseItem.classList.add("blood-pressure");
+    const pulseItem = createTextElement(
+      "span",
+      `Pulse: ${randomPulse}`,
+      "blood-pressure"
+    );
     vitalsItem.appendChild(pulseItem);
 
     setDivContent(sizeUpTitle, sizeUpItem, vitalsItem);
 
-    const primaryGroup = document.createElement("div");
-    primaryGroup.setAttribute("class", "size-up-group fade-in");
+    const primaryGroup = createDivElement(null, "size-up-group");
     patientBody.appendChild(primaryGroup);
 
-    const primarySurveyTitle = document.createElement("div");
-    primarySurveyTitle.setAttribute("class", "patient-sub-title fade-in");
-    const primarySurveyTitleText = createTextSpanElement(
+    const primarySurveyTitle = createDivElement(null, "patient-sub-title");
+    const primarySurveyTitleText = createTextElement(
+      "span",
       `Primary Survey / Resuscitation`
     );
     primarySurveyTitle.appendChild(primarySurveyTitleText);
     primaryGroup.appendChild(primarySurveyTitle);
 
-    const primarySurveyItem = document.createElement("div");
-    primarySurveyItem.setAttribute("id", "patient-primary-survey");
-    primarySurveyItem.classList.add("assessment");
+    const primarySurveyItem = createDivElement(
+      "patient-primary-survey",
+      "assessment"
+    );
     if (selectedNature === "Medical") {
-      const medicalChief = getRandomChiefComplaint(medicalChiefComplaints);
       const assessmentLines = [
         `General Impression: `,
         `Responsiveness/LOC (AVPU): ${medicalChief.responsiveness}`,
@@ -418,13 +474,15 @@ const buildPatients = (number) => {
         `Patient Priority/Transport: `,
       ];
       assessmentLines.forEach((line, index) => {
-        const lineElement = document.createElement("div");
-        lineElement.textContent = line;
-        lineElement.setAttribute("id", `primary-line-${index + 1}`);
+        const lineElement = createTextElement(
+          "div",
+          line,
+          null,
+          `primary-line-${index + 1}`
+        );
         primarySurveyItem.appendChild(lineElement);
       });
     } else if (selectedNature === "Trauma") {
-      const traumaChief = getRandomChiefComplaint(traumaChiefComplaints);
       const assessmentLines = [
         `General Impression: `,
         `Responsiveness/LOC (AVPU): ${traumaChief.responsiveness}`,
@@ -436,9 +494,12 @@ const buildPatients = (number) => {
         `Patient Priority/Transport: `,
       ];
       assessmentLines.forEach((line, index) => {
-        const lineElement = document.createElement("div");
-        lineElement.textContent = line;
-        lineElement.setAttribute("id", `primary-line-${index + 1}`);
+        const lineElement = createTextElement(
+          "div",
+          line,
+          null,
+          `primary-line-${index + 1}`
+        );
         primarySurveyItem.appendChild(lineElement);
       });
     }
@@ -448,6 +509,8 @@ const buildPatients = (number) => {
   }
 };
 
+const buildSceneButton = document.getElementById("build-scene-button");
+
 buildSceneButton.addEventListener("click", () => {
   buildScene();
   let selectedPatients = getSelectedOption(selectors.patients);
@@ -456,15 +519,4 @@ buildSceneButton.addEventListener("click", () => {
       ? getRandomOption(options.patients)
       : selectedPatients;
   buildPatients(selectedPatients);
-  const patientContainer = document.getElementById(
-    "built-patients-placeholder"
-  );
-  const firstPatientDiv = patientContainer.querySelector(".patient");
-  const firstPatientTitle = patientContainer.querySelector(".patient-title");
-  const firstPatientAge = patientContainer.querySelector(".age");
-  if (firstPatientDiv) {
-    firstPatientDiv.classList.add("active");
-    firstPatientTitle.classList.add("active");
-    firstPatientAge.classList.add("active");
-  }
 });
