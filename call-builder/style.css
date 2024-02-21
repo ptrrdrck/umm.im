@@ -50,7 +50,7 @@ body {
   }
   .section-title,
   .section-info {
-    padding: 0 0 10px 0;
+    padding: 0 0 10px;
   }
   .selector-title {
     padding: 0 20px 0 0;
@@ -119,38 +119,59 @@ body {
   }
 }
 @media (min-width: 600px) {
+  header,
+  main,
+  footer {
+    margin: 0 20px;
+  }
+  #page-title {
+    margin: 40px 0;
+  }
   #scene-info,
   #surf,
-  #built-scene,
   #patients-container {
     flex-direction: column;
   }
   #scene {
-    gap: unset;
+    gap: 10px;
     flex-direction: row;
   }
   .section-title,
   .section-info {
-    padding: 10px 0;
+    padding: 0 0 10px;
   }
   .selector-title {
-    padding: 0 20px 0 0;
-    align-self: center;
+    padding: 0 0 10px;
   }
   .selector {
-    flex-direction: row;
-    padding: 10px 0;
+    flex-direction: column;
+    padding: 10px 20px 0 0;
   }
   .next-button {
-    margin: 10px 0;
+    margin: 25px 0 5px 0;
+  }
+  #built-scene {
+    flex-direction: row;
+    padding: 16px 20px;
+  }
+  .scene-info {
+    padding: 0 0 2px 0;
+  }
+  .scene-desc {
+    padding: 5px 0 0 0;
+  }
+  #scene-date-time,
+  #scene-origin,
+  #scene-location {
+    flex-direction: column;
+    padding: 0 40px 0 0;
   }
   #scene-builder,
-  #built-scene,
   .patient {
     padding: 20px 26px;
   }
   .sex {
-    padding: 10px 20px 10px 0;
+    padding: 10px 30px;
   }
   .nature {
     padding: 10px 0;
@@ -171,15 +192,12 @@ body {
   #patients-container {
     flex-direction: row;
   }
-  #scene {
-    gap: 10px;
-  }
   .section-info {
     padding: 2px 0px 0px 40px;
     align-self: center;
   }
   .section-title {
-    padding: 0 0 10px 0;
+    padding: 0 0 10px;
   }
   .selector-title {
     padding: 0 0 10px 0;
