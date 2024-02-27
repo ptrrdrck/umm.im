@@ -30,8 +30,7 @@ const buildDateTimeContainer = () => {
   );
   dateTimeContainer.appendChild(seasonItem);
 
-  const root = document.getElementById("built-scene");
-  root.appendChild(dateTimeContainer);
+  return dateTimeContainer;
 };
 
 const buildOriginContainer = () => {
@@ -48,8 +47,7 @@ const buildOriginContainer = () => {
   const originDesc = createTextElement("span", "(Origin)", "scene-desc");
   originContainer.appendChild(originDesc);
 
-  const root = document.getElementById("built-scene");
-  root.appendChild(originContainer);
+  return originContainer;
 };
 
 const buildLocationContainer = () => {
@@ -82,8 +80,7 @@ const buildLocationContainer = () => {
     locationContainer.appendChild(locationDesc);
   }
 
-  const root = document.getElementById("built-scene");
-  root.appendChild(locationContainer);
+  return locationContainer;
 };
 
 const builtScenePlaceholder = document.getElementById(
@@ -99,9 +96,14 @@ const buildScene = () => {
   const root = createDivElement("built-scene");
   builtScenePlaceholder.appendChild(root);
 
-  buildDateTimeContainer();
-  buildOriginContainer();
-  buildLocationContainer();
+  const dateTimeContainer = buildDateTimeContainer();
+  root.appendChild(dateTimeContainer);
+
+  const originContainer = buildOriginContainer();
+  root.appendChild(originContainer);
+
+  const locationContainer = buildLocationContainer();
+  root.appendChild(locationContainer);
 };
 
 const builtPatientsPlaceholder = document.getElementById(
