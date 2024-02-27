@@ -235,21 +235,23 @@ const buildPatient = (patientNumber, selectedNature, patientCount) => {
   if (selectedNature === "Medical") {
     chiefComplaintData = getRandomChiefComplaint(medicalChiefComplaints);
     chiefComplaint = chiefComplaintData.complaint;
+    natureMechanism = `Nature of Illness: ${chiefComplaintData.nature}`;
     bloodPressure = chiefComplaintData.bloodPressure;
     pulse = chiefComplaintData.pulse;
   } else if (selectedNature === "Trauma") {
     chiefComplaintData = getRandomChiefComplaint(traumaChiefComplaints);
     chiefComplaint = chiefComplaintData.complaint;
+    natureMechanism = `Mechanism of Injury: ${chiefComplaintData.mechanism}`;
     bloodPressure = chiefComplaintData.bloodPressure;
     pulse = chiefComplaintData.pulse;
   }
 
   const sizeUpLines = [
     `Scene Safety: Safe`,
-    `Nature of Illness: ${chiefComplaintData.nature}`,
+    `${natureMechanism}`,
     `Number of Patients: ${patientCount}`,
-    `Additional EMS: Yes`,
-    `C-Spine Stabilization: Yes`,
+    `Additional EMS: ?`,
+    `C-Spine Stabilization: ?`,
   ];
   sizeUpLines.forEach((line, index) => {
     const lineElement = createTextElement(
@@ -308,14 +310,14 @@ const buildPatient = (patientNumber, selectedNature, patientCount) => {
   );
 
   const primarySurveyLines = [
-    `General Impression: `,
+    `General Impression: ?`,
     `Responsiveness/LOC (AVPU): ${chiefComplaintData.responsiveness}`,
     `Chief Complaint: ${chiefComplaintData.complaint}`,
-    `Apparent Life Threats: `,
+    `Apparent Life Threats: ?`,
     `Airway: ${chiefComplaintData.airway}`,
     `Breathing: ${chiefComplaintData.breathing}`,
     `Circulation: ${chiefComplaintData.circulation}`,
-    `Patient Priority/Transport: `,
+    `Patient Priority/Transport: ?`,
   ];
   primarySurveyLines.forEach((line, index) => {
     const lineElement = createTextElement(
