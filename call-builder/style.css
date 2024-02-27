@@ -580,14 +580,15 @@ select {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   justify-content: space-between;
 }
 
 .size-up-group {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: auto;
+  flex-grow: 1;
 }
 
 #scene-date-time,
@@ -650,6 +651,12 @@ select {
 }
 
 .size-up-group {
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+
+.size-up-group-info {
   background-color: #fff;
   border-radius: 6px;
   padding: 5px 10px;
