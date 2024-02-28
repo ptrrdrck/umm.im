@@ -230,13 +230,41 @@ const getRandomChiefComplaint = (chiefComplaints) => {
   return chiefComplaints[randomIndex];
 };
 
+const getChiefComplaint = (selectedNature) => {
+  let chiefComplaintData;
+
+  if (selectedNature === "Medical") {
+    chiefComplaintData = getRandomChiefComplaint(medicalChiefComplaints);
+  } else if (selectedNature === "Trauma") {
+    chiefComplaintData = getRandomChiefComplaint(traumaChiefComplaints);
+  }
+
+  return {
+    chiefComplaintData: chiefComplaintData,
+    chiefComplaint: chiefComplaintData.complaint,
+    natureMechanism:
+      selectedNature === "Medical"
+        ? `Nature of Illness: ${chiefComplaintData.nature}`
+        : `Mechanism of Injury: ${chiefComplaintData.mechanism}`,
+    responsiveness: chiefComplaintData.responsiveness,
+    airway: chiefComplaintData.airway,
+    breathing: chiefComplaintData.breathing,
+    circulation: chiefComplaintData.circulation,
+    bloodPressure: chiefComplaintData.bloodPressure,
+    pulse: chiefComplaintData.pulse,
+  };
+};
+
 const getRandomOption = (arr) => {
   const options = arr.slice(1);
   const weights = [options[0].weight];
+
   for (let i = 1; i < options.length; i++) {
     weights[i] = options[i].weight + weights[i - 1];
   }
+
   const random = Math.random() * weights[weights.length - 1];
+
   for (let i = 0; i < weights.length; i++) {
     if (weights[i] > random) {
       return options[i].name;
@@ -248,10 +276,12 @@ const getRandomAge = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   const randomValue = Math.floor(Math.random() * (max - min + 1)) + min;
+
   if (randomValue === 0) {
     const months = Math.floor(Math.random() * 11) + 1;
     return months ? (months === 1 ? "1 month" : `${months} months`) : months;
   }
+
   return randomValue;
 };
 
@@ -261,12 +291,14 @@ function getRandomTime(selectedTime) {
     Afternoon: { start: 12, end: 16 },
     Evening: { start: 16, end: 21 },
   };
+
   const { start, end } = timeRanges[selectedTime];
   const randomHour = Math.floor(Math.random() * (end - start) + start);
   const randomMinutes = Math.floor(Math.random() * 60);
   const formattedTime = `${String(randomHour).padStart(2, "0")}:${String(
     randomMinutes
   ).padStart(2, "0")}`;
+
   return formattedTime;
 }
 
@@ -315,7 +347,9 @@ function getRandomBloodPressure(bloodPressureValue) {
     diastolic: { low: 80, high: 120 },
     name: "High",
   };
+
   let selectedRange;
+
   switch (bloodPressureValue) {
     case "Low":
       selectedRange = lowRange;
@@ -332,6 +366,7 @@ function getRandomBloodPressure(bloodPressureValue) {
     default:
       throw new Error("Invalid blood pressure value");
   }
+
   const randomSystolic = getRandomEvenInt(
     Math.max(selectedRange.systolic.low, selectedRange.diastolic.low + 2),
     selectedRange.systolic.high + 1
@@ -340,6 +375,7 @@ function getRandomBloodPressure(bloodPressureValue) {
     selectedRange.diastolic.low,
     Math.min(selectedRange.diastolic.high, randomSystolic - 1) + 1
   );
+
   return `${randomSystolic}/${randomDiastolic} mmHg (${selectedRange.name})`;
 }
 
@@ -349,7 +385,9 @@ function getRandomPulse(pulseValue) {
   const normalRange = { low: 60, high: 100, name: "Normal" };
   const elevatedRange = { low: 100, high: 120, name: "Elevated" };
   const highRange = { low: 120, high: 160, name: "High" };
+
   let selectedRange;
+
   switch (pulseValue) {
     case "None":
       selectedRange = zeroRange;
@@ -369,10 +407,12 @@ function getRandomPulse(pulseValue) {
     default:
       throw new Error("Invalid pulse value");
   }
+
   const randomPulse = getRandomEvenInt(
     selectedRange.low,
     selectedRange.high + 1
   );
+
   return `${randomPulse} bpm (${selectedRange.name})`;
 }
 
@@ -514,20 +554,25 @@ const setDivContent = (buttonDiv, targetDiv, newDiv) => {
     event.preventDefault();
     targetDiv.replaceWith(newDiv);
   });
+
   buttonDiv.addEventListener("touchend", (event) => {
     event.preventDefault();
     newDiv.replaceWith(targetDiv);
   });
+
   buttonDiv.addEventListener("touchcancel", (event) => {
     event.preventDefault();
     newDiv.replaceWith(targetDiv);
   });
+
   buttonDiv.addEventListener("mousedown", () => {
     targetDiv.replaceWith(newDiv);
   });
+
   buttonDiv.addEventListener("mouseup", () => {
     newDiv.replaceWith(targetDiv);
   });
+
   buttonDiv.addEventListener("mouseout", () => {
     newDiv.replaceWith(targetDiv);
   });
