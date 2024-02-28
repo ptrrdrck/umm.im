@@ -114,7 +114,7 @@ body {
   .nature {
     padding: 10px;
   }
-  .size-up-group {
+  .patient-card {
     width: 100%;
   }
 }
@@ -192,11 +192,14 @@ body {
   #patients-container {
     flex-direction: row;
   }
+  #scene-info {
+    gap: 20px;
+  }
   .section-info {
-    padding: 2px 0px 0px 40px;
     align-self: center;
   }
-  .section-title {
+  .section-title,
+  .section-info {
     padding: 0 0 10px;
   }
   .selector-title {
@@ -254,8 +257,8 @@ body {
   .nature {
     padding: 10px 0;
   }
-  .size-up-group {
-    width: 48%;
+  .patient-card {
+    width: 50%;
   }
 }
 
@@ -402,8 +405,8 @@ a:hover {
 }
 
 .section-info {
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 1.8rem;
+  font-weight: 300;
 }
 
 .selector-title {
@@ -545,7 +548,7 @@ select {
   height: 20px;
 }
 
-.patient-sub-title {
+.card-title {
   display: flex;
   justify-content: center;
   background-color: #fff;
@@ -578,13 +581,13 @@ select {
 
 .patient-body {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: 10px;
   justify-content: space-between;
 }
 
-.size-up-group {
+.patient-card {
   display: flex;
   flex-direction: column;
   width: auto;
@@ -650,14 +653,15 @@ select {
   gap: 10px;
 }
 
-.size-up-group {
+.patient-card {
   background-color: #fff;
   border-radius: 6px;
   padding: 5px 10px;
 }
 
-.size-up-group-info {
-  background-color: #fff;
-  border-radius: 6px;
-  padding: 5px 10px;
+.patient-card-group {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  gap: 4px;
 }
