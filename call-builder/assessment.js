@@ -137,12 +137,15 @@ const buildPatients = (number) => {
         ? getRandomOption(options.nature)
         : selectedNature;
 
+    let callData = getChiefComplaint(selectedNature);
+
     buildPatientElements(
       i + 1,
       selectedAge,
       selectedSex,
       selectedNature,
-      patientCount
+      patientCount,
+      callData
     );
   }
 };
@@ -152,7 +155,8 @@ const buildPatientElements = (
   selectedAge,
   selectedSex,
   selectedNature,
-  patientCount
+  patientCount,
+  callData
 ) => {
   const root = document.getElementById("patients-container");
 
@@ -164,8 +168,25 @@ const buildPatientElements = (
   );
   root.appendChild(patientTitle);
 
-  const patient = buildPatient(patientNumber, selectedNature, patientCount);
+  const patient = createDivElement(`patient-${patientNumber}`, "patient");
   root.appendChild(patient);
+
+  const patientTitleDOM = document.getElementById(
+    `patient-${patientNumber}-title`
+  );
+
+  patientTitleDOM.addEventListener("click", () => {
+    patient.classList.toggle("active");
+  });
+
+  const patientBody = createDivElement(null, "patient-body");
+  patient.appendChild(patientBody);
+
+  const patientSizeUp = buildSizeUp(patientCount, callData);
+  patientBody.appendChild(patientSizeUp);
+
+  const patientPrimarySurvey = buildPrimarySurvey(callData);
+  patientBody.appendChild(patientPrimarySurvey);
 };
 
 const buildPatientTitle = (
@@ -211,44 +232,22 @@ const buildPatientTitle = (
   return patientTitle;
 };
 
-const buildPatient = (patientNumber, selectedNature, patientCount) => {
-  let chiefComplaintData;
-  let chiefComplaint = "";
-  let bloodPressure = "";
-  let pulse = "";
+const buildSizeUp = (patientCount, callData) => {
+  const sizeUpGroup = createDivElement(null, "patient-card-group");
 
-  const patient = createDivElement(`patient-${patientNumber}`, "patient");
+  const sizeUpData = createDivElement(null, "patient-card");
+  sizeUpGroup.appendChild(sizeUpData);
 
-  const patientBody = createDivElement(null, "patient-body");
-  patient.appendChild(patientBody);
-
-  const sizeUpGroup = createDivElement(null, "size-up-group");
-  patientBody.appendChild(sizeUpGroup);
-
-  const sizeUpTitle = createDivElement(null, "patient-sub-title");
+  const sizeUpTitle = createDivElement(null, "card-title");
   const sizeUpTitleText = createTextElement("span", "Scene Size Up", null);
   sizeUpTitle.appendChild(sizeUpTitleText);
-  sizeUpGroup.appendChild(sizeUpTitle);
+  sizeUpData.appendChild(sizeUpTitle);
 
   const sizeUpItem = createDivElement("patient-size-up", "assessment");
 
-  if (selectedNature === "Medical") {
-    chiefComplaintData = getRandomChiefComplaint(medicalChiefComplaints);
-    chiefComplaint = chiefComplaintData.complaint;
-    natureMechanism = `Nature of Illness: ${chiefComplaintData.nature}`;
-    bloodPressure = chiefComplaintData.bloodPressure;
-    pulse = chiefComplaintData.pulse;
-  } else if (selectedNature === "Trauma") {
-    chiefComplaintData = getRandomChiefComplaint(traumaChiefComplaints);
-    chiefComplaint = chiefComplaintData.complaint;
-    natureMechanism = `Mechanism of Injury: ${chiefComplaintData.mechanism}`;
-    bloodPressure = chiefComplaintData.bloodPressure;
-    pulse = chiefComplaintData.pulse;
-  }
-
   const sizeUpLines = [
     `Scene Safety: Safe`,
-    `${natureMechanism}`,
+    `${callData.natureMechanism}`,
     `Number of Patients: ${patientCount}`,
     `Additional EMS: ?`,
     `C-Spine Stabilization: ?`,
@@ -262,47 +261,27 @@ const buildPatient = (patientNumber, selectedNature, patientCount) => {
     );
     sizeUpItem.appendChild(lineElement);
   });
+  sizeUpData.appendChild(sizeUpItem);
 
-  sizeUpGroup.appendChild(sizeUpItem);
+  const sizeUpDataInfo = createDivElement(null, "patient-card");
+  sizeUpGroup.appendChild(sizeUpDataInfo);
 
-  const sizeUpGroupInfo = createDivElement(null, "size-up-group-info");
-  patientBody.appendChild(sizeUpGroupInfo);
+  return sizeUpGroup;
+};
 
-  const vitalsItem = createDivElement(null, "assessment");
+const buildPrimarySurvey = (callData) => {
+  const primaryGroup = createDivElement(null, "patient-card-group");
 
-  const randomGCS = getRandomGCS(chiefComplaint);
-  const gcsItem = createTextElement("span", null, "blood-pressure");
-  gcsItem.innerHTML = `GCS: ${randomGCS.totalGCS} <br>E${randomGCS.eyeResponse.score} (${randomGCS.eyeResponse.meaning}) <br>V${randomGCS.verbalResponse.score} (${randomGCS.verbalResponse.meaning}) <br>M${randomGCS.motorResponse.score} (${randomGCS.motorResponse.meaning})`;
-  vitalsItem.appendChild(gcsItem);
+  const primaryData = createDivElement(null, "patient-card");
+  primaryGroup.appendChild(primaryData);
 
-  const randomBloodPressure = getRandomBloodPressure(bloodPressure);
-  const bloodPressureItem = createTextElement(
-    "span",
-    `Blood Pressure: ${randomBloodPressure}`,
-    "blood-pressure"
-  );
-  vitalsItem.appendChild(bloodPressureItem);
-
-  const randomPulse = getRandomPulse(pulse);
-  const pulseItem = createTextElement(
-    "span",
-    `Pulse: ${randomPulse}`,
-    "blood-pressure"
-  );
-  vitalsItem.appendChild(pulseItem);
-
-  setDivContent(sizeUpTitle, sizeUpItem, vitalsItem);
-
-  const primaryGroup = createDivElement(null, "size-up-group");
-  patientBody.appendChild(primaryGroup);
-
-  const primarySurveyTitle = createDivElement(null, "patient-sub-title");
+  const primarySurveyTitle = createDivElement(null, "card-title");
   const primarySurveyTitleText = createTextElement(
     "span",
     `Primary Survey / Resuscitation`
   );
   primarySurveyTitle.appendChild(primarySurveyTitleText);
-  primaryGroup.appendChild(primarySurveyTitle);
+  primaryData.appendChild(primarySurveyTitle);
 
   const primarySurveyItem = createDivElement(
     "patient-primary-survey",
@@ -311,12 +290,12 @@ const buildPatient = (patientNumber, selectedNature, patientCount) => {
 
   const primarySurveyLines = [
     `General Impression: ?`,
-    `Responsiveness/LOC (AVPU): ${chiefComplaintData.responsiveness}`,
-    `Chief Complaint: ${chiefComplaintData.complaint}`,
+    `Responsiveness/LOC (AVPU): ${callData.responsiveness}`,
+    `Chief Complaint: ${callData.chiefComplaint}`,
     `Apparent Life Threats: ?`,
-    `Airway: ${chiefComplaintData.airway}`,
-    `Breathing: ${chiefComplaintData.breathing}`,
-    `Circulation: ${chiefComplaintData.circulation}`,
+    `Airway: ${callData.airway}`,
+    `Breathing: ${callData.breathing}`,
+    `Circulation: ${callData.circulation}`,
     `Patient Priority/Transport: ?`,
   ];
   primarySurveyLines.forEach((line, index) => {
@@ -328,18 +307,34 @@ const buildPatient = (patientNumber, selectedNature, patientCount) => {
     );
     primarySurveyItem.appendChild(lineElement);
   });
+  primaryData.appendChild(primarySurveyItem);
 
-  primaryGroup.appendChild(primarySurveyItem);
+  const primaryInfo = createDivElement(null, "patient-card");
+  primaryGroup.appendChild(primaryInfo);
 
-  setDivContent(primarySurveyTitle, primarySurveyItem, vitalsItem);
+  const vitalsItem = createDivElement(null, "assessment");
+  primaryInfo.appendChild(vitalsItem);
 
-  const patientTitle = document.getElementById(
-    `patient-${patientNumber}-title`
+  const randomGCS = getRandomGCS(callData.chiefComplaint);
+  const gcsItem = createTextElement("span", null, "blood-pressure");
+  gcsItem.innerHTML = `GCS: ${randomGCS.totalGCS} <br>E${randomGCS.eyeResponse.score} (${randomGCS.eyeResponse.meaning}) <br>V${randomGCS.verbalResponse.score} (${randomGCS.verbalResponse.meaning}) <br>M${randomGCS.motorResponse.score} (${randomGCS.motorResponse.meaning})`;
+  vitalsItem.appendChild(gcsItem);
+
+  const randomBloodPressure = getRandomBloodPressure(callData.bloodPressure);
+  const bloodPressureItem = createTextElement(
+    "span",
+    `Blood Pressure: ${randomBloodPressure}`,
+    "blood-pressure"
   );
+  vitalsItem.appendChild(bloodPressureItem);
 
-  patientTitle.addEventListener("click", () => {
-    patient.classList.toggle("active");
-  });
+  const randomPulse = getRandomPulse(callData.pulse);
+  const pulseItem = createTextElement(
+    "span",
+    `Pulse: ${randomPulse}`,
+    "blood-pressure"
+  );
+  vitalsItem.appendChild(pulseItem);
 
-  return patient;
+  return primaryGroup;
 };
