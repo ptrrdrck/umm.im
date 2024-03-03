@@ -224,9 +224,33 @@ const buildPatientTitle = (
   patientHeader.appendChild(natureItem);
   patientTitle.appendChild(patientHeader);
 
+  const callTimer = createDivElement(null, "call-timer");
+  const elapsedTime = createTextElement(
+    "span",
+    "00:00",
+    "timer",
+    `timer-${patientNumber}`
+  );
+  callTimer.appendChild(elapsedTime);
+  patientTitle.appendChild(callTimer);
+
+  let timerInterval;
+  let timerTime = { minutes: 0, seconds: 0 };
+
   patientTitle.addEventListener("click", () => {
     patientTitle.classList.toggle("active");
     ageItem.classList.toggle("active");
+
+    if (patientTitle.classList.contains("active")) {
+      timerInterval = startTimer(timerTime, patientNumber);
+    } else {
+      clearInterval(timerInterval);
+
+      timerTime = {
+        minutes: parseInt(elapsedTime.textContent.slice(0, 2)),
+        seconds: parseInt(elapsedTime.textContent.slice(3)),
+      };
+    }
   });
 
   return patientTitle;
@@ -246,20 +270,25 @@ const buildSizeUp = (patientCount, callData) => {
   const sizeUpItem = createDivElement("patient-size-up", "assessment");
 
   const sizeUpLines = [
-    `Scene Safety: Safe`,
-    `${callData.natureMechanism}`,
-    `Number of Patients: ${patientCount}`,
-    `Additional EMS: ?`,
-    `C-Spine Stabilization: ?`,
+    { title: "Scene Safety", value: "Safe" },
+    {
+      title: `${callData.natureMechanismText}`,
+      value: `${callData.natureMechanismValue}`,
+    },
+    { title: "Number of Patients", value: `${patientCount}` },
+    { title: "Additional EMS", value: "?" },
+    { title: "C-Spine Stabilization", value: "?" },
   ];
+
   sizeUpLines.forEach((line, index) => {
-    const lineElement = createTextElement(
-      "div",
-      line,
-      null,
-      `size-up-line-${index + 1}`
-    );
+    const lineElement = createDivElement(null, "assessment-line");
     sizeUpItem.appendChild(lineElement);
+
+    const lineTitleElement = createTextElement("div", line.title, `line-title`);
+    lineElement.appendChild(lineTitleElement);
+
+    const lineValueElement = createTextElement("div", line.value, `line-value`);
+    lineElement.appendChild(lineValueElement);
   });
   sizeUpData.appendChild(sizeUpItem);
 
@@ -275,13 +304,13 @@ const buildPrimarySurvey = (callData) => {
   const primaryData = createDivElement(null, "patient-card");
   primaryGroup.appendChild(primaryData);
 
-  const primarySurveyTitle = createDivElement(null, "card-title");
-  const primarySurveyTitleText = createTextElement(
+  const primaryDataTitle = createDivElement(null, "card-title");
+  const primaryDataTitleText = createTextElement(
     "span",
     `Primary Survey / Resuscitation`
   );
-  primarySurveyTitle.appendChild(primarySurveyTitleText);
-  primaryData.appendChild(primarySurveyTitle);
+  primaryDataTitle.appendChild(primaryDataTitleText);
+  primaryData.appendChild(primaryDataTitle);
 
   const primarySurveyItem = createDivElement(
     "patient-primary-survey",
@@ -289,52 +318,122 @@ const buildPrimarySurvey = (callData) => {
   );
 
   const primarySurveyLines = [
-    `General Impression: ?`,
-    `Responsiveness/LOC (AVPU): ${callData.responsiveness}`,
-    `Chief Complaint: ${callData.chiefComplaint}`,
-    `Apparent Life Threats: ?`,
-    `Airway: ${callData.airway}`,
-    `Breathing: ${callData.breathing}`,
-    `Circulation: ${callData.circulation}`,
-    `Patient Priority/Transport: ?`,
+    { title: "General Impression", value: `${callData.generalImpression}` },
+    {
+      title: "Responsiveness, Level Of Consciousness (AVPU)",
+      value: `${callData.responsiveness}`,
+    },
+    { title: "Chief Complaint", value: `${callData.chiefComplaint}` },
+    { title: "Apparent Life Threats", value: "?" },
+    { title: "Airway", value: `${callData.airway}` },
+    { title: "Breathing", value: `${callData.breathing}` },
+    { title: "Circulation", value: `${callData.circulation}` },
+    { title: "Patient Priority/Transport", value: "?" },
   ];
+
   primarySurveyLines.forEach((line, index) => {
-    const lineElement = createTextElement(
-      "div",
-      line,
-      null,
-      `primary-line-${index + 1}`
-    );
+    const lineElement = createDivElement(null, "assessment-line");
     primarySurveyItem.appendChild(lineElement);
+
+    const lineTitleElement = createTextElement("div", line.title, `line-title`);
+    lineElement.appendChild(lineTitleElement);
+
+    const lineValueElement = createTextElement("div", line.value, `line-value`);
+    lineElement.appendChild(lineValueElement);
   });
   primaryData.appendChild(primarySurveyItem);
 
   const primaryInfo = createDivElement(null, "patient-card");
   primaryGroup.appendChild(primaryInfo);
 
-  const vitalsItem = createDivElement(null, "assessment");
-  primaryInfo.appendChild(vitalsItem);
+  const primaryInfoTitle = createDivElement(null, "card-title");
+  const primaryInfoTitleText = createTextElement("span", `Primary Vitals`);
+  primaryInfoTitle.appendChild(primaryInfoTitleText);
+  primaryInfo.appendChild(primaryInfoTitle);
+
+  const primaryVitals = createDivElement(null, "vitals");
+  primaryInfo.appendChild(primaryVitals);
+
+  const gcsGroup = createDivElement(null, "vital");
+  primaryVitals.appendChild(gcsGroup);
+
+  const gcsNameValue = createDivElement(null, "vital-name-value");
+  const gcsName = createDivElement(null);
+  const gcsNameText = createTextElement("span", "GCS", "vital-name");
+  gcsName.appendChild(gcsNameText);
+  gcsNameValue.appendChild(gcsName);
 
   const randomGCS = getRandomGCS(callData.chiefComplaint);
-  const gcsItem = createTextElement("span", null, "blood-pressure");
-  gcsItem.innerHTML = `GCS: ${randomGCS.totalGCS} <br>E${randomGCS.eyeResponse.score} (${randomGCS.eyeResponse.meaning}) <br>V${randomGCS.verbalResponse.score} (${randomGCS.verbalResponse.meaning}) <br>M${randomGCS.motorResponse.score} (${randomGCS.motorResponse.meaning})`;
-  vitalsItem.appendChild(gcsItem);
 
-  const randomBloodPressure = getRandomBloodPressure(callData.bloodPressure);
-  const bloodPressureItem = createTextElement(
+  const gcsValue = createDivElement(null);
+  const gcsValueText = createTextElement(
     "span",
-    `Blood Pressure: ${randomBloodPressure}`,
-    "blood-pressure"
+    `${randomGCS.totalGCS}`,
+    "vital-value"
   );
-  vitalsItem.appendChild(bloodPressureItem);
+  gcsValue.appendChild(gcsValueText);
+  gcsNameValue.appendChild(gcsValue);
+  gcsGroup.appendChild(gcsNameValue);
+
+  const gcsInfo = createDivElement(null, "vital-info");
+  const gcsInfoText = createTextElement("span");
+  gcsInfoText.innerHTML = `<b>E${randomGCS.eyeResponse.score}</b> (${randomGCS.eyeResponse.meaning}) <br><b>V${randomGCS.verbalResponse.score}</b> (${randomGCS.verbalResponse.meaning}) <br><b>M${randomGCS.motorResponse.score}</b> (${randomGCS.motorResponse.meaning})`;
+  gcsInfo.appendChild(gcsInfoText);
+  gcsGroup.appendChild(gcsInfo);
+
+  const bpGroup = createDivElement(null, "vital");
+  primaryVitals.appendChild(bpGroup);
+
+  const bpNameValue = createDivElement(null, "vital-name-value");
+  const bpName = createDivElement(null);
+  const bpNameText = createTextElement("span", "Blood Pressure", "vital-name");
+  bpName.appendChild(bpNameText);
+  bpNameValue.appendChild(bpName);
+
+  const randomBP = getRandomBloodPressure(callData.bloodPressure);
+
+  const bpValue = createDivElement(null);
+  const bpValueText = createTextElement(
+    "span",
+    `${randomBP.systolic}/${randomBP.diastolic} mmHg`,
+    "vital-value"
+  );
+  bpValue.appendChild(bpValueText);
+  bpNameValue.appendChild(bpValue);
+  bpGroup.appendChild(bpNameValue);
+
+  const bpInfo = createDivElement(null, "vital-info");
+  const bpInfoText = createTextElement("span");
+  bpInfoText.innerHTML = `${randomBP.range}`;
+  bpInfo.appendChild(bpInfoText);
+  bpGroup.appendChild(bpInfo);
+
+  const pulseGroup = createDivElement(null, "vital");
+  primaryVitals.appendChild(pulseGroup);
+
+  const pulseNameValue = createDivElement(null, "vital-name-value");
+  const pulseName = createDivElement(null);
+  const pulseNameText = createTextElement("span", "Pulse", "vital-name");
+  pulseName.appendChild(pulseNameText);
+  pulseNameValue.appendChild(pulseName);
 
   const randomPulse = getRandomPulse(callData.pulse);
-  const pulseItem = createTextElement(
+
+  const pulseValue = createDivElement(null);
+  const pulseValueText = createTextElement(
     "span",
-    `Pulse: ${randomPulse}`,
-    "blood-pressure"
+    `${randomPulse.pulse} bpm`,
+    "vital-value"
   );
-  vitalsItem.appendChild(pulseItem);
+  pulseValue.appendChild(pulseValueText);
+  pulseNameValue.appendChild(pulseValue);
+  pulseGroup.appendChild(pulseNameValue);
+
+  const pulseInfo = createDivElement(null, "vital-info");
+  const pulseInfoText = createTextElement("span");
+  pulseInfoText.innerHTML = `${randomPulse.range}`;
+  pulseInfo.appendChild(pulseInfoText);
+  pulseGroup.appendChild(pulseInfo);
 
   return primaryGroup;
 };

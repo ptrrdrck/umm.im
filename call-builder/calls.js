@@ -2,74 +2,28 @@
 
 const medicalChiefComplaints = [
   {
-    complaint: "Chest pain",
-    nature: "Cardiac",
-    responsiveness: "Alert",
-    airway: "Clear",
-    breathing: "Normal",
-    circulation: "Pulse present",
-    bloodPressure: "High",
-    pulse: "High",
-  },
-  {
-    complaint: "Shortness of breath",
+    complaint: "Drowning",
     nature: "Respiratory",
-    responsiveness: "Verbal",
+    responsiveness: "Unresponsive",
     airway: "May be compromised",
-    breathing: "Labored",
-    circulation: "Pulse present",
-    bloodPressure: "Elevated",
-    pulse: "Elevated",
+    breathing: "Absent",
+    circulation: "Pulse absent",
+    bloodPressure: "Low",
+    pulse: "None",
+    generalImpression:
+      "The patient is unresponsive, not breathing, and has no pulse.",
   },
   {
-    complaint: "Abdominal pain",
-    nature: "Gastrointestinal",
-    responsiveness: "Pain",
-    airway: "Clear",
-    breathing: "Normal",
-    circulation: "Pulse present",
-    bloodPressure: "Normal",
-    pulse: "Normal",
-  },
-  {
-    complaint: "Headache",
-    nature: "Neurological",
+    complaint: "Heat Exhaustion",
+    nature: "Systemic",
     responsiveness: "Alert",
     airway: "Clear",
     breathing: "Normal",
     circulation: "Pulse present",
     bloodPressure: "Normal",
     pulse: "Normal",
-  },
-  {
-    complaint: "Dizziness",
-    nature: "Neurological",
-    responsiveness: "Alert",
-    airway: "Clear",
-    breathing: "Normal",
-    circulation: "Pulse present",
-    bloodPressure: "Normal",
-    pulse: "Normal",
-  },
-  {
-    complaint: "Nausea",
-    nature: "Gastrointestinal",
-    responsiveness: "Verbal",
-    airway: "Clear",
-    breathing: "Normal",
-    circulation: "Pulse present",
-    bloodPressure: "Normal",
-    pulse: "Normal",
-  },
-  {
-    complaint: "Vomiting",
-    nature: "Gastrointestinal",
-    responsiveness: "Pain",
-    airway: "May be compromised",
-    breathing: "Normal",
-    circulation: "Pulse present",
-    bloodPressure: "Normal",
-    pulse: "Normal",
+    generalImpression:
+      "The patient is responsive but fatigued, with signs of profuse sweating and weakness. Cooling measures and hydration are necessary to address the heat-related distress.",
   },
   {
     complaint: "Allergic reaction",
@@ -80,6 +34,8 @@ const medicalChiefComplaints = [
     circulation: "Pulse present",
     bloodPressure: "Normal",
     pulse: "Normal",
+    generalImpression:
+      "Patient appears alert, but there is a potential for compromised airway due to an allergic reaction. Close monitoring and intervention are needed.",
   },
   {
     complaint: "Seizure",
@@ -90,52 +46,14 @@ const medicalChiefComplaints = [
     circulation: "Pulse present",
     bloodPressure: "Elevated",
     pulse: "Elevated",
-  },
-  {
-    complaint: "Fever",
-    nature: "Infectious",
-    responsiveness: "Alert",
-    airway: "Clear",
-    breathing: "Normal",
-    circulation: "Pulse present",
-    bloodPressure: "Normal",
-    pulse: "Normal",
-  },
-  {
-    complaint: "Cardiac arrest",
-    nature: "Cardiac",
-    responsiveness: "Unresponsive",
-    airway: "May be compromised",
-    breathing: "Absent",
-    circulation: "Pulse absent",
-    bloodPressure: "Low",
-    pulse: "None",
+    generalImpression:
+      "Patient is experiencing a seizure with elevated vital signs. Immediate attention is necessary to manage the seizure and assess the underlying cause.",
   },
 ];
 
 const traumaChiefComplaints = [
   {
-    complaint: "Motor vehicle accident",
-    mechanism: "Blunt trauma",
-    responsiveness: "Alert",
-    airway: "May be compromised",
-    breathing: "Labored",
-    circulation: "Pulse present",
-    bloodPressure: "Elevated",
-    pulse: "Elevated",
-  },
-  {
-    complaint: "Fall from height",
-    mechanism: "Fall",
-    responsiveness: "Pain",
-    airway: "May be compromised",
-    breathing: "Labored",
-    circulation: "Pulse present",
-    bloodPressure: "Elevated",
-    pulse: "Elevated",
-  },
-  {
-    complaint: "Bicycle accident",
+    complaint: "Surfing Accident",
     mechanism: "Blunt trauma",
     responsiveness: "Pain",
     airway: "May be compromised",
@@ -143,9 +61,23 @@ const traumaChiefComplaints = [
     circulation: "Pulse present",
     bloodPressure: "Elevated",
     pulse: "Elevated",
+    generalImpression:
+      "The patient is in pain with potential blunt trauma from a surfing accident. Assessment for fractures and internal injuries is needed, along with immobilization.",
   },
   {
-    complaint: "Assault",
+    complaint: "Beach Volleyball Injury",
+    mechanism: "Blunt trauma",
+    responsiveness: "Pain",
+    airway: "Clear",
+    breathing: "Normal",
+    circulation: "Pulse present",
+    bloodPressure: "Normal",
+    pulse: "Normal",
+    generalImpression:
+      "The patient is in pain with a possible musculoskeletal injury from beach volleyball. Assessment for fractures or sprains and appropriate pain management are necessary.",
+  },
+  {
+    complaint: "Boating Accident",
     mechanism: "Blunt or penetrating trauma",
     responsiveness: "Pain",
     airway: "May be compromised",
@@ -153,66 +85,8 @@ const traumaChiefComplaints = [
     circulation: "Pulse present",
     bloodPressure: "Elevated",
     pulse: "Elevated",
-  },
-  {
-    complaint: "Sports injury",
-    mechanism: "Blunt trauma",
-    responsiveness: "Alert",
-    airway: "Clear",
-    breathing: "Normal",
-    circulation: "Pulse present",
-    bloodPressure: "Normal",
-    pulse: "Normal",
-  },
-  {
-    complaint: "Burn",
-    mechanism: "Burn",
-    responsiveness: "Alert",
-    airway: "May be compromised",
-    breathing: "Labored",
-    circulation: "Pulse present",
-    bloodPressure: "Elevated",
-    pulse: "Elevated",
-  },
-  {
-    complaint: "Penetrating trauma",
-    mechanism: "Penetrating trauma",
-    responsiveness: "Pain",
-    airway: "May be compromised",
-    breathing: "Labored",
-    circulation: "Pulse present",
-    bloodPressure: "Elevated",
-    pulse: "Elevated",
-  },
-  {
-    complaint: "Animal bite",
-    mechanism: "Bite",
-    responsiveness: "Pain",
-    airway: "May be compromised",
-    breathing: "Labored",
-    circulation: "Pulse present",
-    bloodPressure: "Elevated",
-    pulse: "Elevated",
-  },
-  {
-    complaint: "Electrical injury",
-    mechanism: "Electrical injury",
-    responsiveness: "Pain",
-    airway: "May be compromised",
-    breathing: "Labored",
-    circulation: "Pulse present",
-    bloodPressure: "Elevated",
-    pulse: "Elevated",
-  },
-  {
-    complaint: "Crush injury",
-    mechanism: "Crush injury",
-    responsiveness: "Pain",
-    airway: "May be compromised",
-    breathing: "Labored",
-    circulation: "Pulse present",
-    bloodPressure: "Elevated",
-    pulse: "Elevated",
+    generalImpression:
+      "The patient is in pain with potential blunt or penetrating trauma from a boating accident. Rapid assessment for injuries, control of bleeding, and prompt transport are vital.",
   },
 ];
 
@@ -242,16 +116,21 @@ const getChiefComplaint = (selectedNature) => {
   return {
     chiefComplaintData: chiefComplaintData,
     chiefComplaint: chiefComplaintData.complaint,
-    natureMechanism:
+    natureMechanismText:
       selectedNature === "Medical"
-        ? `Nature of Illness: ${chiefComplaintData.nature}`
-        : `Mechanism of Injury: ${chiefComplaintData.mechanism}`,
+        ? `Nature of Illness`
+        : `Mechanism of Injury`,
+    natureMechanismValue:
+      selectedNature === "Medical"
+        ? `${chiefComplaintData.nature}`
+        : `${chiefComplaintData.mechanism}`,
     responsiveness: chiefComplaintData.responsiveness,
     airway: chiefComplaintData.airway,
     breathing: chiefComplaintData.breathing,
     circulation: chiefComplaintData.circulation,
     bloodPressure: chiefComplaintData.bloodPressure,
     pulse: chiefComplaintData.pulse,
+    generalImpression: chiefComplaintData.generalImpression,
   };
 };
 
@@ -326,6 +205,26 @@ function getRandomDate(selectedSeason) {
   return `${randomMonth}-${randomDay}`;
 }
 
+function startTimer(initialTime = { minutes: 0, seconds: 0 }, patientNumber) {
+  let seconds = initialTime.seconds;
+  let minutes = initialTime.minutes;
+  const timerElement = document.getElementById(`timer-${patientNumber}`);
+
+  function updateTimer() {
+    seconds++;
+    if (seconds === 60) {
+      seconds = 0;
+      minutes++;
+    }
+
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    const formattedSeconds = String(seconds).padStart(2, "0");
+    timerElement.textContent = `${formattedMinutes}:${formattedSeconds}`;
+  }
+
+  return setInterval(updateTimer, 1000);
+}
+
 function getRandomBloodPressure(bloodPressureValue) {
   const lowRange = {
     systolic: { low: 40, high: 88 },
@@ -376,7 +275,11 @@ function getRandomBloodPressure(bloodPressureValue) {
     Math.min(selectedRange.diastolic.high, randomSystolic - 1) + 1
   );
 
-  return `${randomSystolic}/${randomDiastolic} mmHg (${selectedRange.name})`;
+  return {
+    systolic: randomSystolic,
+    diastolic: randomDiastolic,
+    range: selectedRange.name,
+  };
 }
 
 function getRandomPulse(pulseValue) {
@@ -413,7 +316,10 @@ function getRandomPulse(pulseValue) {
     selectedRange.high + 1
   );
 
-  return `${randomPulse} bpm (${selectedRange.name})`;
+  return {
+    pulse: randomPulse,
+    range: selectedRange.name,
+  };
 }
 
 function getRandomGCS(chiefComplaint) {
