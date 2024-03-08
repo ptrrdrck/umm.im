@@ -174,7 +174,6 @@ const buildPatientElements = (
   const patientTitleDOM = document.getElementById(
     `patient-${patientNumber}-title`
   );
-
   patientTitleDOM.addEventListener("click", () => {
     patient.classList.toggle("active");
   });
@@ -200,12 +199,14 @@ const buildPatientTitle = (
     "patient-title"
   );
 
+  const patientTitleInfo = createDivElement(null, "patient-title-info");
+
   const patientNumberText = createTextElement(
     "span",
     `Patient ${patientNumber}`,
     "patient-number"
   );
-  patientTitle.appendChild(patientNumberText);
+  patientTitleInfo.appendChild(patientNumberText);
 
   const patientHeader = createDivElement(null, "patient-header");
 
@@ -222,7 +223,10 @@ const buildPatientTitle = (
 
   const natureItem = createTextElement("span", `(${selectedNature})`, "nature");
   patientHeader.appendChild(natureItem);
-  patientTitle.appendChild(patientHeader);
+  patientTitleInfo.appendChild(patientHeader);
+  patientTitle.appendChild(patientTitleInfo);
+
+  const patientTitleTools = createDivElement(null, "patient-title-info");
 
   const callTimer = createDivElement(null, "call-timer");
   const elapsedTime = createTextElement(
@@ -232,7 +236,8 @@ const buildPatientTitle = (
     `timer-${patientNumber}`
   );
   callTimer.appendChild(elapsedTime);
-  patientTitle.appendChild(callTimer);
+  patientTitleTools.appendChild(callTimer);
+  patientTitle.appendChild(patientTitleTools);
 
   let timerInterval;
   let timerTime = { minutes: 0, seconds: 0 };
@@ -259,15 +264,15 @@ const buildPatientTitle = (
 const buildSizeUp = (patientCount, callData) => {
   const sizeUpGroup = createDivElement(null, "patient-card-group");
 
-  const sizeUpData = createDivElement(null, "patient-card");
-  sizeUpGroup.appendChild(sizeUpData);
+  const sizeUpItem = createDivElement(null, "patient-card");
+  sizeUpGroup.appendChild(sizeUpItem);
 
   const sizeUpTitle = createDivElement(null, "card-title");
   const sizeUpTitleText = createTextElement("span", "Scene Size Up", null);
   sizeUpTitle.appendChild(sizeUpTitleText);
-  sizeUpData.appendChild(sizeUpTitle);
+  sizeUpItem.appendChild(sizeUpTitle);
 
-  const sizeUpItem = createDivElement("patient-size-up", "assessment");
+  const sizeUpData = createDivElement("patient-size-up", "assessment");
 
   const sizeUpLines = [
     { title: "Scene Safety", value: "Safe" },
@@ -282,7 +287,7 @@ const buildSizeUp = (patientCount, callData) => {
 
   sizeUpLines.forEach((line, index) => {
     const lineElement = createDivElement(null, "assessment-line");
-    sizeUpItem.appendChild(lineElement);
+    sizeUpData.appendChild(lineElement);
 
     const lineTitleElement = createTextElement("div", line.title, `line-title`);
     lineElement.appendChild(lineTitleElement);
@@ -290,10 +295,26 @@ const buildSizeUp = (patientCount, callData) => {
     const lineValueElement = createTextElement("div", line.value, `line-value`);
     lineElement.appendChild(lineValueElement);
   });
-  sizeUpData.appendChild(sizeUpItem);
+  sizeUpItem.appendChild(sizeUpData);
 
-  const sizeUpDataInfo = createDivElement(null, "patient-card");
-  sizeUpGroup.appendChild(sizeUpDataInfo);
+  const sizeUpWhat = createDivElement(null, "patient-card");
+  sizeUpGroup.appendChild(sizeUpWhat);
+
+  const sizeUpWhatTitle = createDivElement(null, "card-title");
+  const sizeUpWhatTitleText = createTextElement("span", `En route/On scene`);
+  sizeUpWhatTitle.appendChild(sizeUpWhatTitleText);
+  sizeUpWhat.appendChild(sizeUpWhatTitle);
+
+  const sizeUpWhy = createDivElement(null, "patient-card");
+  sizeUpGroup.appendChild(sizeUpWhy);
+
+  const sizeUpWhyTitle = createDivElement(null, "card-title");
+  const sizeUpWhyTitleText = createTextElement(
+    "span",
+    `Protocols/Medical knowledge`
+  );
+  sizeUpWhyTitle.appendChild(sizeUpWhyTitleText);
+  sizeUpWhy.appendChild(sizeUpWhyTitle);
 
   return sizeUpGroup;
 };
@@ -301,26 +322,23 @@ const buildSizeUp = (patientCount, callData) => {
 const buildPrimarySurvey = (callData) => {
   const primaryGroup = createDivElement(null, "patient-card-group");
 
-  const primaryData = createDivElement(null, "patient-card");
-  primaryGroup.appendChild(primaryData);
+  const primaryItem = createDivElement(null, "patient-card");
+  primaryGroup.appendChild(primaryItem);
 
-  const primaryDataTitle = createDivElement(null, "card-title");
-  const primaryDataTitleText = createTextElement(
+  const primaryTitle = createDivElement(null, "card-title");
+  const primaryTitleText = createTextElement(
     "span",
     `Primary Survey / Resuscitation`
   );
-  primaryDataTitle.appendChild(primaryDataTitleText);
-  primaryData.appendChild(primaryDataTitle);
+  primaryTitle.appendChild(primaryTitleText);
+  primaryItem.appendChild(primaryTitle);
 
-  const primarySurveyItem = createDivElement(
-    "patient-primary-survey",
-    "assessment"
-  );
+  const primaryData = createDivElement("patient-primary-survey", "assessment");
 
   const primarySurveyLines = [
     { title: "General Impression", value: `${callData.generalImpression}` },
     {
-      title: "Responsiveness, Level Of Consciousness (AVPU)",
+      title: "Responsiveness (AVPU)",
       value: `${callData.responsiveness}`,
     },
     { title: "Chief Complaint", value: `${callData.chiefComplaint}` },
@@ -333,7 +351,7 @@ const buildPrimarySurvey = (callData) => {
 
   primarySurveyLines.forEach((line, index) => {
     const lineElement = createDivElement(null, "assessment-line");
-    primarySurveyItem.appendChild(lineElement);
+    primaryData.appendChild(lineElement);
 
     const lineTitleElement = createTextElement("div", line.title, `line-title`);
     lineElement.appendChild(lineTitleElement);
@@ -341,18 +359,58 @@ const buildPrimarySurvey = (callData) => {
     const lineValueElement = createTextElement("div", line.value, `line-value`);
     lineElement.appendChild(lineValueElement);
   });
-  primaryData.appendChild(primarySurveyItem);
+  primaryItem.appendChild(primaryData);
 
-  const primaryInfo = createDivElement(null, "patient-card");
-  primaryGroup.appendChild(primaryInfo);
+  const primaryWhat = createDivElement(null, "patient-card");
+  primaryGroup.appendChild(primaryWhat);
 
-  const primaryInfoTitle = createDivElement(null, "card-title");
-  const primaryInfoTitleText = createTextElement("span", `Primary Vitals`);
-  primaryInfoTitle.appendChild(primaryInfoTitleText);
-  primaryInfo.appendChild(primaryInfoTitle);
+  const primaryWhatTitle = createDivElement(null, "card-title");
+  const primaryWhatTitleText = createTextElement("span", `Initial Assessment`);
+  primaryWhatTitle.appendChild(primaryWhatTitleText);
+  primaryWhat.appendChild(primaryWhatTitle);
 
   const primaryVitals = createDivElement(null, "vitals");
-  primaryInfo.appendChild(primaryVitals);
+  primaryWhat.appendChild(primaryVitals);
+
+  const locGroup = createDivElement(null, "vital");
+  primaryVitals.appendChild(locGroup);
+
+  const locNameValue = createDivElement(null, "vital-name-value");
+  const locName = createDivElement(null);
+  const locNameText = createTextElement(
+    "span",
+    "Level of Consciousness",
+    "vital-name"
+  );
+  locName.appendChild(locNameText);
+  locNameValue.appendChild(locName);
+
+  const randomLOC = getRandomLOC(callData.responsiveness);
+
+  const locValue = createDivElement(null);
+  const locValueText = createTextElement(
+    "span",
+    `A/O x ${randomLOC.score}`,
+    "vital-value"
+  );
+  locValue.appendChild(locValueText);
+  locNameValue.appendChild(locValue);
+  locGroup.appendChild(locNameValue);
+
+  const locInfo = createDivElement(null, "vital-info");
+  const locOriented = createTextElement(
+    "span",
+    `${randomLOC.oriented}`,
+    "loc-oriented"
+  );
+  locInfo.appendChild(locOriented);
+  const locNotOriented = createTextElement(
+    "span",
+    `${randomLOC.notOriented}`,
+    "loc-not-oriented"
+  );
+  locInfo.appendChild(locNotOriented);
+  locGroup.appendChild(locInfo);
 
   const gcsGroup = createDivElement(null, "vital");
   primaryVitals.appendChild(gcsGroup);
@@ -368,7 +426,7 @@ const buildPrimarySurvey = (callData) => {
   const gcsValue = createDivElement(null);
   const gcsValueText = createTextElement(
     "span",
-    `${randomGCS.totalGCS}`,
+    `${randomGCS.totalGCS} (E${randomGCS.eyeResponse.score} V${randomGCS.verbalResponse.score} M${randomGCS.verbalResponse.score})`,
     "vital-value"
   );
   gcsValue.appendChild(gcsValueText);
@@ -376,9 +434,26 @@ const buildPrimarySurvey = (callData) => {
   gcsGroup.appendChild(gcsNameValue);
 
   const gcsInfo = createDivElement(null, "vital-info");
-  const gcsInfoText = createTextElement("span");
-  gcsInfoText.innerHTML = `<b>E${randomGCS.eyeResponse.score}</b> (${randomGCS.eyeResponse.meaning}) <br><b>V${randomGCS.verbalResponse.score}</b> (${randomGCS.verbalResponse.meaning}) <br><b>M${randomGCS.motorResponse.score}</b> (${randomGCS.motorResponse.meaning})`;
-  gcsInfo.appendChild(gcsInfoText);
+  const gcsEMeaning = createTextElement(
+    "span",
+    `Eyes: ${randomGCS.eyeResponse.meaning}`,
+    "gcs-meaning"
+  );
+  gcsInfo.appendChild(gcsEMeaning);
+
+  const gcsVMeaning = createTextElement(
+    "span",
+    `Verbal: ${randomGCS.verbalResponse.meaning}`,
+    "gcs-meaning"
+  );
+  gcsInfo.appendChild(gcsVMeaning);
+
+  const gcsMMeaning = createTextElement(
+    "span",
+    `Motor: ${randomGCS.motorResponse.meaning}`,
+    "gcs-meaning"
+  );
+  gcsInfo.appendChild(gcsMMeaning);
   gcsGroup.appendChild(gcsInfo);
 
   const bpGroup = createDivElement(null, "vital");
@@ -434,6 +509,17 @@ const buildPrimarySurvey = (callData) => {
   pulseInfoText.innerHTML = `${randomPulse.range}`;
   pulseInfo.appendChild(pulseInfoText);
   pulseGroup.appendChild(pulseInfo);
+
+  const primaryWhy = createDivElement(null, "patient-card");
+  primaryGroup.appendChild(primaryWhy);
+
+  const primaryWhyTitle = createDivElement(null, "card-title");
+  const primaryWhyTitleText = createTextElement(
+    "span",
+    `Protocols/Medical knowledge`
+  );
+  primaryWhyTitle.appendChild(primaryWhyTitleText);
+  primaryWhy.appendChild(primaryWhyTitle);
 
   return primaryGroup;
 };
