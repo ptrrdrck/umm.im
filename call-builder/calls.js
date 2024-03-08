@@ -5,7 +5,7 @@ const medicalChiefComplaints = [
     complaint: "Drowning",
     nature: "Respiratory",
     responsiveness: "Unresponsive",
-    airway: "May be compromised",
+    airway: "Obstructed/Compromised",
     breathing: "Absent",
     circulation: "Pulse absent",
     bloodPressure: "Low",
@@ -17,7 +17,7 @@ const medicalChiefComplaints = [
     complaint: "Heat Exhaustion",
     nature: "Systemic",
     responsiveness: "Alert",
-    airway: "Clear",
+    airway: "Clear/Open",
     breathing: "Normal",
     circulation: "Pulse present",
     bloodPressure: "Normal",
@@ -29,7 +29,7 @@ const medicalChiefComplaints = [
     complaint: "Allergic reaction",
     nature: "Allergic/Immunologic",
     responsiveness: "Alert",
-    airway: "May be compromised",
+    airway: "Obstructed/Compromised",
     breathing: "Normal",
     circulation: "Pulse present",
     bloodPressure: "Normal",
@@ -40,8 +40,8 @@ const medicalChiefComplaints = [
   {
     complaint: "Seizure",
     nature: "Neurological",
-    responsiveness: "Pain",
-    airway: "May be compromised",
+    responsiveness: "Verbal",
+    airway: "Obstructed/Compromised",
     breathing: "Labored",
     circulation: "Pulse present",
     bloodPressure: "Elevated",
@@ -53,10 +53,10 @@ const medicalChiefComplaints = [
 
 const traumaChiefComplaints = [
   {
-    complaint: "Surfing Accident",
-    mechanism: "Blunt trauma",
-    responsiveness: "Pain",
-    airway: "May be compromised",
+    complaint: "Blunt trauma",
+    mechanism: "Surfing accident",
+    responsiveness: "Pressure",
+    airway: "Clear/Open",
     breathing: "Labored",
     circulation: "Pulse present",
     bloodPressure: "Elevated",
@@ -65,10 +65,10 @@ const traumaChiefComplaints = [
       "The patient is in pain with potential blunt trauma from a surfing accident. Assessment for fractures and internal injuries is needed, along with immobilization.",
   },
   {
-    complaint: "Beach Volleyball Injury",
-    mechanism: "Blunt trauma",
-    responsiveness: "Pain",
-    airway: "Clear",
+    complaint: "Blunt trauma",
+    mechanism: "Beach volleyball",
+    responsiveness: "Alert",
+    airway: "Clear/Open",
     breathing: "Normal",
     circulation: "Pulse present",
     bloodPressure: "Normal",
@@ -77,21 +77,21 @@ const traumaChiefComplaints = [
       "The patient is in pain with a possible musculoskeletal injury from beach volleyball. Assessment for fractures or sprains and appropriate pain management are necessary.",
   },
   {
-    complaint: "Boating Accident",
-    mechanism: "Blunt or penetrating trauma",
-    responsiveness: "Pain",
-    airway: "May be compromised",
+    complaint: "Penetrating trauma",
+    mechanism: "Boating accident",
+    responsiveness: "Pressure",
+    airway: "Obstructed/ Compromised",
     breathing: "Labored",
     circulation: "Pulse present",
     bloodPressure: "Elevated",
     pulse: "Elevated",
     generalImpression:
-      "The patient is in pain with potential blunt or penetrating trauma from a boating accident. Rapid assessment for injuries, control of bleeding, and prompt transport are vital.",
+      "The patient appears to be in pain with potential trauma from a boating accident. Rapid assessment for injuries, control of bleeding, and prompt transport are vital.",
   },
 ];
 
 function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function getRandomEvenInt(min, max) {
@@ -322,6 +322,31 @@ function getRandomPulse(pulseValue) {
   };
 }
 
+function getRandomLOC(responsiveness) {
+  const orientedToItems = ["Person", "Place", "Time", "Event"];
+
+  let locScore;
+  if (responsiveness === "Alert") {
+    locScore = Math.floor(Math.random() * 4) + 1;
+  } else {
+    locScore = 0;
+  }
+
+  const selectedItems = orientedToItems.slice(0, locScore);
+
+  const notOrientedToItems = orientedToItems.slice(locScore);
+  /*
+  const result = `A/O x ${locScore} - Oriented to ${selectedItems.join(
+    ", "
+  )}. Not oriented to ${notOrientedToItems.join(", ")}.`;
+*/
+  return {
+    score: locScore,
+    oriented: selectedItems.join(", "),
+    notOriented: notOrientedToItems.join(", "),
+  };
+}
+
 function getRandomGCS(chiefComplaint) {
   const eyeResponseValues = [
     { score: 1, meaning: "Your eyes don’t open for any reason." },
@@ -411,9 +436,9 @@ function getRandomGCS(chiefComplaint) {
   };
 
   const expectedGCS = gcsMapping[chiefComplaint] || {
-    eye: 3,
-    verbal: 4,
-    motor: 5,
+    eye: 4,
+    verbal: 5,
+    motor: 6,
   };
 
   const randomEyeResponse = getRandomInt(
