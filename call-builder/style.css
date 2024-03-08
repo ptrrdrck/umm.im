@@ -124,7 +124,7 @@ body {
     flex-direction: column;
   }
   .patient-card {
-    width: auto;
+    width: 100%;
   }
   .vital {
     flex-direction: column;
