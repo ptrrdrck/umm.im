@@ -102,7 +102,8 @@ body {
     justify-content: flex-start;
     height: auto;
   }
-  .patient-title {
+  .patient-title,
+  .patient-title-info {
     flex-direction: column;
   }
   .patient-header {
@@ -277,6 +278,9 @@ body {
     height: auto;
   }
   .patient-title {
+    flex-direction: row;
+  }
+  .patient-title-info {
     flex-direction: row;
   }
   .patient-header {
@@ -634,7 +638,6 @@ select {
 
 .patient-title-info {
   display: flex;
-  flex-direction: row;
 }
 
 .patient-body {
@@ -787,6 +790,7 @@ select {
   font-size: 1rem;
   border-radius: 3px;
   width: fit-content;
+  max-width: min-content;
 }
 
 .vital-value {
@@ -796,7 +800,7 @@ select {
   background-color: #d9eef5;
   border-radius: 3px;
   width: fit-content;
-  min-width: 40px;
+  min-width: fit-content;
   height: 40px;
   justify-content: center;
   font-size: 1rem;
