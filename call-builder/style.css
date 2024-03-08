@@ -298,7 +298,7 @@ body {
     flex-direction: row;
   }
   .vital-info {
-    padding: 10px 0 10px 20px;
+    padding: 10px 0;
   }
 }
 
@@ -570,6 +570,7 @@ select {
   padding: 12px 60px 10px 64px;
   display: flex;
   align-self: center;
+  font-size: 1.2em;
 }
 
 .patient-title.active {
@@ -627,6 +628,11 @@ select {
 }
 
 .patient-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.patient-title-info {
   display: flex;
   flex-direction: row;
 }
@@ -705,6 +711,7 @@ select {
   padding: 10px 0;
   margin: 0 10px;
   border-bottom: 1px dotted #000;
+  gap: 10px;
 }
 
 .assessment div:last-of-type {
@@ -714,6 +721,7 @@ select {
 .line-title {
   display: flex;
   align-self: center;
+  width: auto;
 }
 
 .line-value {
@@ -724,18 +732,18 @@ select {
   color: #000;
   border-radius: 3px;
   padding: 10px;
-  max-width: 60%;
+  width: auto;
   height: fit-content;
   min-height: 40px;
 }
 
 .patient-card {
   display: flex;
+  flex: 1;
   flex-direction: column;
   background-color: #fff;
   border-radius: 6px;
   padding: 16px;
-  height: fit-content;
 }
 
 .patient-card-group {
@@ -757,6 +765,7 @@ select {
 
 .vital {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   border-bottom: 1px dotted #000;
   margin: 0 10px;
@@ -765,21 +774,26 @@ select {
 
 .vital-name-value {
   display: flex;
-  flex-direction: column;
-  padding: 10px 0;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: space-between;
+  padding: 10px 0 0;
 }
 
 .vital-name {
   display: flex;
-  padding: 0 10px 10px 0;
+  margin: 0 0 10px 0;
+  padding: 10px 0;
   font-size: 1rem;
+  border-radius: 3px;
+  width: fit-content;
 }
 
 .vital-value {
   display: flex;
   padding: 10px;
-  background-color: #d9eef5;
   color: #000;
+  background-color: #d9eef5;
   border-radius: 3px;
   width: fit-content;
   min-width: 40px;
@@ -790,4 +804,27 @@ select {
 
 .vital-info {
   display: flex;
+  flex-direction: column;
+}
+
+.vital-info span:last-of-type {
+  padding-bottom: 0;
+}
+
+.gcs-score {
+  display: flex;
+  font-weight: 600;
+}
+
+.gcs-meaning {
+  display: flex;
+  padding: 0 0 10px 0;
+}
+
+.loc-oriented {
+  margin-bottom: 10px;
+}
+
+.loc-not-oriented {
+  text-decoration: line-through;
 }
