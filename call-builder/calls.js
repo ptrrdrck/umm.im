@@ -333,13 +333,8 @@ function getRandomLOC(responsiveness) {
   }
 
   const selectedItems = orientedToItems.slice(0, locScore);
-
   const notOrientedToItems = orientedToItems.slice(locScore);
-  /*
-  const result = `A/O x ${locScore} - Oriented to ${selectedItems.join(
-    ", "
-  )}. Not oriented to ${notOrientedToItems.join(", ")}.`;
-*/
+
   return {
     score: locScore,
     oriented: selectedItems.join(", "),
@@ -349,7 +344,7 @@ function getRandomLOC(responsiveness) {
 
 function getRandomGCS(chiefComplaint) {
   const eyeResponseValues = [
-    { score: 1, meaning: "Your eyes don’t open for any reason." },
+    { score: 1, meaning: "Your eyes don't open for any reason." },
     {
       score: 2,
       meaning: "Your eyes only open in response to feeling pressure.",
@@ -367,26 +362,26 @@ function getRandomGCS(chiefComplaint) {
 
   const verbalResponseValues = [
     { score: 1, meaning: "You can't speak or make sounds." },
-    { score: 2, meaning: "You can’t talk and can only make sounds or noises." },
+    { score: 2, meaning: "You can't talk and can only make sounds or noises." },
     {
       score: 3,
       meaning:
-        "You can talk and others can understand words you say, but your responses to questions don’t make sense.",
+        "You can talk and others can understand words you say, but your responses to questions don't make sense.",
     },
     {
       score: 4,
       meaning:
-        "You’re confused. You can answer questions, but your answers show you’re not fully aware of what’s happening.",
+        "You're confused. You can answer questions, but your answers show you're not fully aware of what's happening.",
     },
     {
       score: 5,
       meaning:
-        "You’re oriented. You can correctly answer questions about who you are, where you’re at, the day or year, etc.",
+        "You're oriented. You can correctly answer questions about who you are, where you're at, the day or year, etc.",
     },
   ];
 
   const motorResponseValues = [
-    { score: 1, meaning: "You don’t move in response to pressure." },
+    { score: 1, meaning: "You don't move in response to pressure." },
     {
       score: 2,
       meaning: "You extend muscles (stretch outward) in response to pressure.",
